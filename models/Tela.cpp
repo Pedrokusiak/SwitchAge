@@ -1,23 +1,21 @@
 #include <iostream>
+ using namespace models;
 
 class Tela {
 
-    SDL_Renderer *render;
-    SDL_Window *janela;
 private:
     int cima;
     int baixo;
     int esquerda;
     int direita;
+    SDL_Renderer *render;
+    SDL_Window *janela;
 public:
     int getCima(){
         return cima;
     }
     int getBaixo(){
         return baixo;
-    }
-    int getEsquerda(){
-        return esquerda;
     }
     int getDireita(){
         return direita;
@@ -27,9 +25,6 @@ public:
     }
     void setBaixo(b){
         baixo= b;
-    }
-    void setEsquerda(e){
-        esquerda = e;
     }
     void setDireita(d){
         direita = d;

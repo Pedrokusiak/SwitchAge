@@ -78,6 +78,7 @@ void doKeyDown(SDL_KeyboardEvent *event)
 	}
 }
 
+
 void doKeyUp(SDL_KeyboardEvent *event)
 {
 	if (event->repeat == 0)
