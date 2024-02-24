@@ -8,19 +8,19 @@ class Posicao{
     public:
 
         int getPosicaoX() {
-            return this.posicaoX;
+            return posicaoX;
         }
 
         int getPosicaoY() {
-            return this.posicaoY;
+            return posicaoY;
         }
 
-        void setPosicaoX(posicaoX) {
-            this.posicaoX  = posicaoX;
+        void setPosicaoX(int posicaoXSet) {
+            posicaoX  = posicaoXSet;
         }
 
-         void setPosicaoY(posicaoY) {
-            this.posicaoY  = posicaoY;
+         void setPosicaoY(int posicaoYSet) {
+            posicaoY  = posicaoYSet;
         }
 
 }

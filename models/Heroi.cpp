@@ -10,19 +10,19 @@ class Heroi : public Posicao{
     public:
 
         int getAceleracao(){
-            return this.aceleracao;
+            return aceleracao;
         }
 
         int getTextura(){
-            return this.textura;
+            return textura;
         }
 
-        void setAceleracao(aceleracao) {
-            this.aceleracao = aceleracao;
+        void setAceleracao(int aceleracaoSet) {
+            aceleracao = aceleracaoSet;
         }
 
-        void setTextura(textura){
-            this.textura = textura;
+        void setTextura(SDL_Texture texturaSet){
+            textura = texturaSet;
         }
 
 }

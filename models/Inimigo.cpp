@@ -10,19 +10,19 @@ class Inimigo : public Posicao{
     public:
 
         int getAceleracao(){
-            return this.aceleracao;
+            return aceleracao;
         }
 
-        int getNomeDoSprite(){
-            return this.nomeDoSprite;
+        SDL_Texture getTextura(){
+            return textura;
         }
 
-        void setAceleracao(aceleracao) {
-            this.aceleracao = aceleracao;
+        void setAceleracao(int aceleracaoSet) {
+            aceleracao = aceleracaoSet;
         }
 
-        void setNomeDoSprite(nomeDoSprite){
-            this.nomeDoSprite = nomeDoSprite;
+        void setTextura(SDL_Texture texturaSet){
+            textura = texturaSet;
         }
 
 }
