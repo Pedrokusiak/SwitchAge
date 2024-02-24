@@ -3,18 +3,14 @@
 #include <SDL.h>
 using namespace models;
 
-class Inimigo : public Posicao{
+class Heroi : public Posicao{
     private: 
         int aceleracao = 0;
-        SDL_Texture *texture;
+        
     public:
 
         int getAceleracao(){
             return aceleracao;
-        }
-
-        SDL_Texture getTextura(){
-            return textura;
         }
 
         void setAceleracao(int aceleracaoSet) {

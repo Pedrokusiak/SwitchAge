@@ -1,19 +1,18 @@
 
 #include <iostream>
 #include <SDL.h>
-using namespace models;
+using namespace models.Inimigo;
 
-class Heroi : public Posicao{
+class Inimigo : public Posicao{
     private: 
         int aceleracao = 0;
-        SDL_Texture *textura;
     public:
 
         int getAceleracao(){
             return aceleracao;
         }
 
-        int getTextura(){
+        SDL_Texture getTextura(){
             return textura;
         }
 
@@ -21,8 +20,6 @@ class Heroi : public Posicao{
             aceleracao = aceleracaoSet;
         }
 
-        void setTextura(SDL_Texture texturaSet){
-            textura = texturaSet;
-        }
+    
 
 }

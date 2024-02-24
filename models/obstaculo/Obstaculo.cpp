@@ -6,5 +6,5 @@ class Obstaculo: public Posicao {
     private:
        
     public:         
-     
+        
 }

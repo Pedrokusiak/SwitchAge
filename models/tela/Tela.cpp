@@ -1,7 +1,7 @@
 #include <iostream>
+#include <SDL.h>
 
 class Tela {
-
     SDL_Renderer *render;
     SDL_Window *janela;
 private:
