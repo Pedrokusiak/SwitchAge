@@ -28,7 +28,7 @@ void MovimentacaoController::teclaParaBaixo(SDL_KeyboardEvent *event) {
     }
 }
 
-void MovimentacaoController::doInput() {
+void MovimentacaoController::leEntrada() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
@@ -36,10 +36,10 @@ void MovimentacaoController::doInput() {
                 exit(0);
                 break;
             case SDL_KEYDOWN:
-                handleKeyDown(&event.key);
+                teclaParaBaixo(&event.key);
                 break;
             case SDL_KEYUP:
-                handleKeyUp(&event.key);
+                teclaParaCima(&event.key);
                 break;
             default:
                 break;
