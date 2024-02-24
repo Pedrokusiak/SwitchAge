@@ -1,24 +1,17 @@
+#include "Heroi.hpp"
 
-#include <iostream>
-#include <SDL.h>
-using namespace models;
-
-class Heroi : public Posicao{
-    private: 
-        int aceleracao = 0;
-        
-    public:
-
-        int getAceleracao(){
+namespace models {
+    namespace heroi {
+        int Heroi::getAceleracao() {
             return aceleracao;
         }
 
-        void setAceleracao(int aceleracaoSet) {
+        void Heroi::setAceleracao(int aceleracaoSet) {
             aceleracao = aceleracaoSet;
         }
 
-        void setTextura(SDL_Texture texturaSet){
+        void Heroi::setTextura(SDL_Texture *texturaSet) {
             textura = texturaSet;
         }
-
-}
+    } 
+} 

@@ -5,7 +5,7 @@
 #include <SDL.h>
 
 namespace models {
-    namespace Inimigo { 
+    namespace inimigo { 
         class Inimigo : public Posicao {
         private: 
             int aceleracao = 0;

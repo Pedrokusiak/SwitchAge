@@ -4,7 +4,7 @@
 #include "Posicao.hpp" 
 
 namespace models {
-    namespace Obstaculo {
+    namespace obstaculo {
          class Obstaculo : public Posicao {
     private:
         

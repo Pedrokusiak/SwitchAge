@@ -25,7 +25,7 @@ namespace models {
             }
         };
 
-    } // namespace heroi
-} // namespace models
+    } 
+} 
 
 #endif // HEROI_HPP

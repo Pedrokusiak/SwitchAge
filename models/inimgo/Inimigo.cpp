@@ -7,7 +7,6 @@ class Inimigo : public Posicao{
     private: 
         int aceleracao = 0;
     public:
-
         int getAceleracao(){
             return aceleracao;
         }
@@ -19,7 +18,4 @@ class Inimigo : public Posicao{
         void setAceleracao(int aceleracaoSet) {
             aceleracao = aceleracaoSet;
         }
-
-    
-
 }
