@@ -9,7 +9,6 @@ namespace models {
            class Chao : public Posicao {
     private:
         int aceleracao = 0;
-
     public:
       
     };

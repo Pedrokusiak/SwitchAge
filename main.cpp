@@ -1,14 +1,9 @@
 #define SCREEN_WIDTH   1280
 #define SCREEN_HEIGHT  720
+#include <"Tela.h">
 
-typedef struct {
-    SDL_Renderer *renderer;
-    SDL_Window *window;
-    int up;
-    int down;
-    int left;
-    int right;
-} App;
+
+
 
 typedef struct {
     int x;
@@ -150,10 +145,13 @@ void cleanup() {
 }
 
 int main(int argc, char *argv[]) {
-    memset(&app, 0, sizeof(App));
-    memset(&entity, 0, sizeof(Entity));
+    Tela tela;
+    Heroi heroi;
+
+    memset(&tela, 0, sizeof(Tela));
+    memset(&heroi, 0, sizeof(Heroi));
     initSDL();
-    entity.x = 250;
+    entity.set = 250;
     entity.y = 250;
     Uint32 pixels[SCREEN_WIDTH * SCREEN_HEIGHT] = {0};
     entity.texture = loadTexture(pixels, entity.x, entity.y);
@@ -162,22 +160,17 @@ int main(int argc, char *argv[]) {
         prepareScene();
         doInput();
         
-        if (app.up)
+        if (tela.getCima())
 		{
 			entity.y -= 4;
 		}
 
-		if (app.down)
+		if (tela.getBaixo())
 		{
 			entity.y += 4;
 		}
 
-		if (app.left)
-		{
-			entity.x -= 4;
-		}
-
-		if (app.right)
+		if (tela.getDireita())
 		{
 			entity.x += 4;
 		}
