@@ -12,8 +12,8 @@ namespace models {
             int esquerda;
             int direita;
     public:
-            int getCima() {
-                return cima;
+    int getCima() {
+        return cima;
     }
     int getBaixo() {
         return baixo;

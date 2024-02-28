@@ -1,6 +1,7 @@
 #define SCREEN_WIDTH   1280
 #define SCREEN_HEIGHT  720
 #include <"Tela.h">
+#include <"Heroi.h">
 
 
 
@@ -151,10 +152,10 @@ int main(int argc, char *argv[]) {
     memset(&tela, 0, sizeof(Tela));
     memset(&heroi, 0, sizeof(Heroi));
     initSDL();
-    entity.set = 250;
-    entity.y = 250;
+    heroi.setPosicaoX = 250;
+    heroi.setPosicaoY = 250;
     Uint32 pixels[SCREEN_WIDTH * SCREEN_HEIGHT] = {0};
-    entity.texture = loadTexture(pixels, entity.x, entity.y);
+    heroi.texturaSet = loadTexture(pixels, heroi.setPosicaoX, heroi.setPosicaoY);
     atexit(cleanup);
     while (1) {
         prepareScene();
@@ -162,17 +163,17 @@ int main(int argc, char *argv[]) {
         
         if (tela.getCima())
 		{
-			entity.y -= 4;
+			heroi.setPosicaoY -= 4;
 		}
 
 		if (tela.getBaixo())
 		{
-			entity.y += 4;
+			heroi.setPosicaoY += 4;
 		}
 
 		if (tela.getDireita())
 		{
-			entity.x += 4;
+			heroi.setPosicaoX += 4;
 		}
         
         blit(entity.texture, entity.x, entity.y);
