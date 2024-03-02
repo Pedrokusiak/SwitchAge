@@ -148,7 +148,7 @@ void cleanup() {
 int main(int argc, char *argv[]) {
     Tela tela;
     Heroi heroi;
-
+    MovimentacaoController movimentacaoController;
     memset(&tela, 0, sizeof(Tela));
     memset(&heroi, 0, sizeof(Heroi));
     initSDL();
@@ -156,27 +156,14 @@ int main(int argc, char *argv[]) {
     heroi.setPosicaoY = 250;
     Uint32 pixels[SCREEN_WIDTH * SCREEN_HEIGHT] = {0};
     heroi.texturaSet = loadTexture(pixels, heroi.setPosicaoX, heroi.setPosicaoY);
+    
     atexit(cleanup);
     while (1) {
         prepareScene();
         doInput();
-        
-        if (tela.getCima())
-		{
-			heroi.setPosicaoY -= 4;
-		}
-
-		if (tela.getBaixo())
-		{
-			heroi.setPosicaoY += 4;
-		}
-
-		if (tela.getDireita())
-		{
-			heroi.setPosicaoX += 4;
-		}
-        
-        blit(entity.texture, entity.x, entity.y);
+        int direcao = movimentacaoController.getDirecao();
+        movimentacaoController.movimentaObjeto(heroi,direcao,4);
+        blit(heroi.texture, heroi.get, heroi.y);
         presentScene();
         SDL_Delay(16);
     }

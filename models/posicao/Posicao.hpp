@@ -3,16 +3,16 @@
 
 namespace models {
     namespace posicao {
-class Posicao {
-private:
-    int posicaoX = 0;
-    int posicaoY = 0;
-public:
-    int getPosicaoX();
-    int getPosicaoY();
-    void setPosicaoX(int posicaoXSet);
-    void setPosicaoY(int posicaoYSet);
-};
+        class Posicao {
+            private:
+                int posicaoX = 0;
+                int posicaoY = 0;
+            public:
+                int getPosicaoX();
+                int getPosicaoY();
+                void setPosicaoX(int posicaoXSet);
+                void setPosicaoY(int posicaoYSet);
+        };
     }
 }
 

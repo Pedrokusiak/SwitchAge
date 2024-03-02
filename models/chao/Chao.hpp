@@ -4,14 +4,15 @@
 #include "Posicao.hpp" 
 #include <SDL.h> 
 
+
 namespace models {
     namespace  chao {
-           class Chao : public Posicao {
+           class Chao {
     private:
         int aceleracao = 0;
     public:
       
-    };
+        };
     }
  
 } 

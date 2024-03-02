@@ -7,10 +7,9 @@
 namespace models {
     namespace heroi { 
 
-        class Heroi : public Posicao {
+        class Heroi {
         private: 
-            int aceleracao = 0;
-            SDL_Texture *textura; 
+            SDL_Texture *textura;
         public:
             int getAceleracao() {
                 return aceleracao;

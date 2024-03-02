@@ -1,16 +1,18 @@
 #ifndef TELA_HPP
 #define TELA_HPP
 #include <SDL.h>
+#include "TelaInterface";
+
 namespace models {
     namespace tela {
-        class Tela {
+        class TelaSDL : public TelaInterface {
         private:    
             SDL_Renderer *render;
             SDL_Window *janela;
-            int cima;
-            int baixo;
-            int esquerda;
-            int direita;
+            Heroi heroi;
+            Posicao posicaoHeroi;
+            Posicao posicaoChao;
+           
     public:
     int getCima() {
         return cima;
@@ -36,7 +38,13 @@ namespace models {
     void setDireita(int d) {
         direita = d;
     }
-};
+
+    Tela(SDL_Window* janela, SDL_Renderer* renderer) 
+        : janela(janela), renderer(renderer) {}
+
+    virtual void desenhar() override; 
+
+        };
     }
     
 }

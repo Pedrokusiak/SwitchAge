@@ -6,13 +6,15 @@
 
 namespace models {
     namespace  planoDeFundo {
-           class PlanoDeFundo : public Posicao {
+           class PlanoDeFundo  {
     private:
+        Posicao posicao;
         int aceleracao = 0;
-
     public:
       
-    };
+        
+
+        };
     }
  
 } 

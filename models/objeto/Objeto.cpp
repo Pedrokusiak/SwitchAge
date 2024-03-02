@@ -4,16 +4,15 @@
 #include "Posicao.hpp" 
 
 namespace models {
-    namespace obstaculo {
-         class Obstaculo  {
+    namespace objeto {
+         class Objeto   {
     private:
         Posicao posicao;
     public:
     
-
-        };
+    };
     }
    
 } 
 
-#endif 
+#endif // Objeto

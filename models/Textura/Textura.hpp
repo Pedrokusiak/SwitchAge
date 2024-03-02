@@ -5,7 +5,7 @@
 #include <SDL.h> 
 
 namespace models {
-    class Textura : public Posicao {
+    class Textura {
     private:
         SDL_Texture *textura; 
     public:
@@ -15,5 +15,3 @@ namespace models {
 } 
 
 #endif 
-
-
