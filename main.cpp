@@ -3,18 +3,6 @@
 #include <"Tela.h">
 #include <"Heroi.h">
 
-
-
-
-typedef struct {
-    int x;
-    int y;
-    SDL_Texture *texture;
-} Entity;
-
-App app;
-Entity entity;
-
 SDL_Texture *loadTexture(void *pixels, int width, int height) {
     SDL_Texture *texture = SDL_CreateTexture(app.renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC, width, height);
     if (!texture) {
