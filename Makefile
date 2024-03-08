@@ -1,34 +1,27 @@
-CXX = g++
 CXXFLAGS = -std=c++11 -Wall
 LDFLAGS = -lSDL2
-
-EXEC = meu_programa
 
 SRCDIR = src
 BUILDDIR = build
 TARGETDIR = bin
 
-SRCS = main.cpp \
-       controller/implentacaoController/TelaController.cpp \
-       models/implentacao/Tela.cpp \
-       controller/implentacaoController/RenderizadorController.cpp
+SRCS = src/main.cpp src/controller/implentacaoController/TelaController.cpp src/models/implentacao/Tela.cpp src/controller/implentacaoController/RenderizadorController.cpp
+OBJS = $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SRCS))
 
-OBJS = $(SRCS:%.cpp=$(BUILDDIR)/%.o)
+EXEC = bin/SwitchAge
 
-all: $(TARGETDIR)/$(EXEC)
+all: directories $(EXEC)
 
-$(TARGETDIR)/$(EXEC): $(OBJS) | directories
-    $(CXX) $(LDFLAGS) $^ -o $@
+$(EXEC): $(OBJS)
+    g++ $(LDFLAGS) $^ -o $@
 
-$(BUILDDIR)/%.o: %.cpp | directories
-    $(CXX) $(CXXFLAGS) -c $< -o $@
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
+    g++ $(CXXFLAGS) -c $< -o $@
 
 clean:
-    $(RM) -r $(BUILDDIR)/* $(TARGETDIR)/*
+    rm -r $(BUILDDIR)/* $(TARGETDIR)/*
 
-# Regra para criar diretórios necessários
 directories:
-    @mkdir -p $(BUILDDIR) $(TARGETDIR)
+    mkdir -p $(BUILDDIR) $(TARGETDIR)
 
-# Define as regras que não geram arquivos de saída
 .PHONY: all clean directories
