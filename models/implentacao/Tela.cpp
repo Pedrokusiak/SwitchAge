@@ -1,11 +1,10 @@
 #include <iostream>
+#include "TelaInterface.h"
 namespace models{
     namespace tela{
-        class Tela: public TelaSDL {
+        class Tela: public TelaInterface {
 
         private:
-            SDL_Renderer *render;
-            SDL_Window *janela;
         public:
             int getCima(){
                 return cima;
@@ -25,11 +24,6 @@ namespace models{
             void setDireita(d){
                 direita = d;
             }
-        void desenhar() override {
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-            SDL_RenderClear(renderer);
-            SDL_RenderPresent(renderer);
-        }
         }
     }
 }

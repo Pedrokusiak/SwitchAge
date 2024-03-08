@@ -1,12 +1,36 @@
+#include <iostream>
+#include <SDL.h>
+#include "Renderizador.h"
+#include "TelaControllerInterface.h"
+
 class TelaController : public TelaControllerInterface{
     private:
     Tela* tela;
-    RenderizadorController* renderizador;
+    RenderizadorController* renderizador;      
 
-    
     public:
     TelaController(Tela* tela, RenderizadorController* renderizador) : tela(tela, renderizador) {}
-    virtual ~TelaController() {}
+    virtual ~TelaController() {
+        int rendererFlags, windowFlags;
+        rendererFlags = SDL_RENDERER_ACCELERATED;
+        windowFlags = 0;
+        
+        if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+            printf("Couldn't initialize SDL: %s\n", SDL_GetError());
+            exit(1);
+        }
+        renderizador.janela = SDL_CreateWindow("Shooter 01", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, windowFlags);
+        if (!tela.window) {
+            printf("Failed to open %d x %d window: %s\n", SCREEN_WIDTH, SCREEN_HEIGHT, SDL_GetError());
+            exit(1);
+        }
+        SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+        renderizador.renderer = SDL_CreateRenderer(renderizador.janela, -1, rendererFlags);
+        if (!renderizador.renderer) {
+            printf("Failed to create renderer: %s\n", SDL_GetError());
+            exit(1);
+        }
+    }
     
     
 
