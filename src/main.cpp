@@ -2,9 +2,8 @@
 #define SCREEN_HEIGHT  720
 
 #include <iostream>
-#include <SDL.h>
-#include "TelaControllerInterface.h"
-#include "RenderizadorController.h"
+#include "controller/TelaControllerInterface.hpp"
+#include "controller/RenderizadorControllerInterface.hpp"
 
 SDL_Texture *loadTexture(void *pixels, int width, int height) {
     SDL_Texture *texture = SDL_CreateTexture(app.renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC, width, height);

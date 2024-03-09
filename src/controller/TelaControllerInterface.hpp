@@ -1,13 +1,20 @@
+#ifndef TELACONTROLLERINTERFACE_H
+#define TELACONTROLLERINTERFACE_H
+
+#include "../models/TelaInterface.hpp"
+
 class TelaControllerInterface{
     private:
-        Tela* tela
+        TelaInterface* tela;
     public:
         virtual void processarEventos() = 0;
-        void setTela(Tela* tela){
+        void setTela(TelaInterface* tela){
             this->tela = tela;
         };
-        Tela* getTela(){
+        TelaInterface* getTela(){
             return tela;
         }
     
 } 
+
+#endif 

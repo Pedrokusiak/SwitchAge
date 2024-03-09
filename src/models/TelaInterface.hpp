@@ -1,3 +1,5 @@
+#ifndef TELAINTERFACE_H
+#define TELAINTERFACE_H
 
 
 class TelaInterface {
@@ -9,5 +11,5 @@ class TelaInterface {
         int baixo;
         int esquerda;
         int direita;
-    };
-
+    }
+#endif 
