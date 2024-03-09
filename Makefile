@@ -1,27 +1,25 @@
 CXXFLAGS = -std=c++11 -Wall
 LDFLAGS = -lSDL2
 
-SRCDIR = src
-BUILDDIR = build
-TARGETDIR = bin
+all: directories bin/meu_programa
 
-SRCS = src/main.cpp src/controller/implentacaoController/TelaController.cpp src/models/implentacao/Tela.cpp src/controller/implentacaoController/RenderizadorController.cpp
-OBJS = $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SRCS))
+bin/meu_programa: build/main.o build/TelaController.o build/Tela.o build/RenderizadorController.o
+	g++ $^ -o $@ $(LDFLAGS)
 
-EXEC = bin/SwitchAge
+build/main.o: src/main.cpp | directories
+	g++ $(CXXFLAGS) -c $< -o $@
 
-all: directories $(EXEC)
+build/TelaController.o: src/controller/implentacaoController/TelaController.cpp | directories
+	g++ $(CXXFLAGS) -c $< -o $@
 
-$(EXEC): $(OBJS)
-    g++ $(LDFLAGS) $^ -o $@
+build/Tela.o: src/models/implentacao/Tela.cpp | directories
+	g++ $(CXXFLAGS) -c $< -o $@
 
-$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
-    g++ $(CXXFLAGS) -c $< -o $@
+build/RenderizadorController.o: src/controller/implentacaoController/RenderizadorController.cpp | directories
+	g++ $(CXXFLAGS) -c $< -o $@
 
 clean:
-    rm -r $(BUILDDIR)/* $(TARGETDIR)/*
+	rm -r build/* bin/*
 
 directories:
-    mkdir -p $(BUILDDIR) $(TARGETDIR)
-
-.PHONY: all clean directories
+	mkdir -p build bin
