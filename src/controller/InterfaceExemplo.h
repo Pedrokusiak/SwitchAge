@@ -1,4 +1,4 @@
-lass InterfaceExemplo{
+class InterfaceExemplo{
     public:
         virtual void teclaParaCima(){
             jogo->teclaParaCima(); 

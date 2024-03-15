@@ -1,7 +1,5 @@
 #include <iostream>
-#include <SDL.h>
-#include "Renderizador.h"
-#include "RenderizadorControllerInterface.h"
+#include "controller/RenderizadorControllerInterface.h"
 
 class RenderizadorController : public RenderizadorControllerInterface {
 private:

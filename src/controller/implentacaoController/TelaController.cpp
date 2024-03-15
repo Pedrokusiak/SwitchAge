@@ -1,7 +1,6 @@
 #include <iostream>
-#include <SDL.h>
-#include "Renderizador.h"
-#include "TelaControllerInterface.h"
+#include "src/controller/implentacaoController/RenderizadorController.cpp"
+#include "src/controller/TelaControllerInterface.hpp"
 
 class TelaController : public TelaControllerInterface{
     private:
@@ -48,3 +47,5 @@ class TelaController : public TelaControllerInterface{
         renderizador->copiarBlocoPixel();
     }
 }
+
+TelaController:: 

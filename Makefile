@@ -1,4 +1,4 @@
-CXXFLAGS = -std=c++11 -Wall
+CXXFLAGS = -std=c++11 -Wall -I/usr/include/SDL2
 LDFLAGS = -lSDL2
 
 all: directories bin/meu_programa
@@ -23,4 +23,6 @@ clean:
 
 directories:
 	mkdir -p build bin
+	
+.PHONY: clean all
 
