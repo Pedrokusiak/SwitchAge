@@ -15,6 +15,6 @@ class TelaControllerInterface{
             return tela;
         }
     
-} 
+};
 
 #endif 

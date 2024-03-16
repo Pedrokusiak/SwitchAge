@@ -1,15 +1,16 @@
 #include <iostream>
-#include <SDL.h>
-#include "Renderizador.h"
-#include "TelaControllerInterface.h"
+#include "../RenderizadorControllerInterface.hpp"
+#include "../TelaControllerInterface.hpp"
+#include "SDL.h"
+#include "../../models/TelaInterface.hpp"
 
 class TelaController : public TelaControllerInterface{
     private:
-    Tela* tela;
-    RenderizadorController* renderizador;      
+    TelaInterface* tela;
+    RenderizadorControllerInterface* renderizador;      
 
     public:
-    TelaController(Tela* tela, RenderizadorController* renderizador) : tela(tela, renderizador) {}
+    TelaController(TelaInterface* tela, RenderizadorControllerInterface* renderizador) : tela(tela, renderizador) {}
     virtual ~TelaController() {
         int rendererFlags, windowFlags;
         rendererFlags = SDL_RENDERER_ACCELERATED;
@@ -34,17 +35,19 @@ class TelaController : public TelaControllerInterface{
     
     
 
-    void processarEventos() override {
+    void processarEventos() {
         std::cout << "Tela Controller: Processando eventos." << std::endl;
     }
 
-    void preparaCenario() override {
+    void preparaCenario() {
         std::cout << "Tela Controller: Preparando Cenario." << std::endl;
         renderizador->preparaCenario();
     }
 
-    void copiarBlocoPixel() override {
+    void copiarBlocoPixel() {
         std::cout << "Tela Controller: copiarBlocoPixel." << std::endl;
         renderizador->copiarBlocoPixel();
     }
 }
+
+TelaController:: 

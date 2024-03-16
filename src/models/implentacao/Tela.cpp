@@ -1,11 +1,14 @@
 #include <iostream>
-#include "models/TelaInterface.h"
-namespace models{
-    namespace tela{
+#include "../TelaInterface.hpp"
+
         class Tela: public TelaInterface {
 
         private:
+        	
         public:
+           void desenhar() override {
+           	
+           }
             int getCima(){
                 return cima;
             }
@@ -15,17 +18,15 @@ namespace models{
             int getDireita(){
                 return direita;
             }
-            void setCima(c){
-                cima = c;
+            void setCima(int c){
+                this->cima = c;
             }
-            void setBaixo(b){
-                baixo= b;
+            void setBaixo(int b){
+                this->baixo= b;
             }
-            void setDireita(d){
-                direita = d;
+            void setDireita(int d){
+                this->direita = d;
             }
-        }
-    }
-}
+        };
 
 

@@ -11,5 +11,5 @@ class TelaInterface {
         int baixo;
         int esquerda;
         int direita;
-    }
+    };
 #endif 

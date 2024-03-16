@@ -1,7 +1,6 @@
 #include <iostream>
-#include <SDL.h>
-#include "Renderizador.h"
-#include "RenderizadorControllerInterface.h"
+#include "SDL.h"
+#include "../RenderizadorControllerInterface.hpp"
 
 class RenderizadorController : public RenderizadorControllerInterface {
 private:
@@ -18,12 +17,12 @@ public:
         SDL_RenderCopy(renderer, sdlTexture, NULL, &dest);
     }
 
-    void preparaCenario(){
+    void preparaCenario() override {
         SDL_SetRenderDrawColor(renderer, 96, 128, 255, 255);
         SDL_RenderClear(renderer);
     }
 
-    void cenaPresente(){
+    void cenaPresente() override {
         SDL_RenderPresent(renderer);
     }
 };
