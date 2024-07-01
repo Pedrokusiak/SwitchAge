@@ -10,6 +10,8 @@ public:
 
 private:
     RendererPort* renderer;
+    const int FPS = 60;
+    const int frameDelay = 1000 / FPS;
 };
 
 #endif
