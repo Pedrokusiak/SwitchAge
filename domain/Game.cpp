@@ -2,7 +2,7 @@
 #include "domain/Game.h"
 #include <adapters/SDL/SDLRendererAdapter.h>
 
-Game::Game(RendererPort *renderer) : renderer(renderer), player(50, 50, 50, 50) {}
+Game::Game(RendererPort *renderer) : renderer(renderer), player(Position(50,50) ,50, 50) {}
 
 void Game::run()
 {

@@ -2,8 +2,8 @@
 
 const int PLAYER_VEL = 5;
 
-Player::Player(int x, int y, int width, int height)
-    : posX(x), posY(y), width(width), height(height), velX(0), velY(0), onGround(false) {}
+Player::Player(Position pos, int width, int height)
+    : position(pos), velX(0), velY(0), width(width), height(height), onGround(false) {}
 
 void Player::handleEvent(SDL_Event& e) {
     if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
@@ -26,17 +26,26 @@ void Player::handleEvent(SDL_Event& e) {
 }
 
 void Player::move() {
-    posX += velX;
-    if (posX < 0 || posX + width > 800) {
-        posX -= velX;
+    // Atualiza a posição horizontal
+    position.setPositionX(position.getPositionX() + velX);
+
+    // Checa os limites da tela para a posição horizontal
+    if (position.getPositionX() < 0 || position.getPositionX() + width > 800) {
+        position.setPositionX(position.getPositionX() - velX);
     }
+
+    // Aplica gravidade
     velY += GRAVITY;
     if (velY > MAX_FALL_SPEED) {
         velY = MAX_FALL_SPEED;
     }
-    posY += velY;
-    if (posY + height > 600) {
-        posY = 600 - height;
+
+    // Atualiza a posição vertical
+    position.setPositionY(position.getPositionY() + velY);
+
+    // Checa os limites da tela para a posição vertical
+    if (position.getPositionY() + height > 600) {
+        position.setPositionY(600 - height);
         velY = 0;
         onGround = true;
     } else {
@@ -44,6 +53,7 @@ void Player::move() {
     }
 }
 
+
 void Player::render(RendererPort* renderer) {
-     renderer->drawPlayer(posX, posY, width, height, 0xFF, 0x00, 0x00, 0xFF);
+     renderer->drawPlayer(position.getPositionX(), position.getPositionY(), width, height, 0xFF, 0x00, 0x00, 0xFF);
 }
