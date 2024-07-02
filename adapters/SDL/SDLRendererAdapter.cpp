@@ -17,3 +17,13 @@ void SDLRendererAdapter::draw() const {
     SDL_RenderClear(renderer);
     SDL_RenderPresent(renderer);
 }
+
+void SDLRendererAdapter::drawPlayer(int x, int y, int width, int height, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, a);
+    SDL_Rect rect = { x, y, width, height };
+    SDL_RenderFillRect(renderer, &rect);
+}
+
+SDL_Renderer* SDLRendererAdapter::getRenderer() const {
+    return renderer;
+}

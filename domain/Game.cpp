@@ -1,36 +1,46 @@
 #include <SDL2/SDL.h>
 #include "domain/Game.h"
+#include <adapters/SDL/SDLRendererAdapter.h>
 
-Game::Game(RendererPort* renderer) : renderer(renderer) {}
+Game::Game(RendererPort *renderer) : renderer(renderer), player(50, 50, 50, 50) {}
 
-void Game::run() {
-    bool running = true;
-    SDL_Event event;
-
-    while (running) {
+void Game::run()
+{
     bool running = true;
     SDL_Event event;
     Uint32 frameStart;
     int frameTime;
+    const int FPS = 60;
+    const int frameDelay = 1000 / FPS;
 
-    while (running) {
+    while (running)
+    {
         frameStart = SDL_GetTicks();
 
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
+        while (SDL_PollEvent(&event))
+        {
+            if (event.type == SDL_QUIT)
+            {
                 running = false;
             }
+            player.handleEvent(event);
         }
 
-        renderer->draw();
+        player.move();
 
-        // Calcular o tempo gasto em milissegundos
+        renderer->draw(); // Desenha o fundo
+
+        player.render(renderer); // Renderiza o jogador
+
+        SDL_RenderPresent(static_cast<SDLRendererAdapter*>(renderer)->getRenderer()); // Atualiza a tela com o renderizador SDL
+
         frameTime = SDL_GetTicks() - frameStart;
 
-        // Se o frame processar mais rápido que o tempo desejado por frame, adiciona um atraso
-        if (frameDelay > frameTime) {
+        if (frameDelay > frameTime)
+        {
             SDL_Delay(frameDelay - frameTime);
         }
     }
-    }
+
+    SDL_Quit();
 }
