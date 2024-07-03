@@ -10,6 +10,7 @@ public:
     ~SDLRendererAdapter();
     void draw() const;
     void drawPlayer(int x, int y, int width, int height, Uint8 r, Uint8 g, Uint8 b, Uint8 a) override;
+    void drawRect(int x, int y, int width, int height, Uint8 r, Uint8 g, Uint8 b, Uint8 a) override;
     SDL_Renderer* getRenderer() const;
 
 private:

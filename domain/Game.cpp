@@ -1,8 +1,13 @@
 #include <SDL2/SDL.h>
 #include "domain/Game.h"
 #include <adapters/SDL/SDLRendererAdapter.h>
+#include "PlayerPhysics.h" 
 
-Game::Game(RendererPort *renderer) : renderer(renderer), player(Position(50,50) ,50, 50) {}
+Game::Game(RendererPort *renderer)
+    : renderer(renderer),
+      playerPhysics(1, 10, -15),  // Inicializando PlayerPhysics com parâmetros adequados
+      player(Position(50, 50), 50, 50, &playerPhysics)  // Passando a instância de PlayerPhysics
+{}
 
 void Game::run()
 {

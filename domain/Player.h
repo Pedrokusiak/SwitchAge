@@ -3,17 +3,19 @@
 
 #include <SDL2/SDL.h>
 #include "ports/RendererPort.h"
-#include "Position.h"  // Inclua o cabeçalho Position
+#include "Position.h"
+#include "Physics.h"  // Inclua o cabeçalho Position
 
 class Player {
 public:
-    Player(Position position, int width, int height);
-    void handleEvent(SDL_Event& e);
+    Player(Position pos, int width, int height, Physics *physicsComponent);
+    void handleEvent(SDL_Event &e);
     void move();
     void render(RendererPort* renderer);
 
 private:
     Position position;  // Use a classe Position para gerenciar a posição
+    Physics* physicsComponent; 
     int velX, velY;
     int width, height;
     bool onGround;
