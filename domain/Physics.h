@@ -1,12 +1,14 @@
-#ifndef PHYSICSCOMPONENT_H
-#define PHYSICSCOMPONENT_H
+#ifndef PHYSICSCOMPONENT_HPP
+#define PHYSICSCOMPONENT_HPP
 
-#include "Position.h"
+#include "Vector2D.h"
+#include "GroundSegment.h"
+#include <vector>
 
 class Physics {
 public:
     virtual ~Physics() = default;
-    virtual void applyPhysics(Position& position, int& velX, int& velY, bool& onGround, int width, int height) = 0;
+    virtual void applyPhysics(Vector2D& position, Vector2D& velocity, bool& onGround, const Vector2D& size, const std::vector<GroundSegment>& groundSegments) = 0;
 };
 
 #endif // PHYSICSCOMPONENT_HPP

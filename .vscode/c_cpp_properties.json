@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/src/include",
-                "${workspaceFolder}/ports"
+                "${workspaceFolder}/ports",
+                "${workspaceFolder}/adapters/SDL"
             ],
             "defines": [
                 "_DEBUG",

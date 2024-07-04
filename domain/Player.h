@@ -3,26 +3,26 @@
 
 #include <SDL2/SDL.h>
 #include "ports/RendererPort.h"
-#include "Position.h"
-#include "Physics.h"  // Inclua o cabeçalho Position
+#include "Vector2D.h"
+#include "Physics.h"
+#include "GroundSegment.h"
+#include <vector>
+#include <ports/EventPort.h>
 
 class Player {
 public:
-    Player(Position pos, int width, int height, Physics *physicsComponent);
-    void handleEvent(SDL_Event &e);
-    void move();
-    void render(RendererPort* renderer);
+    Player(Vector2D position, Vector2D size, Physics* physicsComponent);
+    void handleEvent(EventPort* e);
+    void move(const std::vector<GroundSegment>& groundSegments);
+    void render(RendererPort* renderer) const;
 
 private:
-    Position position;  // Use a classe Position para gerenciar a posição
-    Physics* physicsComponent; 
-    int velX, velY;
-    int width, height;
+    Vector2D position;
+    Vector2D size;
+    Physics* physicsComponent;
+    std::vector<GroundSegment> groundSegments; // Certifique-se de declarar aqui
+    Vector2D velocity;
     bool onGround;
-
-    const int GRAVITY = 1;
-    const int MAX_FALL_SPEED = 10;
-    const int JUMP_FORCE = -15;
 };
 
 #endif // PLAYER_H

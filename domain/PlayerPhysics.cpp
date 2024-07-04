@@ -1,32 +1,24 @@
 #include "PlayerPhysics.h"
+#include "GroundSegment.h"
 
-PlayerPhysics::PlayerPhysics(int gravity, int maxFallSpeed, int jumpForce)
+PlayerPhysics::PlayerPhysics(float gravity, float maxFallSpeed, float jumpForce)
     : gravity(gravity), maxFallSpeed(maxFallSpeed), jumpForce(jumpForce) {}
 
-void PlayerPhysics::applyPhysics(Position& position, int& velX, int& velY, bool& onGround, int width, int height) {
-    // Atualiza a posição horizontal
-    position.setPositionX(position.getPositionX() + velX);
-
-    // Checa os limites da tela para a posição horizontal
-    if (position.getPositionX() < 0 || position.getPositionX() + width > 800) {
-        position.setPositionX(position.getPositionX() - velX);
+void PlayerPhysics::applyPhysics(Vector2D& position, Vector2D& velocity, bool& onGround, const Vector2D& size, const std::vector<GroundSegment>& groundSegments) {
+    velocity.y += gravity;
+    if (velocity.y > maxFallSpeed) {
+        velocity.y = maxFallSpeed;
     }
-
-    // Aplica gravidade
-    velY += gravity;
-    if (velY > maxFallSpeed) {
-        velY = maxFallSpeed;
-    }
-
-    // Atualiza a posição vertical
-    position.setPositionY(position.getPositionY() + velY);
-
-    // Checa os limites da tela para a posição vertical
-    if (position.getPositionY() + height > 600) {
-        position.setPositionY(600 - height);
-        velY = 0;
-        onGround = true;
-    } else {
-        onGround = false;
+    position += velocity;
+    onGround = false;
+    for (const auto& segment : groundSegments) {
+        if (position.y + size.y > segment.getPosition().y &&
+            position.x < segment.getPosition().x + segment.getWidth() &&
+            position.x + size.x > segment.getPosition().x) {
+            position.y = segment.getPosition().y - size.y;
+            velocity.y = 0;
+            onGround = true;
+            break;
+        }
     }
 }

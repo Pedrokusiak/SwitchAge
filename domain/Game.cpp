@@ -1,48 +1,47 @@
-#include <SDL2/SDL.h>
-#include "domain/Game.h"
+#include "Game.h"
+#include <adapters/SDL/SDLEventAdapter.h>
 #include <adapters/SDL/SDLRendererAdapter.h>
-#include "PlayerPhysics.h" 
 
 Game::Game(RendererPort *renderer)
     : renderer(renderer),
-      playerPhysics(1, 10, -15),  // Inicializando PlayerPhysics com parâmetros adequados
-      player(Position(50, 50), 50, 50, &playerPhysics)  // Passando a instância de PlayerPhysics
-{}
+      playerPhysics(0.5f, 10.0f, 15.0f),
+      player(Vector2D(50, 50), Vector2D(50, 50), &playerPhysics) {
+    // Inicializa segmentos do chão
+    groundSegments.push_back(GroundSegment(Vector2D(0, 580), 800, 20));
+    // Adicione mais segmentos conforme necessário
+}
 
-void Game::run()
-{
+void Game::run() {
     bool running = true;
-    SDL_Event event;
     Uint32 frameStart;
     int frameTime;
     const int FPS = 60;
     const int frameDelay = 1000 / FPS;
 
-    while (running)
-    {
+    while (running) {
         frameStart = SDL_GetTicks();
 
-        while (SDL_PollEvent(&event))
-        {
-            if (event.type == SDL_QUIT)
-            {
+        while (eventAdapter.pollEvent()) {
+            if (eventAdapter.isQuitEvent()) {
                 running = false;
             }
-            player.handleEvent(event);
+            player.handleEvent(&eventAdapter); // Passa o adaptador de evento para o jogador
         }
 
-        player.move();
+        player.move(groundSegments);  // Passa os segmentos do chão para verificar a colisão
 
         renderer->draw(); // Desenha o fundo
 
         player.render(renderer); // Renderiza o jogador
+        for (const auto& segment : groundSegments) {
+            segment.render(renderer); // Renderiza cada segmento do chão
+        }
 
         SDL_RenderPresent(static_cast<SDLRendererAdapter*>(renderer)->getRenderer()); // Atualiza a tela com o renderizador SDL
 
         frameTime = SDL_GetTicks() - frameStart;
 
-        if (frameDelay > frameTime)
-        {
+        if (frameDelay > frameTime) {
             SDL_Delay(frameDelay - frameTime);
         }
     }

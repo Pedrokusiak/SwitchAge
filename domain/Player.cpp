@@ -1,36 +1,33 @@
-#include "domain/Player.h"
 #include "Player.h"
-#include "Physics.h"
+#include "GroundSegment.h"
 
-const int PLAYER_VEL = 5;
+const float PLAYER_ACC = 0.5f;
+const float PLAYER_FRICTION = 0.1f;
+const float PLAYER_JUMP_FORCE = 15.0f;
 
-Player::Player(Position pos, int width, int height, Physics* physicsComponent)
-    : position(pos), width(width), height(height), physicsComponent(physicsComponent), velX(0), velY(0), onGround(false) {}
+Player::Player(Vector2D pos, Vector2D size, Physics* physicsComponent)
+    : position(pos), size(size), physicsComponent(physicsComponent), velocity(0, 0), onGround(false) {}
 
-void Player::handleEvent(SDL_Event& e) {
-    if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
-        switch (e.key.keysym.sym) {
-            case SDLK_LEFT: velX -= PLAYER_VEL; break;
-            case SDLK_RIGHT: velX += PLAYER_VEL; break;
+void Player::handleEvent(EventPort* event) { // Atualizado para usar EventPort
+    if (event->isKeyDownEvent()) {
+        switch (event->getKey()) {
+            case SDLK_LEFT: velocity.x -= PLAYER_ACC; break;
+            case SDLK_RIGHT: velocity.x += PLAYER_ACC; break;
             case SDLK_UP:
                 if (onGround) {
-                    velY = -15;  // Usando o valor fixo para o salto
+                    velocity.y = -PLAYER_JUMP_FORCE;
                     onGround = false;
                 }
                 break;
         }
-    } else if (e.type == SDL_KEYUP && e.key.repeat == 0) {
-        switch (e.key.keysym.sym) {
-            case SDLK_LEFT: velX += PLAYER_VEL; break;
-            case SDLK_RIGHT: velX -= PLAYER_VEL; break;
-        }
     }
 }
 
-void Player::move() {
-    physicsComponent->applyPhysics(position, velX, velY, onGround, width, height);
+
+void Player::move(const std::vector<GroundSegment>& groundSegments) {
+    physicsComponent->applyPhysics(position, velocity, onGround, size, groundSegments);
 }
 
-void Player::render(RendererPort* renderer) {
-    renderer-> drawPlayer(position.getPositionX(), position.getPositionY(), width, height, 0xFF, 0x00, 0x00, 0xFF);
+void Player::render(RendererPort* renderer) const {
+    renderer->drawPlayer(position.x, position.y, size.x, size.y, 0xFF, 0x00, 0x00, 0xFF);
 }

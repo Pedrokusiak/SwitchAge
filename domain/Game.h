@@ -1,22 +1,24 @@
 #ifndef GAME_H
 #define GAME_H
-#include <memory>
-#include "ports/RendererPort.h"
+
 #include "Player.h"
-#include "PlayerPhysics.h" 
+#include "GroundSegment.h"
+#include "ports/RendererPort.h"
+#include "PlayerPhysics.h"
+#include <vector>
+#include <adapters/SDL/SDLEventAdapter.h>
 
 class Game {
 public:
-    Game(RendererPort* renderer);
+    Game(RendererPort *renderer);
     void run();
 
 private:
-    RendererPort* renderer;
+    RendererPort *renderer;
     Player player;
+    std::vector<GroundSegment> groundSegments;
     PlayerPhysics playerPhysics;
-
-    const int FPS = 60;
-    const int frameDelay = 1000 / FPS;
+    SDLEventAdapter eventAdapter; 
 };
 
-#endif
+#endif // GAME_HPP

@@ -2,17 +2,18 @@
 #define PLAYERPHYSICS_HPP
 
 #include "Physics.h"
-#include <SDL2/SDL.h>
+#include "Vector2D.h"
+#include <vector>
 
 class PlayerPhysics : public Physics {
 public:
-    PlayerPhysics(int gravity, int maxFallSpeed, int jumpForce);
-    void applyPhysics(Position& position, int& velX, int& velY, bool& onGround, int width, int height) override;
+    PlayerPhysics(float gravity, float maxFallSpeed, float jumpForce);
+    void applyPhysics(Vector2D& position, Vector2D& velocity, bool& onGround, const Vector2D& size, const std::vector<GroundSegment>& groundSegments) override;
 
 private:
-    int gravity;
-    int maxFallSpeed;
-    int jumpForce;
+    float gravity;
+    float maxFallSpeed;
+    float jumpForce;
 };
 
 #endif // PLAYERPHYSICS_HPP
