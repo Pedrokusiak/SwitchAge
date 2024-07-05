@@ -24,6 +24,9 @@ void SDLRendererAdapter::drawPlayer(int x, int y, int width, int height, Uint8 r
     SDL_RenderFillRect(renderer, &rect);
 }
 
+void SDLRendererAdapter::present() const {
+    SDL_RenderPresent(renderer);
+}
 
 void SDLRendererAdapter::drawRect(int x, int y, int width, int height, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, a);

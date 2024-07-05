@@ -1,6 +1,9 @@
 #include "SDLEventAdapter.h"
 
+
 SDLEventAdapter::SDLEventAdapter() {}
+
+SDLEventAdapter::~SDLEventAdapter() {}
 
 bool SDLEventAdapter::pollEvent() {
     return SDL_PollEvent(&event);

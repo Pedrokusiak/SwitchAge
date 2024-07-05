@@ -2,10 +2,14 @@
 #include <adapters/SDL/SDLEventAdapter.h>
 #include <adapters/SDL/SDLRendererAdapter.h>
 
-Game::Game(RendererPort *renderer)
+Game::Game(RendererPort *renderer, EventPort *eventPort)
     : renderer(renderer),
-      playerPhysics(0.5f, 10.0f, 15.0f),
-      player(Vector2D(50, 50), Vector2D(50, 50), &playerPhysics) {
+    eventPort(eventPort),
+    playerPhysics(0.5f, 10.0f, 15.0f),
+    player(
+        Vector2D(50, 50), 
+        Vector2D(50, 50), 
+        &playerPhysics) {
     // Inicializa segmentos do chão
     groundSegments.push_back(GroundSegment(Vector2D(0, 580), 800, 20));
     // Adicione mais segmentos conforme necessário
@@ -21,11 +25,11 @@ void Game::run() {
     while (running) {
         frameStart = SDL_GetTicks();
 
-        while (eventAdapter.pollEvent()) {
-            if (eventAdapter.isQuitEvent()) {
+        while (eventPort -> pollEvent()) {
+            if (eventPort -> isQuitEvent()) {
                 running = false;
             }
-            player.handleEvent(&eventAdapter); // Passa o adaptador de evento para o jogador
+            player.handleEvent(eventPort); // Passa o adaptador de evento para o jogador
         }
 
         player.move(groundSegments);  // Passa os segmentos do chão para verificar a colisão
@@ -37,7 +41,8 @@ void Game::run() {
             segment.render(renderer); // Renderiza cada segmento do chão
         }
 
-        SDL_RenderPresent(static_cast<SDLRendererAdapter*>(renderer)->getRenderer()); // Atualiza a tela com o renderizador SDL
+        renderer->present(); 
+
 
         frameTime = SDL_GetTicks() - frameStart;
 

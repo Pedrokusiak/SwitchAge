@@ -7,6 +7,7 @@
 class SDLEventAdapter : public EventPort {
 public:
     SDLEventAdapter();
+    ~SDLEventAdapter();
     bool pollEvent() override;
     bool isQuitEvent() const override;
     bool isKeyDownEvent() const override;
