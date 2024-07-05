@@ -6,7 +6,8 @@
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/src/include",
                 "${workspaceFolder}/ports",
-                "${workspaceFolder}/adapters/SDL"
+                "${workspaceFolder}/adapters/SDL",
+                "${workspaceFolder}/domain"
             ],
             "defines": [
                 "_DEBUG",

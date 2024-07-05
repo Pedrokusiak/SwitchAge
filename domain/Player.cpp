@@ -12,6 +12,7 @@ void Player::handleEvent(EventPort* event) { // Atualizado para usar EventPort
     if (event->isKeyDownEvent()) {
         switch (event->getKey()) {
             case SDLK_LEFT: velocity.x -= PLAYER_ACC; break;
+            case SDLK_RIGHT: velocity.x += PLAYER_ACC; break;
             case SDLK_UP:
                 if (onGround) {
                     velocity.y = -PLAYER_JUMP_FORCE;

@@ -24,32 +24,23 @@ void Game::run() {
 
     while (running) {
         frameStart = SDL_GetTicks();
-
         while (eventPort -> pollEvent()) {
             if (eventPort -> isQuitEvent()) {
                 running = false;
             }
             player.handleEvent(eventPort); // Passa o adaptador de evento para o jogador
         }
-
         player.move(groundSegments);  // Passa os segmentos do chão para verificar a colisão
-
         renderer->draw(); // Desenha o fundo
-
         player.render(renderer); // Renderiza o jogador
         for (const auto& segment : groundSegments) {
             segment.render(renderer); // Renderiza cada segmento do chão
         }
-
         renderer->present(); 
-
-
         frameTime = SDL_GetTicks() - frameStart;
-
         if (frameDelay > frameTime) {
             SDL_Delay(frameDelay - frameTime);
         }
     }
-
-    SDL_Quit();
+    renderer -> quit();
 }
