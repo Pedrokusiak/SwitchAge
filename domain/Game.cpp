@@ -19,7 +19,7 @@ void Game::run() {
     bool running = true;
     Uint32 frameStart;
     int frameTime;
-    const int FPS = 60;
+    const int FPS = 45;
     const int frameDelay = 1000 / FPS;
 
     while (running) {
@@ -37,9 +37,9 @@ void Game::run() {
             segment.render(renderer); // Renderiza cada segmento do chão
         }
         renderer->present(); 
-        frameTime = SDL_GetTicks() - frameStart;
+        frameTime = (renderer -> getTicks()) - frameStart;
         if (frameDelay > frameTime) {
-            SDL_Delay(frameDelay - frameTime);
+            renderer -> delay(frameDelay - frameTime);
         }
     }
     renderer -> quit();
