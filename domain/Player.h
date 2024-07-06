@@ -8,19 +8,19 @@
 #include "GroundSegment.h"
 #include <vector>
 #include <ports/EventPort.h>
+#include "VisualElement.h"
 
-class Player {
+class Player : public VisualElement {
 public:
     Player(Vector2D position, Vector2D size, Physics* physicsComponent);
     void handleEvent(EventPort* e);
     void move(const std::vector<GroundSegment>& groundSegments);
-    void render(RendererPort* renderer) const;
+    void render(RendererPort* renderer) const override;
 
 private:
-    Vector2D position;
     Vector2D size;
     Physics* physicsComponent;
-    std::vector<GroundSegment> groundSegments; // Certifique-se de declarar aqui
+    std::vector<GroundSegment> groundSegments;
     Vector2D velocity;
     bool onGround;
 };

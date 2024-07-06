@@ -15,6 +15,4 @@ float GroundSegment::getHeight() const {
     return height;
 }
 
-Vector2D GroundSegment::getPosition() const {
-    return position;
-}
+

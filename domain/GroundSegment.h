@@ -3,18 +3,17 @@
 
 #include "Vector2D.h"
 #include "ports/RendererPort.h"
+#include "VisualElement.h"
 
-class GroundSegment {
+class GroundSegment : public VisualElement {
 public:
     GroundSegment(Vector2D position, float width, float height);
-    void render(RendererPort* renderer) const;
+    void render(RendererPort* renderer) const override;
     float getWidth() const;
     float getHeight() const;
-    Vector2D getPosition() const;
 
 private:
-    Vector2D position;
     float width, height;
 };
 
-#endif // GROUNDSEGMENT_HPP
+#endif // GROUNDSEGMENT_H
