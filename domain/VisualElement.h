@@ -6,13 +6,13 @@
 
 class VisualElement {
 public:
-    VisualElement(Vector2D pos);
+    VisualElement(Vector2D position);
     virtual ~VisualElement() = default;
 
     virtual void render(RendererPort* renderer) const = 0;
 
     Vector2D getPosition() const;
-    void setPosition(const Vector2D& pos);
+    void setPosition(const Vector2D& position);
 
 protected:
     Vector2D position;
