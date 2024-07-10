@@ -18,8 +18,9 @@ private:
     RendererPort *renderer;
     EventPort *eventPort;
     Player player;
+    PlayerPhysics playerPhysics;
     std::vector<GroundSegment> groundSegments;
-    PlayerPhysics playerPhysics;  
+     
 };
 
 #endif // GAME_HPP
