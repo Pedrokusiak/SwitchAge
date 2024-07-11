@@ -5,7 +5,7 @@
 #include "Vector2D.h"
 #include <vector>
 
-class PlayerPhysics : public Physics {
+class PlayerPhysics {
 public:
     PlayerPhysics(float gravity, float maxFallSpeed, float jumpForce);
     void applyPhysics(Vector2D& position, Vector2D& velocity, bool& onGround, const Vector2D& size, const std::vector<GroundSegment>& groundSegments) override;
