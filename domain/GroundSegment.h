@@ -14,6 +14,7 @@ public:
 
 private:
     float width, height;
+    
 };
 
 #endif // GROUNDSEGMENT_H
