@@ -18,7 +18,7 @@ private:
     RendererPort *renderer;
     EventPort *eventPort;
     Player player;
-    PlayerPhysics playerPhysics;
+    Physics physics;
     std::vector<GroundSegment> groundSegments;
      
 };

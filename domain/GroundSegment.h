@@ -3,18 +3,14 @@
 
 #include "Vector2D.h"
 #include "ports/RendererPort.h"
-#include "VisualElement.h"
+#include "ObjectGame.h"
 
-class GroundSegment : public VisualElement {
+class GroundSegment : public ObjectGame {
 public:
-    GroundSegment(Vector2D position, float width, float height);
+    GroundSegment(Vector2D position, Vector2D size);
     void render(RendererPort* renderer) const override;
     float getWidth() const;
     float getHeight() const;
-
-private:
-    float width, height;
-    
 };
 
 #endif // GROUNDSEGMENT_H

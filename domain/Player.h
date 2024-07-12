@@ -1,28 +1,23 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 
-#include <SDL2/SDL.h>
-#include "ports/RendererPort.h"
+#include "ObjectGame.h"
+#include "ports/EventPort.h"
 #include "Vector2D.h"
-#include "Physics.h"
-#include "GroundSegment.h"
+#include <memory>
 #include <vector>
-#include <ports/EventPort.h>
-#include "VisualElement.h"
+#include <SDLEventAdapter.h>
 
-class Player : public VisualElement {
+class Player : public ObjectGame {
 public:
-    Player(Vector2D position, Vector2D size, Physics* physicsComponent);
-    void handleEvent(EventPort* e);
-    void move(const std::vector<GroundSegment>& groundSegments);
+    Player(Vector2D pos, Vector2D size, Physics* physicsComponent);
+    void handleEvent(EventPort* event);
+    void update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects);
     void render(RendererPort* renderer) const override;
 
 private:
-    Vector2D size;
-    Physics* physicsComponent;
-    std::vector<GroundSegment> groundSegments;
     Vector2D velocity;
     bool onGround;
 };
 
-#endif // PLAYER_H
+#endif // PLAYER_HPP

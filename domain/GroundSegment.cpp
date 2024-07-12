@@ -1,19 +1,16 @@
 #include "GroundSegment.h"
-#include "VisualElement.h"
 
-GroundSegment::GroundSegment(Vector2D position, float width, float height)
-    : VisualElement(position), width(width), height(height) {}
+GroundSegment::GroundSegment(Vector2D position, Vector2D size)
+    : ObjectGame(position, size, nullptr) {} // O chão não precisa de física
 
 void GroundSegment::render(RendererPort* renderer) const {
-    renderer->drawRect(position.x, position.y, width, height, 0x00, 0xFF, 0x00, 0xFF);
+    renderer->drawRect(position.x, position.y, size.x, size.y, 0x00, 0xFF, 0x00, 0xFF);
 }
 
 float GroundSegment::getWidth() const {
-    return width;
+    return size.x;
 }
 
 float GroundSegment::getHeight() const {
-    return height;
+    return size.y;
 }
-
-

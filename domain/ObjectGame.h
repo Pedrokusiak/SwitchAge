@@ -1,26 +1,28 @@
-#ifndef OBJECTGAME_H
-#define OBJECTGAME_H
 
-#include <SDL2/SDL.h>
-#include "ports/RendererPort.h"
 #include "Vector2D.h"
 #include "Physics.h"
-#include "GroundSegment.h"
-#include <vector>
-#include <ports/EventPort.h>
+#include "Hitbox.h"
 #include "VisualElement.h"
+#include <vector>
+#include <memory>
 
 class ObjectGame : public VisualElement {
 public:
     ObjectGame(Vector2D position, Vector2D size, Physics* physicsComponent);
-    virtual void move(const std::vector<GroundSegment>& groundSegments, float deltaTime);
-    void render(RendererPort* renderer) const override;
+    virtual ~ObjectGame() = default;
 
-private:
+    virtual void update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects);
+    void applyPhysics(float deltaTime);
+    bool checkCollision(const ObjectGame& other) const;
+    void resolveCollision(ObjectGame& other);
+
+    const Hitbox& getHitbox() const;
+
+protected:
+    Vector2D position;
     Vector2D size;
     Physics* physicsComponent;
-    Vector2D velocity;
-
+    Hitbox hitbox;
 };
 
-#endif 
+#endif // GAMEOBJECT_HPP
