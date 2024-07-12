@@ -7,7 +7,7 @@
 
 class GroundSegment : public ObjectGame {
 public:
-    GroundSegment(Vector2D position, Vector2D size);
+    GroundSegment(Vector2D position, Vector2D size, Physics* py);
     void render(RendererPort* renderer) const override;
     float getWidth() const;
     float getHeight() const;

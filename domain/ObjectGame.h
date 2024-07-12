@@ -1,3 +1,5 @@
+#ifndef OBJECTGAME_H
+#define OBJECTGAME_H
 
 #include "Vector2D.h"
 #include "Physics.h"

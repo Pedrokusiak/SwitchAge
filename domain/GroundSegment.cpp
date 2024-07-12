@@ -1,6 +1,6 @@
 #include "GroundSegment.h"
 
-GroundSegment::GroundSegment(Vector2D position, Vector2D size)
+GroundSegment::GroundSegment(Vector2D position, Vector2D size, Physics* physics)
     : ObjectGame(position, size, nullptr) {} // O chão não precisa de física
 
 void GroundSegment::render(RendererPort* renderer) const {
