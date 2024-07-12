@@ -1,15 +1,18 @@
 #include "Game.h"
-#include "GroundSegment.h"
 #include <adapters/SDL/SDLEventAdapter.h>
 #include <adapters/SDL/SDLRendererAdapter.h>
 
 Game::Game(RendererPort *renderer, EventPort *eventPort)
     : renderer(renderer),
       eventPort(eventPort),
-      player(Vector2D(50, 50), Vector2D(50, 50), new Physics(Vector2D(0, 9.8f), 1.0f)) {
-    // Inicializa segmentos do chão
-    groundSegments.push_back(GroundSegment(Vector2D(0, 580), Vector2D(800, 20), nullptr));
-    // Adicione mais segmentos conforme necessário
+      playerPhysics(Vector2D(0, 9.8f), 1.0f),
+      groundPhysics(Vector2D(0, 0), 0), // Física estática para o chão
+      player(Vector2D(50, 50), Vector2D(50, 50), &playerPhysics) {
+    // Inicializa objetos do jogo
+    gameObjects.push_back(std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), &groundPhysics));
+    gameObjects.push_back(std::make_unique<GroundSegment>(Vector2D(800, 580), Vector2D(800, 20), &groundPhysics));
+    gameObjects.push_back(std::make_unique<Player>(Vector2D(50, 50), Vector2D(50, 50), &playerPhysics)); // Adicione o jogador
+    // Adicione mais objetos conforme necessário
 }
 
 void Game::run() {
@@ -21,28 +24,27 @@ void Game::run() {
 
     while (running) {
         frameStart = renderer->getTicks();
+
         while (eventPort->pollEvent()) {
             if (eventPort->isQuitEvent()) {
                 running = false;
             }
-            player.handleEvent(eventPort); // Passa o adaptador de evento para o jogador
+            player.handleEvent(eventPort);
         }
 
         float deltaTime = (renderer->getTicks() - frameStart) / 1000.0f;
 
-        // Atualiza o jogador e segmentos do chão
-        player.update(deltaTime, groundSegments);
-
-        renderer->draw(); // Desenha o fundo
-
-        // Renderiza cada segmento do chão
-        for (const auto& segment : groundSegments) {
-            segment.render(renderer);
+        for (const auto& object : gameObjects) {
+            object->update(deltaTime, gameObjects);
         }
 
-        player.render(renderer); // Renderiza o jogador
+        renderer->draw();
 
-        renderer->present(); 
+        for (const auto& object : gameObjects) {
+            object->render(renderer);
+        }
+
+        renderer->present();
 
         frameTime = renderer->getTicks() - frameStart;
         if (frameDelay > frameTime) {

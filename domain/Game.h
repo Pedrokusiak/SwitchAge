@@ -1,13 +1,14 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAME_HPP
+#define GAME_HPP
 
 #include "Player.h"
 #include "GroundSegment.h"
 #include "ports/RendererPort.h"
 #include "ports/EventPort.h"
-#include "PlayerPhysics.h"
+#include "Physics.h"
 #include <vector>
-#include <adapters/SDL/SDLEventAdapter.h>
+#include <memory>
+#include "ObjectGame.h"
 
 class Game {
 public:
@@ -18,9 +19,9 @@ private:
     RendererPort *renderer;
     EventPort *eventPort;
     Player player;
-    Physics physics;
-    std::vector<GroundSegment> groundSegments;
-     
+    std::vector<std::unique_ptr<ObjectGame>> gameObjects;
+    Physics playerPhysics;
+    Physics groundPhysics;
 };
 
 #endif // GAME_HPP

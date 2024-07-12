@@ -27,4 +27,4 @@ protected:
     Hitbox hitbox;
 };
 
-#endif // GAMEOBJECT_HPP
+#endif
