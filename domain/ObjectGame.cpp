@@ -5,7 +5,6 @@ ObjectGame::ObjectGame(Vector2D position, Vector2D size, Physics* physicsCompone
     : VisualElement(position), size(size), physicsComponent(physicsComponent), hitbox(position, size) {}
 
 void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
-    std::cout << "Método Update " << std::endl;
 
     applyPhysics(deltaTime);
     for (const auto& object : gameObjects) {
@@ -17,9 +16,10 @@ void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<Objec
 
 void ObjectGame::applyPhysics(float deltaTime) {
     if (physicsComponent) {
-        std::cout << "Chamada" << std::endl;
 
         physicsComponent->update(deltaTime);
+
+        
         position += physicsComponent->getVelocity() * deltaTime;
     }
 }
@@ -33,10 +33,6 @@ void ObjectGame::resolveCollision(ObjectGame& other) {
         Vector2D overlap = hitbox.getOverlap(other.getHitbox());
         position -= overlap / 2;
         other.position += overlap / 2;
-        hitbox.update(position);
-        other.hitbox.update(other.position);
-
-        // Invertendo a velocidade ao colidir (exemplo simples)
         Vector2D tempVelocity = physicsComponent->getVelocity();
         physicsComponent->setVelocity(other.physicsComponent->getVelocity());
         other.physicsComponent->setVelocity(tempVelocity);

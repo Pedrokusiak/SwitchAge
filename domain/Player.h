@@ -10,7 +10,7 @@
 
 class Player : public ObjectGame {
 public:
-    Player(Vector2D pos, Vector2D size, Physics* physicsComponent);
+    Player(Vector2D position, Vector2D size, Physics* physicsComponent);
     void handleEvent(EventPort* event);
     void render(RendererPort* renderer) const override;
     void update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) override; 

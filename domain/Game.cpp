@@ -12,8 +12,9 @@ Game::Game(RendererPort *renderer, EventPort *eventPort)
 {
     // Inicializa objetos do jogo
 
-    gameObjects.push_back(std::make_unique<Player>(Vector2D(50, 50), Vector2D(50, 50), &playerPhysics)); // Adicione o jogador
-    gameObjects.push_back(std::make_unique<GroundSegment>(Vector2D(0, 50), Vector2D(0, 50), &groundPhysics));
+    gameObjects.push_back(std::make_unique<Player>(Vector2D(10, 500), Vector2D(50, 50), &playerPhysics)); // Adicione o jogador
+
+    
     // Adicione mais objetos conforme necessário
 }
 
@@ -22,7 +23,7 @@ void Game::run()
     bool running = true;
     Uint32 frameStart;
     int frameTime;
-    const int FPS = 45;
+    const int FPS = 30;
     const int frameDelay = 1000 / FPS;
     try
     {
@@ -42,17 +43,25 @@ void Game::run()
 
             float deltaTime = (renderer->getTicks() - frameStart) / 1000.0f;
 
+            std::cout << "Frame Time: " << frameTime << "ms" << std::endl;
+
+
             for (const auto &object : gameObjects)
             {
 
+                Vector2D position = object->getPosition();
+                std::cout << "Object Position: (" << position.x << ", " << position.y << ")" << std::endl;
+
                 object->update(deltaTime, gameObjects);
+
+                Vector2D positionAfter = object->getPosition();
+                std::cout << "Object Position: After (" << positionAfter.x << ", " << positionAfter.y << ")" << std::endl;
             }
 
             renderer->draw();
 
             for (const auto &object : gameObjects)
             {
-
                 object->render(renderer);
             }
 
@@ -64,6 +73,7 @@ void Game::run()
                 renderer->delay(frameDelay - frameTime);
             }
         }
+        std::cout << "Frame Time: " << frameTime << "ms" << std::endl;
     }
     catch (const std::exception &e)
     {

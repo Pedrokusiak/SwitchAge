@@ -1,11 +1,11 @@
 #include "Player.h"
 #include <iostream> // Para depuração
 
-const float PLAYER_ACC = 1000.0f;
+const float PLAYER_ACC = 10.0f;
 const float PLAYER_JUMP_FORCE = 15.0f;
 
-Player::Player(Vector2D pos, Vector2D size, Physics* physicsComponent)
-    : ObjectGame(pos, size, physicsComponent), velocity(0, 0), onGround(false) {}
+Player::Player(Vector2D position, Vector2D size, Physics* physicsComponent)
+    : ObjectGame(position, size, physicsComponent), velocity(0, 0), onGround(false) {}
 
 void Player::handleEvent(EventPort* event) {
     if (event->isKeyDownEvent()) {
@@ -24,31 +24,29 @@ void Player::handleEvent(EventPort* event) {
 
 void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
     // Aplicar a gravidade
-    physicsComponent->applyForce(physicsComponent->getVelocity() * physicsComponent->getVelocity().y);
+    std::cout << "Player Position: (" << position.x << ", " << position.y << ")" << std::endl;
+    physicsComponent->applyForce(Vector2D(0, physicsComponent->getVelocity().y));
+    std::cout << "Player Position: (" << position.x << ", " << position.y << ")" << std::endl;
+
     
+
+
+
     // Atualizar a física
     physicsComponent->update(deltaTime);
-    Vector2D newVelocity = physicsComponent->getVelocity();
-
-    // Atualizar a posição do jogador
-    position += newVelocity * deltaTime;
 
     // Verificar colisões e resolver
     onGround = false;
+    std::cout << "Player Position: (" << position.x << ", " << position.y << ")" << std::endl;
     for (const auto& object : gameObjects) {
         if (this != object.get() && checkCollision(*object)) {
-            if (newVelocity.y > 0 && object->getPosition().y > position.y) {
+            resolveCollision(*object);
+            if (physicsComponent->getVelocity().y > 0 && object->getPosition().y > position.y) {
                 onGround = true;
             }
         }
     }
-
-    // Atualizar a hitbox
-    hitbox.update(position);
-
-    // Imprimir informações de depuração
-    std::cout << "Player Position: (" << position.x << ", " << position.y << ")" << std::endl;
-    std::cout << "Player Velocity: (" << newVelocity.x << ", " << newVelocity.y << ")" << std::endl;
+   
 }
 
 void Player::render(RendererPort* renderer) const {
