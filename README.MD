@@ -7,6 +7,10 @@ As principais dificuldades enfrentadas durante o período da aula foram:
 A falta de um compilador para o projeto, onde um dos membros não conseguiu compilar o projeto, fazendo o mesmo programar às cegas.
 Outro problema enfrentado foi ao mesclar as branches sem que uma das partes conseguisse compilar antes e checar o que estava desenvolvendo. Porém, ao final do período, a mesclagem foi resolvida e o projeto voltou a compilar e funcionar o que estava desenvolvido.
 
-10/07 Entrada: Apos a conversa com o Professor durante a aula, foi apontando algumas melhorias a serem feitas sobre a fisica que esta sendo empregada no projeto. 
+10/07 Entrada: Apos a conversa com o Professor durante a aula, foi apontado algumas melhorias a serem feitas sobre a fisica que esta sendo empregada no projeto. 
 
-10/07 Saida: Foi iniciado as mudanças na fisica, e...
+10/07 Saida: Foi iniciado as modificações na fisica, mas não foi possivel terminar-la durante a aula
+
+12/07 Entrada: Continuidade nas melhorias envolvendo a fisica apontadas pelo professor na ultima aula;
+
+12/07 Saida: 
