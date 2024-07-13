@@ -13,11 +13,8 @@ public:
     }
 
     void update(float deltaTime) {
-        // Newton's Second Law: F = m * a -> a = F / m
         acceleration = force / mass;
-        // Update velocity: v = v0 + a * t
         velocity += acceleration * deltaTime;
-        // Reset force
         force = Vector2D();
     }
 

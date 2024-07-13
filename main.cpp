@@ -7,6 +7,7 @@
 const int WIDTH = 800, HEIGHT = 600;
 
 int main(int argc, char *argv[]) {
+    std::cout << "Hello, World!" << std::endl;
     SDLRendererAdapter renderer;
     SDLEventAdapter event;
     Game game(&renderer, &event);

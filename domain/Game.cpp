@@ -7,13 +7,13 @@ Game::Game(RendererPort *renderer, EventPort *eventPort)
     : renderer(renderer),
       eventPort(eventPort),
       playerPhysics(Vector2D(0, 9.8f), 1.0f),
-      groundPhysics(Vector2D(0, 0), 0), // Física estática para o chão
+      groundPhysics(Vector2D(0, 0), 20), // Física estática para o chão
       player(Vector2D(50, 50), Vector2D(50, 50), &playerPhysics)
 {
     // Inicializa objetos do jogo
-    gameObjects.push_back(std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), &groundPhysics));
-    gameObjects.push_back(std::make_unique<GroundSegment>(Vector2D(800, 580), Vector2D(800, 20), &groundPhysics));
+
     gameObjects.push_back(std::make_unique<Player>(Vector2D(50, 50), Vector2D(50, 50), &playerPhysics)); // Adicione o jogador
+    gameObjects.push_back(std::make_unique<GroundSegment>(Vector2D(0, 50), Vector2D(0, 50), &groundPhysics));
     // Adicione mais objetos conforme necessário
 }
 
@@ -45,6 +45,7 @@ void Game::run()
             for (const auto &object : gameObjects)
             {
 
+                object->update(deltaTime, gameObjects);
             }
 
             renderer->draw();

@@ -1,12 +1,13 @@
 #include "ObjectGame.h"
+#include <iostream>
 
 ObjectGame::ObjectGame(Vector2D position, Vector2D size, Physics* physicsComponent)
     : VisualElement(position), size(size), physicsComponent(physicsComponent), hitbox(position, size) {}
 
 void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
-    applyPhysics(deltaTime);
-    hitbox.update(position);
+    std::cout << "Método Update " << std::endl;
 
+    applyPhysics(deltaTime);
     for (const auto& object : gameObjects) {
         if (this != object.get() && checkCollision(*object)) {
             resolveCollision(*object);
@@ -16,9 +17,10 @@ void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<Objec
 
 void ObjectGame::applyPhysics(float deltaTime) {
     if (physicsComponent) {
+        std::cout << "Chamada" << std::endl;
+
         physicsComponent->update(deltaTime);
         position += physicsComponent->getVelocity() * deltaTime;
-        hitbox.update(position);
     }
 }
 
