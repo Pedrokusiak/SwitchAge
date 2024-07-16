@@ -1,14 +1,12 @@
-#ifndef GAME_HPP
-#define GAME_HPP
+#ifndef GAME_H
+#define GAME_H
 
 #include "Player.h"
 #include "GroundSegment.h"
 #include "ports/RendererPort.h"
 #include "ports/EventPort.h"
-#include "Physics.h"
 #include <vector>
 #include <memory>
-#include "ObjectGame.h"
 
 class Game {
 public:
@@ -18,10 +16,7 @@ public:
 private:
     RendererPort *renderer;
     EventPort *eventPort;
-    Player player;
     std::vector<std::unique_ptr<ObjectGame>> gameObjects;
-    Physics playerPhysics;
-    Physics groundPhysics;
 };
 
-#endif // GAME_HPP
+#endif // GAME_H

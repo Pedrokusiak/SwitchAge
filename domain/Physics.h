@@ -15,7 +15,8 @@ public:
     void update(float deltaTime) {
         acceleration = force / mass;
         velocity += acceleration * deltaTime;
-        force = Vector2D();
+        velocity += gravity * deltaTime;  // Aplicar gravidade
+        force = Vector2D();  // Resetar força após a atualização
     }
 
     Vector2D getVelocity() const {

@@ -10,7 +10,7 @@
 
 class ObjectGame : public VisualElement {
 public:
-    ObjectGame(Vector2D position, Vector2D size, Physics* physicsComponent);
+    ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass);
     virtual ~ObjectGame() = default;
 
     virtual void update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects);
@@ -19,12 +19,13 @@ public:
     void resolveCollision(ObjectGame& other);
 
     const Hitbox& getHitbox() const;
+    Vector2D getPosition() const;
+    Vector2D getSize() const;
 
 protected:
-    Vector2D position;
     Vector2D size;
-    Physics* physicsComponent;
+    Physics physicsComponent;
     Hitbox hitbox;
 };
 
-#endif
+#endif // OBJECTGAME_H
