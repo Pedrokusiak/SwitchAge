@@ -1,7 +1,7 @@
 #include "Player.h"
 
-const float PLAYER_ACC = 0.5f;
-const float PLAYER_JUMP_FORCE = 15.0f;
+const float PLAYER_ACC = 10000.0f;
+const float PLAYER_JUMP_FORCE = 150000.0f;
 
 Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass)
     : ObjectGame(pos, size, gravity, mass), onGround(false) {}

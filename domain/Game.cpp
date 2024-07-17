@@ -5,42 +5,54 @@
 
 Game::Game(RendererPort *renderer, EventPort *eventPort)
     : renderer(renderer),
-      eventPort(eventPort) {
+      eventPort(eventPort)
+{
     // Inicializa objetos do jogo
-    gameObjects.push_back(std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 0.0f)); // Chão com física estática
-    gameObjects.push_back(std::make_unique<Player>(Vector2D(10, 500), Vector2D(50, 50), Vector2D(0, 9.8f), 1.0f)); // Jogador com física
+    auto player = std::make_unique<Player>(Vector2D(50, 550), Vector2D(50, 50), Vector2D(0, 9.8f), 1.0f);
+    auto groundSegment = std::make_unique<GroundSegment>(Vector2D(20, 600), Vector2D(30, 600), Vector2D(0, 0), 1.0f);
+    gameObjects.push_back(std::move(player));
+    gameObjects.push_back(std::move(groundSegment));
     // Adicione mais objetos conforme necessário
 }
 
-void Game::run() {
+void Game::run()
+{
     bool running = true;
     Uint32 frameStart;
-    int frameTime;
     const int FPS = 30;
+    frameStart = renderer->getTicks();
     const int frameDelay = 1000 / FPS;
 
-    try {
-        while (running) {
+    try
+    {
+        while (running)
+        {
+            const float deltaTime = (renderer->getTicks() - frameStart) / 1000.0f;
             frameStart = renderer->getTicks();
 
-            while (eventPort->pollEvent()) {
-                if (eventPort->isQuitEvent()) {
+            while (eventPort->pollEvent())
+            {
+                if (eventPort->isQuitEvent())
+                {
                     running = false;
                 }
 
                 // Atualizar eventos do jogador
-                for (const auto& object : gameObjects) {
-                    Player* player = dynamic_cast<Player*>(object.get());
-                    if (player) {
+                for (const auto &object : gameObjects)
+                {
+                    Player *player = dynamic_cast<Player *>(object.get());
+                    if (player)
+                    {
                         player->handleEvent(eventPort);
                     }
                 }
             }
 
-            float deltaTime = (renderer->getTicks() - frameStart) / 1000.0f;
+            
 
             // Atualizar todos os objetos do jogo
-            for (const auto &object : gameObjects) {
+            for (const auto &object : gameObjects)
+            {
                 Vector2D position = object->getPosition();
                 std::cout << "Object Position: (" << position.x << ", " << position.y << ")" << std::endl;
 
@@ -53,21 +65,27 @@ void Game::run() {
             // Renderizar todos os objetos do jogo
             renderer->draw();
 
-            for (const auto &object : gameObjects) {
+            for (const auto &object : gameObjects)
+            {
                 object->render(renderer);
             }
 
             renderer->present();
 
-            frameTime = renderer->getTicks() - frameStart;
-            if (frameDelay > frameTime) {
+            const int frameTime =  renderer->getTicks() - frameStart;
+            if (frameDelay > frameTime)
+            {
                 renderer->delay(frameDelay - frameTime);
             }
         }
-    } catch (const std::exception &e) {
+    }
+    catch (const std::exception &e)
+    {
         std::cerr << "Erro durante a execução do jogo: " << e.what() << std::endl;
         renderer->quit();
-    } catch (...) {
+    }
+    catch (...)
+    {
         std::cerr << "Erro desconhecido durante a execução do jogo." << std::endl;
         renderer->quit();
     }

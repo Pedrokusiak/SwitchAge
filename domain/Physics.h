@@ -21,8 +21,7 @@ public:
         velocity += gravity * deltaTime; 
         std::cout << "Velocity: Update INTO until gravity (" << velocity.x << ", " << velocity.y << ")" << std::endl;
         std::cout << "Velocity: Update INTO (" << velocity.x << ", " << velocity.y << ")" << std::endl;
-         // Aplicar gravidade
-        force = Vector2D(0,0);  // Resetar força após a atualização
+        force = Vector2D(0,0);  
     }
 
     Vector2D getVelocity() const {
