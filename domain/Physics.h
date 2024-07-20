@@ -15,12 +15,8 @@ public:
 
     void update(float deltaTime) {
         acceleration = force / mass;
-        std::cout << "Velocity: Update INTO until sum (" << velocity.x << ", " << velocity.y << ")" << std::endl;
         velocity += acceleration * deltaTime;
-        std::cout << "Velocity: Update INTO until acceleration (" << velocity.x << ", " << velocity.y << ")" << std::endl;
         velocity += gravity * deltaTime; 
-        std::cout << "Velocity: Update INTO until gravity (" << velocity.x << ", " << velocity.y << ")" << std::endl;
-        std::cout << "Velocity: Update INTO (" << velocity.x << ", " << velocity.y << ")" << std::endl;
         force = Vector2D(0,0);  
     }
 

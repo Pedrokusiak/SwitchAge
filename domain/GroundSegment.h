@@ -3,12 +3,12 @@
 
 #include "Vector2D.h"
 #include "ports/RendererPort.h"
-#include "ObjectGame.h"
+#include "ObjectGameStatic.h"
 
-class GroundSegment : public ObjectGame {
+class GroundSegment : public ObjectGameStatic {
 public:
     GroundSegment(Vector2D position, Vector2D size, Vector2D gravity, float mass);
-    void render(RendererPort* renderer) const override;
+    void render(RendererPort* renderer) const;
     float getWidth() const;
     float getHeight() const;
 };

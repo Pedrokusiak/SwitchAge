@@ -11,7 +11,6 @@
 class ObjectGame : public VisualElement {
 public:
     ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass);
-    virtual ~ObjectGame() = default;
 
     virtual void update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects);
     virtual void render(RendererPort* renderer) const = 0; // Método virtual puro
@@ -19,7 +18,6 @@ public:
     void applyPhysics(float deltaTime);
     bool checkCollision(const ObjectGame& other) const;
     void resolveCollision(ObjectGame& other);
-
     const Hitbox& getHitbox() const { return hitbox; }
     Vector2D getPosition() const { return position; }
     Vector2D getSize() const { return size; }
