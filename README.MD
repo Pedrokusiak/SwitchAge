@@ -13,4 +13,12 @@ Outro problema enfrentado foi ao mesclar as branches sem que uma das partes cons
 
 12/07 Entrada: Continuidade nas melhorias envolvendo a fisica apontadas pelo professor na ultima aula;
 
-12/07 Saida: 
+12/07 Saida: Foram feitas melhorias na fisica do jogo, e apos conversa com o professor Helio, foi iniciada mudanças na estrutura da arquitetura empregada no jogo.
+
+17/07 Entrada: Apos conversa com o professor, melhoramos a fisica do jogo, e o objetivo da aula, é arrumar o "chão" e deixar o jogo jogavel.
+
+17/07 Saída: 
+
+19/07 Entrada: Continuidade nas melhorias envolvendo colisão, e desenvolvimento da tela de final game;
+
+19/07 Saida: 

@@ -21,6 +21,20 @@ void Player::handleEvent(EventPort* event) {
     }
 }
 
+void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
+    onGround = false;
+    ObjectGame::update(deltaTime, gameObjects);
+    for (const auto& object : gameObjects) {
+        if (this != object.get() && checkCollision(*object)) {
+            if (position.y + size.y <= object->getPosition().y) {
+                onGround = true;
+                // Ajustar a posição para ficar em cima do chão
+                position.y = object.get()->getPosition().y - size.y;
+                physicsComponent.setVelocity(Vector2D(physicsComponent.getVelocity().x, 0));
+            }
+        }
+    }
+}
 
 void Player::render(RendererPort* renderer) const {
     renderer->drawPlayer(position.x, position.y, size.x, size.y, 0xFF, 0x00, 0x00, 0xFF);
