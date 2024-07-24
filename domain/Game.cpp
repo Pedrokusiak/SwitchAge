@@ -8,8 +8,10 @@ Game::Game(RendererPort *renderer, EventPort *eventPort)
       eventPort(eventPort)
 {
     // Inicializa objetos do jogo
-    auto player = std::make_unique<Player>(Vector2D(50, 550), Vector2D(50, 50), Vector2D(0, 9.8f), 1.0f);
-    auto groundSegment = std::make_unique<GroundSegment>(Vector2D(20, 600), Vector2D(30, 600), Vector2D(0, 0), 1.0f);
+    auto player = std::make_unique<Player>(Vector2D(200, 550), Vector2D(50, 50), Vector2D(0, 20.0f), 1.0f);
+    // auto groundSegment = std::make_unique<GroundSegment>(Vector2D(50, 500), Vector2D(1000, 500), Vector2D(0, 0), 1.0f);
+    auto groundSegment = std::make_unique<Player>(Vector2D(50, 500), Vector2D(1000, 500), Vector2D(0, 0), 10.0f);
+
     gameObjects.push_back(std::move(player));
     gameObjects.push_back(std::move(groundSegment));
     // Adicione mais objetos conforme necessário

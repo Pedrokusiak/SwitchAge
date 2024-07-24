@@ -7,6 +7,7 @@
 #include "VisualElement.h"
 #include <vector>
 #include <memory>
+#include "ObjectGameStatic.h"
 
 class ObjectGame : public VisualElement {
 public:

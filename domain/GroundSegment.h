@@ -8,7 +8,7 @@
 class GroundSegment : public ObjectGameStatic {
 public:
     GroundSegment(Vector2D position, Vector2D size, Vector2D gravity, float mass);
-    void render(RendererPort* renderer) const;
+    void render(RendererPort* renderer) const override;
     float getWidth() const;
     float getHeight() const;
 };
