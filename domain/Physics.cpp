@@ -11,11 +11,15 @@ void Physics::update(float deltaTime) {
     acceleration = force / mass;
     velocity += acceleration * deltaTime;
     velocity += gravity * deltaTime; 
-    force = Vector2D(0, 0);  
+    force = Vector2D(0, 0); 
 }
 
 Vector2D Physics::getVelocity() const {
     return velocity;
+}
+
+float Physics::getMass() const {
+    return mass;
 }
 
 void Physics::setVelocity(const Vector2D& vel) {

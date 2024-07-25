@@ -1,17 +1,17 @@
 #include "Game.h"
-#include <adapters/SDL/SDLEventAdapter.h>
-#include <adapters/SDL/SDLRendererAdapter.h>
 #include <iostream>
 
-Game::Game(RendererPort *renderer, EventPort *eventPort)
+Game::Game(RendererPort *renderer, PlayerPort *playerRenderPort,EventPort *eventPort)
     : renderer(renderer),
       eventPort(eventPort)
 {
     // Inicializa objetos do jogo
-    auto player = std::make_unique<Player>(Vector2D(375, 275), Vector2D(50, 50), Vector2D(0, 900.8f), 1.0f);
-    auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1.0f);
+    auto player = std::make_unique<Player>(Vector2D(375, 275), Vector2D(50, 50), Vector2D(0, 90.8f), 1.0f);
+    auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1000000000.0f);
+    auto groundSegment2 = std::make_unique<GroundSegment>(Vector2D(400, 275), Vector2D(50, 50), Vector2D(0, 0), 10000000000.0f);
     gameObjects.push_back(std::move(player));
     gameObjects.push_back(std::move(groundSegment));
+    gameObjects.push_back(std::move(groundSegment2));
     // Adicione mais objetos conforme necessário
 }
 
@@ -51,12 +51,12 @@ void Game::run()
             // Atualizar todos os objetos do jogo
             for (const auto &object : gameObjects)
             {
-                Vector2D position = object->getPosition();
+                Vector2D const position = object->getPosition();
                 std::cout << "Object Position: (" << position.x << ", " << position.y << ")" << std::endl;
 
                 object->update(deltaTime, gameObjects);
 
-                Vector2D positionAfter = object->getPosition();
+                Vector2D const positionAfter = object->getPosition();
                 std::cout << "Object Position After Update: (" << positionAfter.x << ", " << positionAfter.y << ")" << std::endl;
             }
 

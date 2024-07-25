@@ -22,25 +22,34 @@ bool ObjectGame::checkCollision(const ObjectGame& other) const {
     return hitbox.intersects(other.getHitbox());
 }
 
+
+
 void ObjectGame::resolveCollision(ObjectGame& other) {
-    if (checkCollision(other)) {
         Vector2D overlap = hitbox.getOverlap(other.getHitbox());
 
-        // Supondo que 'other' seja o chão e deve ser estático
-        // Se a colisão é vertical (com o chão)
+        float const totalMass = this->physicsComponent.getMass() + other.physicsComponent.getMass();
+        float const thisMassRatio = this->physicsComponent.getMass() / totalMass;
+        float const otherMassRatio = other.physicsComponent.getMass() / totalMass;
+
         if (overlap.y < overlap.x) {
             if (position.y < other.position.y) { // Se este objeto está acima do outro (chão)
                 position.y -= overlap.y; // Mover para cima, fora do chão
                 physicsComponent.setVelocity(Vector2D(physicsComponent.getVelocity().x, 0)); // Parar movimento vertical
             } 
-        } else { // Se a colisão é horizontal
-            if (position.x < other.position.x) { // Este objeto está à esquerda do outro
-                position.x -= overlap.x; // Mover para a esquerda
-            } else { // Este objeto está à direita do outro
-                position.x += overlap.x; // Mover para a direita
+        } else { 
+            if (position.x < other.position.x) { 
+                float const displacement = overlap.x * thisMassRatio; 
+                position.x -= displacement; 
+                other.position.x += overlap.x * otherMassRatio; 
+            } else { 
+                float const displacement = overlap.x * thisMassRatio;
+                position.x += displacement; 
+                other.position.x -= overlap.x * otherMassRatio; 
             }
-            // Parar movimento horizontal
             physicsComponent.setVelocity(Vector2D(0, physicsComponent.getVelocity().y));
+            other.physicsComponent.setVelocity(Vector2D(0, other.physicsComponent.getVelocity().y));
         }
     }
-}
+
+
+

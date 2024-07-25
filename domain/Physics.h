@@ -10,6 +10,7 @@ public:
     void applyForce(const Vector2D& force);
     void update(float deltaTime);
 
+    float getMass() const;
     Vector2D getVelocity() const;
     void setVelocity(const Vector2D& vel);
 
