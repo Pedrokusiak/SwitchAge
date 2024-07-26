@@ -22,3 +22,11 @@ Outro problema enfrentado foi ao mesclar as branches sem que uma das partes cons
 19/07 Entrada: Continuidade nas melhorias envolvendo colisão, e desenvolvimento da tela de final game;
 
 19/07 Saida: 
+
+24/07 Entrada: Avaliação 
+
+24/07 Saída:
+
+26/07 Entrada:
+
+26/07 Saída:

@@ -1,14 +1,14 @@
 #include "Game.h"
 #include <iostream>
 
-Game::Game(RendererPort *renderer, PlayerPort *playerRenderPort,EventPort *eventPort)
+Game::Game(RendererPort *renderer,EventPort *eventPort)
     : renderer(renderer),
       eventPort(eventPort)
 {
     // Inicializa objetos do jogo
-    auto player = std::make_unique<Player>(Vector2D(375, 275), Vector2D(50, 50), Vector2D(0, 90.8f), 1.0f);
+    auto player = std::make_unique<Player>(Vector2D(375, 275), Vector2D(50, 50), Vector2D(0, 45.8f), 1.0f);
     auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1000000000.0f);
-    auto groundSegment2 = std::make_unique<GroundSegment>(Vector2D(400, 275), Vector2D(50, 50), Vector2D(0, 0), 10000000000.0f);
+    auto groundSegment2 = std::make_unique<GroundSegment>(Vector2D(0, 20), Vector2D(800, 20), Vector2D(0, 0), 10000000000.0f);
     gameObjects.push_back(std::move(player));
     gameObjects.push_back(std::move(groundSegment));
     gameObjects.push_back(std::move(groundSegment2));

@@ -11,12 +11,11 @@
 
 class Game {
 public:
-    Game(RendererPort *renderer, PlayerRenderPort *playerRenderPort,EventPort *eventPort);
+    Game(RendererPort *renderer,EventPort *eventPort);
     void run();
 
 private:
     RendererPort *renderer;
-    PlayerRenderPort *playerRenderPort;
     EventPort *eventPort;
     std::vector<std::unique_ptr<ObjectGame>> gameObjects;
 };

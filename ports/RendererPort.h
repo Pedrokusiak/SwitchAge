@@ -13,7 +13,7 @@ public:
     virtual void draw() const = 0;
 
 
-
+    virtual void drawPlayer(int x, int y, int width, int height, Uint8 r, Uint8 g, Uint8 b, Uint8 a) = 0;
     
     // Draw rect port -> RectRenderPort
     virtual void drawRect(int x, int y, int width, int height, Uint8 r, Uint8 g, Uint8 b, Uint8 a) = 0;
