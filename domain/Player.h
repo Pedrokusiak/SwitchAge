@@ -10,9 +10,6 @@ public:
     void handleEvent(EventPort* event);
     void render(RendererPort* renderer) const override;
     void update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) override; // Adicione esta linha
-
-private:
-    bool onGround;  // Adiciona o estado onGround somente para o player
 };
 
 #endif // PLAYER_HPP

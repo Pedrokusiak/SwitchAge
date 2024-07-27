@@ -1,25 +1,23 @@
 #include "Player.h"
+#include <iostream>
 
-const float PLAYER_ACC = 1000.0f;
-const float PLAYER_JUMP_FORCE = -1000.0f;
+const float PLAYER_FORCE = 1000.0f;
 
 Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass)
-    : ObjectGame(pos, size, gravity, mass), onGround(false) {}
+    : ObjectGame(pos, size, gravity, mass) {}
 
 void Player::handleEvent(EventPort* event) {
     if (event->isKeyDownEvent()) {
         switch (event->getKey()) {
             case SDLK_LEFT: 
-                physicsComponent.applyForce(Vector2D(-PLAYER_ACC, 0));
+                physicsComponent.applyForce(Vector2D(PLAYER_FORCE, 0));
                 break;
             case SDLK_RIGHT: 
-                physicsComponent.applyForce(Vector2D(PLAYER_ACC, 0));
+                physicsComponent.applyForce(Vector2D(PLAYER_FORCE, 0));
                 break;
             case SDLK_UP:
-
-                    physicsComponent.applyForce(Vector2D(0, PLAYER_JUMP_FORCE));
-                    onGround = false;
-                    printf("Pular: Não está no chão, não pode pular\n");
+                physicsComponent.applyForce(Vector2D(0, PLAYER_FORCE));
+                printf("Pular: Não está no chão, não pode pular\n");
                 break;
         }
     }
@@ -30,7 +28,6 @@ void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGam
     for (const auto& object : gameObjects) {
         if (this != object.get() && checkCollision(*object)) {
             if (position.y + size.y <= object->getPosition().y) {
-                onGround = true;
                 position.y = object.get()->getPosition().y - size.y;
                 physicsComponent.setVelocity(Vector2D(physicsComponent.getVelocity().x, 0));
             }

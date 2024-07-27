@@ -6,7 +6,7 @@ Game::Game(RendererPort *renderer,EventPort *eventPort)
       eventPort(eventPort)
 {
     // Inicializa objetos do jogo
-    auto player = std::make_unique<Player>(Vector2D(375, 275), Vector2D(50, 50), Vector2D(0, 45.8f), 1.0f);
+    auto player = std::make_unique<Player>(Vector2D(375, 275), Vector2D(50, 50), Vector2D(0, 9.8f), 1.0f);
     auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1000000000.0f);
     auto groundSegment2 = std::make_unique<GroundSegment>(Vector2D(0, 20), Vector2D(800, 20), Vector2D(0, 0), 10000000000.0f);
     gameObjects.push_back(std::move(player));
@@ -36,8 +36,6 @@ void Game::run()
                 {
                     running = false;
                 }
-
-                // Atualizar eventos do jogador
                 for (const auto &object : gameObjects)
                 {
                     Player *player = dynamic_cast<Player *>(object.get());
@@ -47,17 +45,10 @@ void Game::run()
                     }
                 }
             }
-
-            // Atualizar todos os objetos do jogo
+            // Atualizar eventos do jogador
             for (const auto &object : gameObjects)
             {
-                Vector2D const position = object->getPosition();
-                std::cout << "Object Position: (" << position.x << ", " << position.y << ")" << std::endl;
-
                 object->update(deltaTime, gameObjects);
-
-                Vector2D const positionAfter = object->getPosition();
-                std::cout << "Object Position After Update: (" << positionAfter.x << ", " << positionAfter.y << ")" << std::endl;
             }
 
             // Renderizar todos os objetos do jogo
