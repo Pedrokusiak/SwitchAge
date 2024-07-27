@@ -23,13 +23,6 @@ void SDLRendererAdapter::drawPlayer(int x, int y, int width, int height, Uint8 r
     SDL_RenderFillRect(renderer, &rect);
 }
 
-void SDLRendererAdapter::present() const {
-    SDL_RenderPresent(renderer);
-}
-
-void SDLRendererAdapter::quit() const {
-    SDL_Quit();
-}
 
 void SDLRendererAdapter::delay(Uint32 ms) const {
     SDL_Delay(ms);

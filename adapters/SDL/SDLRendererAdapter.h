@@ -16,7 +16,6 @@ public:
     void quit() const override;
 
     void delay(Uint32 ms) const override;
-
     Uint32 getTicks() const override;
     SDL_Renderer *getRenderer() const;
 
