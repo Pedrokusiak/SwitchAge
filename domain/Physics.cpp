@@ -6,12 +6,11 @@ Physics::Physics(Vector2D gravity, float mass)
 
 void Physics::applyForce(const Vector2D& force) {
     this->acceleration = force / mass;
-    std::cout << "acc (" <<  this->acceleration.x << ", " <<  this->acceleration.y << ")" << std::endl;
+    std::cout << "acc apply (" <<  this->acceleration.x << ", " <<  this->acceleration.y << ")" << std::endl;
 }
 
 void Physics::update(float deltaTime) {
     this->velocity += this->acceleration * deltaTime;
-    std::cout << "acc (" <<  velocity.x << ", " <<  velocity.y << ")" << std::endl;
 }
 
 Vector2D Physics::getVelocity() const {

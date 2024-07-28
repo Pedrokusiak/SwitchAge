@@ -28,8 +28,8 @@ void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGam
     for (const auto& object : gameObjects) {
         if (this != object.get() && checkCollision(*object)) {
             if (position.y + size.y <= object->getPosition().y) {
-                position.y = object.get()->getPosition().y - size.y;
-                physicsComponent.setVelocity(Vector2D(physicsComponent.getVelocity().x, 0));
+                //position.y = object.get()->getPosition().y - size.y;
+                //physicsComponent.setVelocity(Vector2D(physicsComponent.getVelocity().x, 0));
             }
         }
     }
