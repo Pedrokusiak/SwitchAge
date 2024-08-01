@@ -6,6 +6,7 @@ ObjectGame::ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float
 
 void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
     applyPhysics(deltaTime);
+   
     for (const auto& object : gameObjects) {
         if (this != object.get() && checkCollision(*object)) {
             resolveCollision(*object);
@@ -27,22 +28,18 @@ bool ObjectGame::checkCollision(const ObjectGame& other) const {
 void ObjectGame::resolveCollision(ObjectGame& other) {
     if (checkCollision(other)) {
         Vector2D overlap = hitbox.getOverlap(other.getHitbox());
-
-        // Supondo que 'other' seja o chão e deve ser estático
-        // Se a colisão é vertical (com o chão)
         if (overlap.y < overlap.x) {
-            if (position.y < other.position.y) { // Se este objeto está acima do outro (chão)
-                //position.y -= overlap.y; // Mover para cima, fora do chão
-                //physicsComponent.setVelocity(Vector2D(physicsComponent.getVelocity().x, 0)); // Parar movimento vertical
+            if (position.y < other.position.y) {
+                position.y -= overlap.y; 
+                physicsComponent.setVelocity(Vector2D(physicsComponent.getVelocity().x, 0)); 
             } 
-        } else { // Se a colisão é horizontal
-            if (position.x < other.position.x) { // Este objeto está à esquerda do outro
-                //position.x -= overlap.x; // Mover para a esquerda
-            } else { // Este objeto está à direita do outro
-                //position.x += overlap.x; // Mover para a direita
+        } else { 
+            if (position.x < other.position.x) {
+                position.x -= overlap.x; 
+            } else {
+                position.x += overlap.x; 
             }
-            // Parar movimento horizontal
-            //physicsComponent.setVelocity(Vector2D(0, physicsComponent.getVelocity().y));
+            physicsComponent.setVelocity(Vector2D(0, physicsComponent.getVelocity().y));
         }
     }
 }
