@@ -6,7 +6,7 @@
 #include "ports/RendererPort.h"
 #include "ports/EventPort.h"
 #include "ports/PlayerRenderPort.h"
-#include <vector>
+#include <list>
 #include <memory>
 
 class Game {
@@ -17,7 +17,7 @@ public:
 private:
     RendererPort *renderer;
     EventPort *eventPort;
-    std::vector<std::unique_ptr<ObjectGame>> gameObjects;
+    std::list<std::unique_ptr<ObjectGame>> gameObjects;
 };
 
 #endif // GAME_H

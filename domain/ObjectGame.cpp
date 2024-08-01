@@ -4,7 +4,7 @@
 ObjectGame::ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass)
     : VisualElement(position), size(size), physicsComponent(gravity, mass), hitbox(position, size) {}
 
-void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
+void ObjectGame::update(float deltaTime, const std::list<std::unique_ptr<ObjectGame>>& gameObjects) {
     applyPhysics(deltaTime);
    
     for (const auto& object : gameObjects) {

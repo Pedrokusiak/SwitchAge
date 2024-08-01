@@ -25,7 +25,7 @@ void Player::handleEvent(EventPort* event) {
     }
 }
 
-void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
+void Player::update(float deltaTime, const std::list<std::unique_ptr<ObjectGame>>& gameObjects) {
     ObjectGame::update(deltaTime, gameObjects);
     for (const auto& object : gameObjects) {
         if (this != object.get() && checkCollision(*object)) {
