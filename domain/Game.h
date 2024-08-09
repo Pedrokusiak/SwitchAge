@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "GroundSegment.h"
+#include "Physics.h"
 #include "ports/RendererPort.h"
 #include "ports/EventPort.h"
 #include "ports/PlayerRenderPort.h"
@@ -13,11 +14,16 @@ class Game {
 public:
     Game(RendererPort *renderer,EventPort *eventPort);
     void run();
+    void processEvents(bool running);
+    void updateGameObjects(float deltaTime);
+    void renderGameObjects();
+    void controlFrameRate(Uint32 frameStar, float frameDelay);
 
 private:
     RendererPort *renderer;
     EventPort *eventPort;
     std::vector<std::unique_ptr<ObjectGame>> gameObjects;
+
 };
 
 #endif // GAME_H

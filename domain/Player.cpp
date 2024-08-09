@@ -3,8 +3,8 @@
 
 const float PLAYER_FORCE = 1000.0f;
 
-Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass)
-    : ObjectGame(pos, size, gravity, mass) {}
+Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate )
+    : ObjectGame(pos, size, gravity, mass, hibernate ) {}
 
 void Player::handleEvent(EventPort* event) {
     if (event->isKeyDownEvent()) {
@@ -16,8 +16,9 @@ void Player::handleEvent(EventPort* event) {
                 physicsComponent.applyForce(Vector2D(PLAYER_FORCE, 0));
                 break;
             case SDLK_UP:
-                physicsComponent.applyForce(Vector2D(0, -PLAYER_FORCE));
-                printf("Pular: Não está no chão, não pode pular\n");
+                physicsComponent.setGravity(Vector2D(0, -PLAYER_FORCE));
+                // physicsComponent.applyForce(Vector2D(0, -PLAYER_FORCE));
+                // printf("Pular: Não está no chão, não pode pular\n");
                 break;
             default:
                  physicsComponent.applyForce(Vector2D(0, 0));

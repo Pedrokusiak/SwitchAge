@@ -11,8 +11,10 @@ public:
     void update(float deltaTime);
 
     float getMass() const;
+    Vector2D getGravity() const;
     Vector2D getVelocity() const;
     void setVelocity(const Vector2D& vel);
+    void setGravity(const Vector2D& gravit);
 
 private:
     Vector2D gravity;

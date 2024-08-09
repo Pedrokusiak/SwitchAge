@@ -7,7 +7,7 @@
 
 class GroundSegment : public ObjectGame {
 public:
-    GroundSegment(Vector2D position, Vector2D size, Vector2D gravity, float mass);
+    GroundSegment(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hibernate);
     void render(RendererPort* renderer) const override;
     float getWidth() const;
     float getHeight() const;

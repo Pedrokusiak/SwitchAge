@@ -9,6 +9,14 @@ public:
     void update(Vector2D position);
     bool intersects(const Hitbox& other) const;
     Vector2D getOverlap(const Hitbox& other) const;
+     // Getter methods for position and size
+        Vector2D getPosition() const {
+            return position;
+        }
+
+        Vector2D getSize() const {
+            return size;
+        }
 
 private:
     Vector2D position;
