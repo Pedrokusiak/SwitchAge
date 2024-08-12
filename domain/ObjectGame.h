@@ -17,6 +17,8 @@ public:
     virtual void render(RendererPort* renderer) const = 0; // Método virtual puro
 
     void applyPhysics(float deltaTime);
+    void handleHibernateCollision(ObjectGame& other, const Vector2D& overlap);
+    void adjustForCollision(ObjectGame& other,const Vector2D& overlap);
     bool checkCollision(const ObjectGame& other) const;
     void resolveCollision(ObjectGame& other);
 

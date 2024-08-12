@@ -5,10 +5,10 @@ Game::Game(RendererPort *renderer,EventPort *eventPort)
     : renderer(renderer),
       eventPort(eventPort)
 {
-    auto player = std::make_unique<Player>(Vector2D(375, 30), Vector2D(50, 50), Vector2D(0, 10.0f), 10.00f, false);
+    auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 50), Vector2D(0, 1.0f), 1.00f, false);
     auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1000000000.0f, true);
-    auto groundSegment2 = std::make_unique<GroundSegment>(Vector2D(0, 80), Vector2D(800, 20), Vector2D(0, 0), 10000000000.0f, true);
-    auto groundSegment3 = std::make_unique<GroundSegment>(Vector2D(0, 20), Vector2D(800, 20), Vector2D(0, 0), 10000000000.0f, true);
+    auto groundSegment2 = std::make_unique<GroundSegment>(Vector2D(0, 150), Vector2D(800, 20), Vector2D(0, 0), 10000000000.0f, true);
+    auto groundSegment3 = std::make_unique<GroundSegment>(Vector2D(0, 75), Vector2D(800, 20), Vector2D(0, 0), 10000000000.0f, true);
 
     gameObjects.push_back(std::move(player));
     gameObjects.push_back(std::move(groundSegment));
@@ -40,7 +40,7 @@ void Game::run()
                 {
                     Player *player = dynamic_cast<Player *>(object.get());
                     if (player)
-                    {
+                    { 
                         player->handleEvent(eventPort);
                     }
                 }
