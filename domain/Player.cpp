@@ -17,17 +17,14 @@ void Player::handleEvent(EventPort* event) {
                 break;
             case SDLK_UP:
                 physicsComponent.applyForce(Vector2D(0, -PLAYER_FORCE));
-                // physicsComponent.applyForce(Vector2D(0, -PLAYER_FORCE));
-                // printf("Pular: Não está no chão, não pode pular\n");
                 break;
             case SDLK_DOWN:
                 physicsComponent.applyForce(Vector2D(0, PLAYER_FORCE));
-                // physicsComponent.applyForce(Vector2D(0, -PLAYER_FORCE));
-                // printf("Pular: Não está no chão, não pode pular\n");
                 break;
 
             default:
                  physicsComponent.applyForce(Vector2D(0, 0));
+                 break;
         }
     }
 }

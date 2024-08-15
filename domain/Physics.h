@@ -12,8 +12,17 @@ public:
 
     float getMass() const;
     Vector2D getGravity() const;
+    Vector2D getForce() const { return force; }
     Vector2D getVelocity() const;
+    Vector2D getAcceleration() const { return acceleration;}
     void setVelocity(const Vector2D& vel);
+    void setForce(const Vector2D& force);
+    void setAcceleration(const Vector2D& acceleration){
+        this -> acceleration = acceleration;
+    }
+    
+
+
     void setGravity(const Vector2D& gravit);
 
 private:

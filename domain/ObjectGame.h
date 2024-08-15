@@ -25,7 +25,9 @@ public:
     const Hitbox& getHitbox() const { return hitbox; }
     Vector2D getPosition() const { return position; }
     Vector2D getSize() const { return size; }
+   
     bool getHibernate() const { return hibernate; }
+
 
 protected:
 
