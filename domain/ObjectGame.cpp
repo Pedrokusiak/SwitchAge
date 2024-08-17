@@ -63,18 +63,18 @@ void ObjectGame::resolveCollision(ObjectGame& other) {
         if (position.y < other.position.y) {  // This object is above the other
             position.y -= overlap.y;  // Move this object up by overlap amount
             
-            other.physicsComponent.setVelocity(Vector2D(0, 0));    
             physicsComponent.applyForce(Vector2D(physicsComponent.getForce().x, -physicsComponent.getForce().y * 2));
-            other.physicsComponent.setAcceleration(Vector2D(0,0));
+            physicsComponent.setAcceleration(Vector2D(physicsComponent.getAcceleration().x,0));
+            other.physicsComponent.setAcceleration(Vector2D(other.physicsComponent.getAcceleration().x,0));
             physicsComponent.setGravity(Vector2D(0,0));
             physicsComponent.setVelocity(Vector2D(0,0));
             std::cout << "Correcting vertical overlap from above. New y-position: " << position.y << "\n";
         } else {  
             other.position.y -= overlap.y;  // Move the other object up
-            other.physicsComponent.setVelocity(Vector2D(0,0));
-            physicsComponent.setAcceleration(Vector2D(0,0));
+            physicsComponent.setAcceleration(Vector2D(physicsComponent.getAcceleration().x,0));
+            other.physicsComponent.setAcceleration(Vector2D(other.physicsComponent.getAcceleration().x,0));
+            physicsComponent.setGravity(Vector2D(0,0));
             physicsComponent.applyForce(Vector2D(physicsComponent.getForce().x, -physicsComponent.getForce().y * 2));
-            physicsComponent.setVelocity(Vector2D(0,0));
             std::cout << "Correcting vertical overlap from below. New y-position of other: " << other.position.y << "\n";
         }
 
