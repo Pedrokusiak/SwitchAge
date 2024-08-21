@@ -41,6 +41,7 @@ void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGam
     }
 }
 
-void Player::render(RendererPort* renderer) const {
-    renderer->drawPlayer(position.x, position.y, size.x, size.y, 0xFF, 0x00, 0x00, 0xFF);
+void Player::render(RendererPort* renderer, const Camera& camera) const {
+    Vector2D screenPos = camera.worldToScreen(position);
+    renderer->drawPlayer(screenPos.x, screenPos.y, size.x, size.y, 0xFF, 0x00, 0x00, 0xFF);
 }

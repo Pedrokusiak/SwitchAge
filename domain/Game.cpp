@@ -3,9 +3,10 @@
 
 Game::Game(RendererPort *renderer,EventPort *eventPort)
     : renderer(renderer),
-      eventPort(eventPort)
+      eventPort(eventPort),
+      camera(0, 0, 800, 600)
 {
-    auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 50), Vector2D(0, 0.0f), 1.00f, false);
+    auto player = std::make_unique<Player>(Vector2D(100, 100), Vector2D(50, 50), Vector2D(0, 0.0f), 1.00f, false);
     auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1000000000.0f, false);
     auto groundSegment2 = std::make_unique<GroundSegment>(Vector2D(0, 150), Vector2D(800, 20), Vector2D(0, 0), 10000000000.0f, false);
     auto groundSegment3 = std::make_unique<GroundSegment>(Vector2D(0, 75), Vector2D(800, 20), Vector2D(0, 0), 10000000000.0f, true);
@@ -23,6 +24,9 @@ void Game::run()
     const int FPS = 30;
     frameStart = renderer->getTicks();
     const int frameDelay = 1000 / FPS;
+    Player* player = nullptr;
+
+
 
     try
     {
@@ -38,10 +42,11 @@ void Game::run()
                 }
                 for (const auto &object : gameObjects)
                 {
-                    Player *player = dynamic_cast<Player *>(object.get());
-                    if (player)
-                    { 
+                    player = dynamic_cast<Player *>(object.get());
+                    if (player) {
+                        
                         player->handleEvent(eventPort);
+                        break;
                     }
                 }
             }
@@ -49,10 +54,16 @@ void Game::run()
             {
                 object->update(deltaTime, gameObjects);
             }
+
+             if (player) {
+                camera.centerOn(player->getPosition());
+            }
+
             renderer->draw();
             for (const auto &object : gameObjects)
             {
-                object->render(renderer);
+                
+                object->render(renderer, camera);
             }
             renderer->present();
             const int frameTime =  renderer->getTicks() - frameStart;

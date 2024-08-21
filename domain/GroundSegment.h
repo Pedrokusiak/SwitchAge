@@ -4,11 +4,12 @@
 #include "Vector2D.h"
 #include "ports/RendererPort.h"
 #include "ObjectGame.h"
+#include "Camera.h"
 
 class GroundSegment : public ObjectGame {
 public:
     GroundSegment(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hibernate);
-    void render(RendererPort* renderer) const override;
+    void render(RendererPort* renderer, const Camera& camera) const override;
     float getWidth() const;
     float getHeight() const;
 };

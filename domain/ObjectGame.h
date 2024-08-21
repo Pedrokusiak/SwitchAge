@@ -5,6 +5,7 @@
 #include "Physics.h"
 #include "Hitbox.h"
 #include "VisualElement.h"
+#include "Camera.h"
 #include <vector>
 #include <memory>
 
@@ -14,7 +15,7 @@ public:
     virtual ~ObjectGame() = default;
 
     virtual void update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects);
-    virtual void render(RendererPort* renderer) const = 0; // Método virtual puro
+    virtual void render(RendererPort* renderer, const Camera& camera) const = 0;
 
     void applyPhysics(float deltaTime);
     void handleHibernateCollision(ObjectGame& other, const Vector2D& overlap);
