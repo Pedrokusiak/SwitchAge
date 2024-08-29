@@ -1,23 +1,32 @@
-#include <SDL2/SDL.h>
-#include <ports/EventPort.h>
+// Arquivo SDLTexturePort.h
+#pragma once
+#include "TexturePort.h"
+#include <SDL2/SDL_image.h>
+#include <unordered_map>
 
-class SDLTextureManager : public TexturePort {
+class SDLTexturePort : public TexturePort {
 private:
     SDL_Renderer* renderer;
     std::unordered_map<int, SDLTexture*> textures;
-    int nextId = 0;
 
 public:
-    SDLTextureManager(SDL_Renderer* renderer) : renderer(renderer) {}
+    SDLTexturePort(SDL_Renderer* renderer) : renderer(renderer) {}
+    ~SDLTexturePort() {
+        for (auto& pair : textures) {
+            delete pair.second;
+        }
+    }
 
-    TexturePort* loadTexture(const std::string& filePath) override {
+    ITexture* loadTexture(const std::string& filePath) override {
         SDL_Texture* sdlTexture = IMG_LoadTexture(renderer, filePath.c_str());
-        SDLTexture* texture = new SDLTexture(sdlTexture);
-        textures[nextId] = texture;
+        if (!sdlTexture) return nullptr;
+        SDLTexture* texture = new SDLTexture(renderer, sdlTexture);
+        textures.insert(std::make_pair(textures.size(), texture));
         return texture;
     }
 
-    TexturePort* getTexture(int textureId) override {
-        return textures[textureId];
+    ITexture* getTexture(int textureId) {
+        auto it = textures.find(textureId);
+        return it != textures.end() ? it->second : nullptr;
     }
 };

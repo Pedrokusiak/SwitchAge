@@ -1,6 +1,11 @@
+// Arquivo ITexturePort.h
+#pragma once
+#include "ITexture.h"
+#include <string>
+
 class TexturePort {
 public:
     virtual ~TexturePort() {}
-    virtual ITexture* loadTexture(const std::string& filePath) = 0; // Retorna uma interface para a textura
-    virtual ITexture* getTexture(int textureId) = 0; // Recupera a interface de textura pelo ID
+    virtual ITexture* loadTexture(const std::string& filePath) = 0;
+    virtual ITexture* getTexture(int textureId) = 0;
 };

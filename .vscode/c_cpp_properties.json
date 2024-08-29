@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/src/include",
+                "${workspaceFolder}/src/include/sdl_image/",
                 "${workspaceFolder}/ports",
                 "${workspaceFolder}/adapters/SDL",
                 "${workspaceFolder}/domain",

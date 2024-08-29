@@ -2,7 +2,9 @@
 #include <SDL2/SDL.h>
 #include "adapters/SDL/SDLRendererAdapter.h"
 #include "adapters/SDL/SDLEventAdapter.h"
+#include "adapters/SDL/SDLTexture.h"
 #include "domain/Game.h"
+
 
 const int WIDTH = 800, HEIGHT = 600;
 

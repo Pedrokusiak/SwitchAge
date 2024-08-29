@@ -6,6 +6,7 @@
 #include "Physics.h"
 #include "ports/RendererPort.h"
 #include "ports/EventPort.h"
+#include "ports/TexturePort.h"
 #include "ports/PlayerRenderPort.h"
 #include <vector>
 #include <memory>
@@ -22,6 +23,7 @@ public:
 private:
     RendererPort *renderer;
     EventPort *eventPort;
+    TexturePort *texturePort;
     std::vector<std::unique_ptr<ObjectGame>> gameObjects;
 
 };
