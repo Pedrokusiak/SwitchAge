@@ -7,7 +7,7 @@
 class Player : public ObjectGame {
 public:
     Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hiberate, ITexture* texture);
-    virtual ~Player(); 
+    virtual ~Player() override = default; // Destruidor virtual
     void handleEvent(EventPort* event);
     void render(RendererPort* renderer) const override;
     void update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) override; // Adicione esta linha

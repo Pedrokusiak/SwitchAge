@@ -41,3 +41,14 @@ void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGam
     }
 }
 
+
+void Player::render(RendererPort* renderer) const {
+    if (texture) {
+        int width = texture->getWidth();
+        int height = texture->getHeight();
+        int x = static_cast<int>(position.x);
+        int y = static_cast<int>(position.y);
+        renderer->drawTexture(texture, x, y, width, height);
+    }
+}
+
