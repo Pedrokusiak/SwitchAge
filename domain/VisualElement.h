@@ -3,19 +3,21 @@
 
 #include "Vector2D.h"
 #include "ports/RendererPort.h"
+#include "ports/ITexture.h"
 
 class VisualElement {
 public:
-    VisualElement(Vector2D position);
+    VisualElement(Vector2D position, ITexture* texture);
     virtual ~VisualElement() = default;
 
-    virtual void render(RendererPort* renderer) const = 0;
+    virtual void render(RendererPort* renderer) const;
 
-    Vector2D getPosition() const;
-    void setPosition(const Vector2D& position);
+    Vector2D getPosition() const { return position; }
+    void setPosition(const Vector2D& position) { this->position = position; }
 
 protected:
     Vector2D position;
+    ITexture* texture;
 };
 
 #endif // VISUALELEMENT_H

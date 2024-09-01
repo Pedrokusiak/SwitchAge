@@ -3,7 +3,7 @@
 #ifndef RENDERERPORT_H
 #define RENDERERPORT_H
 #include <SDL2/SDL.h>
-
+#include "ITexture.h"
 
 class RendererPort {
 public:
@@ -26,6 +26,7 @@ public:
     virtual void delay(Uint32 tempo) const = 0;
     virtual Uint32 getTicks() const = 0;
     
+    virtual void drawTexture(ITexture* texture, int x, int y, int width, int height) = 0;
 };
 
 #endif 

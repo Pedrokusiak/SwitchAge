@@ -13,7 +13,7 @@
 
 class Game {
 public:
-    Game(RendererPort *renderer,EventPort *eventPort);
+    Game(RendererPort *renderer,EventPort *eventPort, TexturePort *texturePort);
     void run();
     void processEvents(bool running);
     void updateGameObjects(float deltaTime);

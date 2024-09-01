@@ -11,6 +11,7 @@ public:
     void draw() const;
     void drawPlayer(int x, int y, int width, int height, Uint8 r, Uint8 g, Uint8 b, Uint8 a) override;
     void drawRect(int x, int y, int width, int height, Uint8 r, Uint8 g, Uint8 b, Uint8 a) override;
+    void drawTexture(ITexture* texture, int x, int y, int width, int height) override;
     void present() const override;
     
     void quit() const override;

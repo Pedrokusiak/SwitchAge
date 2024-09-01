@@ -1,11 +1,15 @@
 #include "VisualElement.h"
 
-VisualElement::VisualElement(Vector2D pos) : position(pos) {}
+VisualElement::VisualElement(Vector2D pos, ITexture* texture)
+    : position(pos), texture(texture) {}
 
-Vector2D VisualElement::getPosition() const {
-    return position;
+void VisualElement::render(RendererPort* renderer) const {
+    if (texture) {
+        int width = texture->getWidth();
+        int height = texture->getHeight();
+        int x = static_cast<int>(position.x);
+        int y = static_cast<int>(position.y);
+        renderer->drawTexture(texture, x, y, width, height);
+    }
 }
 
-void VisualElement::setPosition(const Vector2D& pos) {
-    position = pos;
-}

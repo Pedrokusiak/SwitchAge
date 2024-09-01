@@ -1,19 +1,18 @@
 #include "Game.h"
 #include <iostream>
 
-Game::Game(RendererPort *renderer,EventPort *eventPort)
+Game::Game(RendererPort *renderer,EventPort *eventPort, TexturePort *texturePort)
     : renderer(renderer),
-      eventPort(eventPort)
+      eventPort(eventPort),
+      texturePort(texturePort)
 {
-    auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 50), Vector2D(0, 0.0f), 1.00f, false);
-    auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1000000000.0f, false);
-    auto groundSegment2 = std::make_unique<GroundSegment>(Vector2D(0, 150), Vector2D(800, 20), Vector2D(0, 0), 10000000000.0f, false);
-    auto groundSegment3 = std::make_unique<GroundSegment>(Vector2D(0, 75), Vector2D(800, 20), Vector2D(0, 0), 10000000000.0f, true);
+    auto playerTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Deco/18.png");
+    auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Deco/18.png");
+    auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 50), Vector2D(0, 0.0f), 1.00f, false, playerTexture);
+    auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1000000000.0f, false, groundTexture);
 
     gameObjects.push_back(std::move(player));
     gameObjects.push_back(std::move(groundSegment));
-    gameObjects.push_back(std::move(groundSegment2));
-    gameObjects.push_back(std::move(groundSegment3));
 }
 
 void Game::run()
@@ -21,6 +20,7 @@ void Game::run()
     bool running = true;
     Uint32 frameStart;
     const int FPS = 30;
+
     frameStart = renderer->getTicks();
     const int frameDelay = 1000 / FPS;
 
@@ -38,6 +38,7 @@ void Game::run()
                 }
                 for (const auto &object : gameObjects)
                 {
+                    
                     Player *player = dynamic_cast<Player *>(object.get());
                     if (player)
                     { 

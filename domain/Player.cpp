@@ -3,8 +3,8 @@
 
 const float PLAYER_FORCE = 1000.0f;
 
-Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate )
-    : ObjectGame(pos, size, gravity, mass, hibernate ) {}
+Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate, ITexture* texture )
+    : ObjectGame(pos, size, gravity, mass, hibernate, texture ) {}
 
 void Player::handleEvent(EventPort* event) {
     if (event->isKeyDownEvent()) {
@@ -41,6 +41,3 @@ void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGam
     }
 }
 
-void Player::render(RendererPort* renderer) const {
-    renderer->drawPlayer(position.x, position.y, size.x, size.y, 0xFF, 0x00, 0x00, 0xFF);
-}

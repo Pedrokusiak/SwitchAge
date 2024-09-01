@@ -10,7 +10,7 @@
 
 class ObjectGame : public VisualElement {
 public:
-    ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hibernate);
+    ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hibernate, ITexture* texture);
     virtual ~ObjectGame() = default;
 
     virtual void update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects);
@@ -23,7 +23,6 @@ public:
     void resolveCollision(ObjectGame& other);
 
     const Hitbox& getHitbox() const { return hitbox; }
-    Vector2D getPosition() const { return position; }
     Vector2D getSize() const { return size; }
    
     bool getHibernate() const { return hibernate; }

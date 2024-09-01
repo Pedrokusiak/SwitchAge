@@ -1,11 +1,13 @@
-#pragma once
+#ifndef ITEXTURE_H
+#define ITEXTURE_H
 
 class ITexture {
 public:
     virtual ~ITexture() {}
 
-    // Métodos virtuais puros que devem ser implementados pelas classes concretas
     virtual int getWidth() const = 0;
     virtual int getHeight() const = 0;
-    virtual void bind() const = 0;  // Método para "bindar" a textura
+    virtual void bind() const = 0;
+    virtual int getId() const = 0;  // Adicione este método para obter o ID da textura
 };
+#endif // ITEXTURE_H

@@ -5,8 +5,8 @@
 #include <iostream>
 #include <memory>
 
-ObjectGame::ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hiberate)
-    : VisualElement(position), size(size), physicsComponent(gravity, mass), hitbox(position, size) {}
+ObjectGame::ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hiberate, ITexture* texture)
+    : VisualElement(position, texture), size(size), physicsComponent(gravity, mass), hitbox(position, size) {}
 
 void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
     applyPhysics(deltaTime);

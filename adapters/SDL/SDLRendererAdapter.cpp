@@ -1,5 +1,5 @@
 #include "SDLRendererAdapter.h"
-
+#include "SDLTexture.h"
 SDLRendererAdapter::SDLRendererAdapter() {
     SDL_Init(SDL_INIT_VIDEO);
     window = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
@@ -47,4 +47,10 @@ void SDLRendererAdapter::drawRect(int x, int y, int width, int height, Uint8 r, 
 
 SDL_Renderer* SDLRendererAdapter::getRenderer() const {
     return renderer;
+}
+
+void SDLRendererAdapter::drawTexture(ITexture* texture, int x, int y, int width, int height) {
+    SDL_Texture* sdlTexture = static_cast<SDLTexture*>(texture)->getInternalTexture();
+    SDL_Rect destRect = {x, y, width, height};
+    SDL_RenderCopy(renderer, sdlTexture, NULL, &destRect);
 }
