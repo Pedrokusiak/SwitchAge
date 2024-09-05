@@ -7,8 +7,9 @@ Game::Game(RendererPort *renderer,EventPort *eventPort, TexturePort *texturePort
       texturePort(texturePort)
 {
     auto playerTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Deco/18.png");
-    auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Deco/18.png");
-    auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 50), Vector2D(0, 0.0f), 1.00f, false, playerTexture);
+    auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Deco");
+
+    auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 150), Vector2D(0, 0.0f), 1.00f, false, playerTexture);
     auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1000000000.0f, false, groundTexture);
 
     gameObjects.push_back(std::move(player));
@@ -30,6 +31,7 @@ void Game::run()
         {
             const float deltaTime = (renderer->getTicks() - frameStart) / 1000.0f;
             frameStart = renderer->getTicks();
+            renderer->draw();
             while (eventPort->pollEvent())
             {
                 if (eventPort->isQuitEvent())
@@ -46,15 +48,14 @@ void Game::run()
                     }
                 }
             }
+       
+
             for (const auto &object : gameObjects)
             {
                 object->update(deltaTime, gameObjects);
-            }
-            renderer->draw();
-            for (const auto &object : gameObjects)
-            {
                 object->render(renderer);
             }
+      
             renderer->present();
             const int frameTime =  renderer->getTicks() - frameStart;
             if (frameDelay > frameTime)

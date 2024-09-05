@@ -31,7 +31,7 @@ public:
             return nullptr;
         }
 
-        int id = ++nextId;  // Incrementa o ID para cada nova textura
+        int id = ++nextId;
         ITexture* texture = new SDLTexture(sdlTexture, id);
         textures[id] = texture;
         return texture;
