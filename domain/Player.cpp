@@ -3,8 +3,8 @@
 
 const float PLAYER_FORCE = 1000.0f;
 
-Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate, ITexture* texture )
-    : ObjectGame(pos, size, gravity, mass, hibernate, texture ) {}
+Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate, ITexture* texture, Animation animation )
+    : ObjectGame(pos, size, gravity, mass, hibernate, texture, animation ) {}
 
 void Player::handleEvent(EventPort* event) {
     if (event->isKeyDownEvent()) {
@@ -29,8 +29,10 @@ void Player::handleEvent(EventPort* event) {
     }
 }
 
+
 void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
     ObjectGame::update(deltaTime, gameObjects);
+    animation.update(deltaTime);
     for (const auto& object : gameObjects) {
         if (this != object.get() && checkCollision(*object)) {
             if (position.y + size.y <= object->getPosition().y) {
@@ -43,12 +45,6 @@ void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGam
 
 
 void Player::render(RendererPort* renderer) const {
-    if (texture) {
-        int width = texture->getWidth();
-        int height = texture->getHeight();
-        int x = static_cast<int>(position.x);
-        int y = static_cast<int>(position.y);
-        renderer->drawTexture(texture, x, y, width, height);
-    }
+    Frame currentFrame = animation.getCurrentFrame(); 
+    renderer->drawTexture(texture, position.x, position.y, currentFrame.width, currentFrame.height);
 }
-

@@ -7,10 +7,10 @@
 #include "VisualElement.h"
 #include <vector>
 #include <memory>
-
+#include "Animation.h"
 class ObjectGame : public VisualElement {
 public:
-    ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hibernate, ITexture* texture);
+    ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hibernate, ITexture* texture, Animation animation);
     virtual ~ObjectGame() override = default;
 
     virtual void update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects);
@@ -34,6 +34,7 @@ protected:
     Vector2D size;
     Physics physicsComponent;
     Hitbox hitbox;
+    Animation animation;
 };
 
 #endif // OBJECTGAME_H

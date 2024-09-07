@@ -1,31 +1,35 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef ANIMATION_H
+#define ANIMATION_H
 
-#include "Player.h"
-#include "GroundSegment.h"
-#include "Physics.h"
-#include "ports/RendererPort.h"
-#include "ports/EventPort.h"
-#include "ports/TexturePort.h"
-#include "ports/PlayerRenderPort.h"
 #include <vector>
-#include <memory>
+#include "Frame.h"
+#include <SDL2/SDL.h>
 
-class Game {
-public:
-    Game(RendererPort *renderer,EventPort *eventPort, TexturePort *texturePort);
-    void run();
-    void processEvents(bool running);
-    void updateGameObjects(float deltaTime);
-    void renderGameObjects();
-    void controlFrameRate(Uint32 frameStar, float frameDelay);
-
+class Animation {
 private:
-    RendererPort *renderer;
-    EventPort *eventPort;
-    TexturePort *texturePort;
-    std::vector<std::unique_ptr<ObjectGame>> gameObjects;
+    std::vector<Frame> frames;
+    int currentFrame;
+    Uint32 lastUpdate;
+    Uint32 updateInterval;
 
+public:
+
+    enum class Direction {
+        Left,
+        Right,
+        Up,
+        Down
+    };
+    Animation(const std::vector<Frame>& frm, Uint32 interval);
+
+    void update(Uint32 currentTime);
+
+    Frame getCurrentFrame() const;
+
+    void setDirection(Direction dir){
+        
+    }
 };
+
 
 #endif // GAME_H

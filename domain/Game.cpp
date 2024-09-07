@@ -1,19 +1,30 @@
 #include "Game.h"
 #include <iostream>
 
-Game::Game(RendererPort *renderer,EventPort *eventPort, TexturePort *texturePort)
+Game::Game(RendererPort *renderer, EventPort *eventPort, TexturePort *texturePort)
     : renderer(renderer),
       eventPort(eventPort),
       texturePort(texturePort)
 {
     auto playerTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Deco/18.png");
-    auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Deco");
 
-    auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 150), Vector2D(0, 0.0f), 1.00f, false, playerTexture);
-    auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1000000000.0f, false, groundTexture);
+    // Suponha que estas sejam as dimensões de cada quadro na sprite sheet
+    int frameWidth = 64;  // largura do quadro
+    int frameHeight = 64; // altura do quadro
+    int numFrames = 4;    // número de quadros na animação de andar
+    int startY = 0;       // Y da linha onde os quadros de andar começam na sprite sheet
+
+    std::vector<Frame> walkingFrames;
+    for (int i = 0; i < numFrames; i++)
+    {
+        Frame frame(i * frameWidth, startY, frameWidth, frameHeight);
+        walkingFrames.push_back(frame);
+    }
+    Uint32 animationInterval = 250; // intervalo de atualização em milissegundos
+    PlayerAnimation walkingAnimation(walkingFrames, animationInterval);
+    auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 150), Vector2D(0, 0.0f), 1.00f, false, playerTexture, walkingAnimation);
 
     gameObjects.push_back(std::move(player));
-    gameObjects.push_back(std::move(groundSegment));
 }
 
 void Game::run()
@@ -40,24 +51,24 @@ void Game::run()
                 }
                 for (const auto &object : gameObjects)
                 {
-                    
+
                     Player *player = dynamic_cast<Player *>(object.get());
                     if (player)
-                    { 
+                    {
+                        std::cout << "Animation frame updated to: " << std::endl;
                         player->handleEvent(eventPort);
                     }
                 }
             }
-       
 
             for (const auto &object : gameObjects)
             {
                 object->update(deltaTime, gameObjects);
                 object->render(renderer);
             }
-      
+
             renderer->present();
-            const int frameTime =  renderer->getTicks() - frameStart;
+            const int frameTime = renderer->getTicks() - frameStart;
             if (frameDelay > frameTime)
             {
                 renderer->delay(frameDelay - frameTime);

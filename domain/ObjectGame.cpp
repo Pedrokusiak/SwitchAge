@@ -5,8 +5,8 @@
 #include <iostream>
 #include <memory>
 
-ObjectGame::ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hiberate, ITexture* texture)
-    : VisualElement(position, texture), size(size), physicsComponent(gravity, mass), hitbox(position, size) {}
+ObjectGame::ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hiberate, ITexture* texture,Animation animation1)
+    : VisualElement(position, texture), size(size), physicsComponent(gravity, mass), hitbox(position, size), animation(animation1) {}
 
 void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
     applyPhysics(deltaTime);
@@ -30,13 +30,10 @@ void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<Objec
 }
 
 void ObjectGame::applyPhysics(float deltaTime) {
-    if(!hibernate){
+     if (!hibernate) {
         physicsComponent.update(deltaTime);
-        if(physicsComponent.getVelocity().y == 0){
-            position = position;
-        }
-
-        position += physicsComponent.getVelocity() * deltaTime;
+        animation.update(deltaTime);  // Atualizar a animação baseada no tempo
+        hitbox.update(position + physicsComponent.getVelocity() * deltaTime);
     }
   
 }
