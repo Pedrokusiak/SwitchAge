@@ -1,6 +1,6 @@
 #include "VisualElement.h"
 
-VisualElement::VisualElement(Vector2D pos, ITexture* texture)
+VisualElement::VisualElement(Vector2D pos, const std::shared_ptr<ITexture>& texture)
     : position(pos), texture(texture) {}
 
 void VisualElement::render(RendererPort* renderer) const {
@@ -12,4 +12,3 @@ void VisualElement::render(RendererPort* renderer) const {
         renderer->drawTexture(texture, x, y, width, height);
     }
 }
-

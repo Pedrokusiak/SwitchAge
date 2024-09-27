@@ -9,6 +9,7 @@ void Hitbox::update(Vector2D newPosition) {
 }
 
 bool Hitbox::intersects(const Hitbox& other) const {
+    
     float thisRight = position.x + size.x;
     float otherRight = other.position.x + other.size.x;
     bool xOverlap = position.x < otherRight && thisRight > other.position.x;

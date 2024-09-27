@@ -3,6 +3,9 @@
 #define SDLRENDERERADAPTER_H
 #include <SDL2/SDL.h>
 #include "ports/RendererPort.h"
+#include "ITexture.h"
+#include <memory>
+#include "SDLTexture.h" 
 
 class SDLRendererAdapter : public RendererPort {
 public:
@@ -11,7 +14,10 @@ public:
     void draw() const;
     void drawPlayer(int x, int y, int width, int height, Uint8 r, Uint8 g, Uint8 b, Uint8 a) override;
     void drawRect(int x, int y, int width, int height, Uint8 r, Uint8 g, Uint8 b, Uint8 a) override;
-    void drawTexture(ITexture* texture, int x, int y, int width, int height) override;
+    virtual void drawTexture(const std::shared_ptr<ITexture>& texture, int x, int y, int width, int height) override;
+    void drawTexturePart(const std::shared_ptr<ITexture>& texture, 
+                                 int destX, int destY, int destW, int destH, 
+                                 int srcX, int srcY, int srcW, int srcH) override; 
     void present() const override;
     
     void quit() const override;

@@ -3,7 +3,8 @@
 #ifndef RENDERERPORT_H
 #define RENDERERPORT_H
 #include <SDL2/SDL.h>
-#include "ITexture.h"
+#include <memory>
+class ITexture;
 
 class RendererPort {
 public:
@@ -26,7 +27,10 @@ public:
     virtual void delay(Uint32 tempo) const = 0;
     virtual Uint32 getTicks() const = 0;
     
-    virtual void drawTexture(ITexture* texture, int x, int y, int width, int height) = 0;
+    virtual void drawTexture(const std::shared_ptr<ITexture>& texture, int x, int y, int width, int height) = 0;
+    virtual void drawTexturePart(const std::shared_ptr<ITexture>& texture, 
+                                 int destX, int destY, int destW, int destH, 
+                                 int srcX, int srcY, int srcW, int srcH) = 0;
 };
 
 #endif 

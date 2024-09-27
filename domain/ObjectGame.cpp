@@ -5,11 +5,20 @@
 #include <iostream>
 #include <memory>
 
-ObjectGame::ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hiberate, ITexture* texture,Animation animation1)
-    : VisualElement(position, texture), size(size), physicsComponent(gravity, mass), hitbox(position, size), animation(animation1) {}
+ObjectGame::ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hibernate, 
+                       std::shared_ptr<ITexture> texture, RendererPort* renderer, int frameWidth, int frameHeight)
+    : VisualElement(position, texture), 
+      size(size), 
+      physicsComponent(gravity, mass), 
+      hitbox(position, size),
+      hibernate(hibernate),
+      animation(std::make_unique<Animation>(renderer, texture, frameWidth, frameHeight)) {}
+
 
 void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
+    std::cout << "Delta time: " << deltaTime << std::endl;
     applyPhysics(deltaTime);
+    std::cout << "ObjectGame::update called" << std::endl;
     if(!hibernate){
         hitbox.update(position);
     }
@@ -32,8 +41,9 @@ void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<Objec
 void ObjectGame::applyPhysics(float deltaTime) {
      if (!hibernate) {
         physicsComponent.update(deltaTime);
-        animation.update(deltaTime);  // Atualizar a animação baseada no tempo
-        hitbox.update(position + physicsComponent.getVelocity() * deltaTime);
+        position += physicsComponent.getVelocity() * deltaTime;
+        animation->update(deltaTime); 
+        hitbox.update(position);
     }
   
 }

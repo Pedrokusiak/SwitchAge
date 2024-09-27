@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "ports/RendererPort.h"
 #include <iostream>
 
 Game::Game(RendererPort *renderer, EventPort *eventPort, TexturePort *texturePort)
@@ -6,25 +7,75 @@ Game::Game(RendererPort *renderer, EventPort *eventPort, TexturePort *texturePor
       eventPort(eventPort),
       texturePort(texturePort)
 {
-    auto playerTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Deco/18.png");
+    // Carregando texturas
+    auto playerTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Resources/Trees/Tree.png");
+    auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Factions/Goblins/Buildings/Wood_House/Goblin_House.png"); // Substitua pelo caminho correto
 
-    // Suponha que estas sejam as dimensões de cada quadro na sprite sheet
-    int frameWidth = 64;  // largura do quadro
-    int frameHeight = 64; // altura do quadro
-    int numFrames = 4;    // número de quadros na animação de andar
-    int startY = 0;       // Y da linha onde os quadros de andar começam na sprite sheet
+    // Configurando o jogador
+    Vector2D playerPosition = {200, 200};
+    Vector2D playerSize = {64, 64};
+    Vector2D playerGravity = {0, 90.8};
+    float playerMass = 10.0f;
+    bool playerHibernate = false;
 
-    std::vector<Frame> walkingFrames;
-    for (int i = 0; i < numFrames; i++)
-    {
-        Frame frame(i * frameWidth, startY, frameWidth, frameHeight);
-        walkingFrames.push_back(frame);
-    }
-    Uint32 animationInterval = 250; // intervalo de atualização em milissegundos
-    PlayerAnimation walkingAnimation(walkingFrames, animationInterval);
-    auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 150), Vector2D(0, 0.0f), 1.00f, false, playerTexture, walkingAnimation);
+    std::unique_ptr<Player> player(new Player(playerPosition, playerSize, playerGravity, playerMass,
+                                              playerHibernate, playerTexture, renderer, 64, 64));
+
+    player->addAnimation("idle", {0, 1, 2, 3});
+    player->addAnimation("walkLeft", {4, 5, 6, 7});
+    player->addAnimation("walkRight", {8, 9, 10, 11});
+    player->addAnimation("jumpUp", {12, 13, 14});
+    player->addAnimation("crouch", {15, 16});
+    player->playAnimation("idle", true);
 
     gameObjects.push_back(std::move(player));
+
+    const int numGroundSegments = 5; // Número de segmentos de chão
+    const int segmentWidth = 160;     // Largura de cada segmento
+    const int segmentHeight = 64;     // Altura de cada segmento
+    const int floorY = 500;
+    const int ceilingY = 50;  // Posição Y do teto
+         
+  for (int i = 0; i < numGroundSegments; ++i)
+    {
+        Vector2D groundPosition = {static_cast<float>(i * segmentWidth), static_cast<float>(floorY + (i % 2) * 30)};
+        Vector2D groundSize = {static_cast<float>(segmentWidth), static_cast<float>(segmentHeight)};
+
+        std::unique_ptr<GroundSegment> ground(new GroundSegment(
+            groundPosition,
+            groundSize,
+            Vector2D(0, 0),
+            1000.0f,
+            true,
+            groundTexture,
+            renderer,
+            128,
+            64
+        ));
+
+        gameObjects.push_back(std::move(ground));
+    }
+
+    // Criando segmentos de teto
+    for (int i = 0; i < numGroundSegments; ++i)
+    {
+        Vector2D ceilingPosition = {static_cast<float>(i * segmentWidth), static_cast<float>(ceilingY - (i % 2) * 30)};
+        Vector2D ceilingSize = {static_cast<float>(segmentWidth), static_cast<float>(segmentHeight)};
+
+        std::unique_ptr<GroundSegment> ceiling(new GroundSegment(
+            ceilingPosition,
+            ceilingSize,
+            Vector2D(0, 0),
+            1000.0f,
+            true,
+            groundTexture,
+            renderer,
+            64,
+            64
+        ));
+
+        gameObjects.push_back(std::move(ceiling));
+    }
 }
 
 void Game::run()

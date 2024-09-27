@@ -1,35 +1,49 @@
-#ifndef ANIMATION_H
-#define ANIMATION_H
 
+    #ifndef ANIMATION_H
+    #define ANIMATION_H
+
+#include "ITexture.h"
+#include "RendererPort.h"
 #include <vector>
-#include "Frame.h"
-#include <SDL2/SDL.h>
+#include <map>
+#include <string>
+#include <memory>
 
 class Animation {
-private:
-    std::vector<Frame> frames;
-    int currentFrame;
-    Uint32 lastUpdate;
-    Uint32 updateInterval;
-
 public:
+    Animation(RendererPort* renderer, std::shared_ptr<ITexture> spritesheet, int frameWidth, int frameHeight);
+
+    void addAnimation(const std::string& name, const std::vector<int>& frameIndices);
+    void playAnimation(const std::string& name, bool loop = true);
+    void update(Uint32 deltaTime);
+    void render(int x, int y);
+
+    int getFrameWidth() const { return frameWidth; }
+    int getFrameHeight() const { return frameHeight; }
+    std::string getCurrentAnimation() const { return currentAnimation; }
+    void setFrameDuration(float duration) { frameDuration = duration; }
 
     enum class Direction {
-        Left,
-        Right,
-        Up,
-        Down
+        Left = 0,
+        Right = 1,
+        Up = 2,
+        Down = 3
     };
-    Animation(const std::vector<Frame>& frm, Uint32 interval);
 
-    void update(Uint32 currentTime);
+private:
+    RendererPort* renderer;
+    std::shared_ptr<ITexture> spritesheet;
+    int frameWidth;
+    int frameHeight;
+    int spritesheetCols;
 
-    Frame getCurrentFrame() const;
-
-    void setDirection(Direction dir){
-        
-    }
+    std::map<std::string, std::vector<int>> animations;
+    std::string currentAnimation;
+    int currentFrameIndex;
+    float frameTimer;
+    float frameDuration;
+    bool looping;
 };
 
+#endif // ANIMATIO
 
-#endif // GAME_H

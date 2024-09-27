@@ -4,10 +4,11 @@
 #include "Vector2D.h"
 #include "ports/RendererPort.h"
 #include "ports/ITexture.h"
+#include "memory"
 
 class VisualElement {
 public:
-    VisualElement(Vector2D position, ITexture* texture);
+    VisualElement(Vector2D position,const  std::shared_ptr<ITexture>& texture);
     virtual ~VisualElement() = default;
 
     virtual void render(RendererPort* renderer) const;
@@ -17,7 +18,7 @@ public:
 
 protected:
     Vector2D position;
-    ITexture* texture;
+    std::shared_ptr<ITexture> texture;
 };
 
 #endif // VISUALELEMENT_H

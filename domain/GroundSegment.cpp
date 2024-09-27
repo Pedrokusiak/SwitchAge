@@ -1,7 +1,8 @@
 #include "GroundSegment.h"
 
-GroundSegment::GroundSegment(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hibernate, ITexture* texture, Animation animation)
-    : ObjectGame(position, size, gravity, mass, hibernate, texture, animation){}
+GroundSegment::GroundSegment(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hibernate, 
+                             std::shared_ptr<ITexture> texture, RendererPort* renderer, int frameWidth, int frameHeight)
+    : ObjectGame(position, size, gravity, mass, hibernate, texture, renderer, frameWidth, frameHeight) {}
 
 void GroundSegment::render(RendererPort* renderer) const {
     if (texture) {

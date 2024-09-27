@@ -1,5 +1,7 @@
 #include "SDLRendererAdapter.h"
 #include "SDLTexture.h"
+#include <iostream>
+
 SDLRendererAdapter::SDLRendererAdapter() {
     SDL_Init(SDL_INIT_VIDEO);
     window = SDL_CreateWindow("Game", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 800, 600, SDL_WINDOW_SHOWN);
@@ -49,8 +51,26 @@ SDL_Renderer* SDLRendererAdapter::getRenderer() const {
     return renderer;
 }
 
-void SDLRendererAdapter::drawTexture(ITexture* texture, int x, int y, int width, int height) {
-    SDL_Texture* sdlTexture = static_cast<SDLTexture*>(texture)->getInternalTexture();
-    SDL_Rect destRect = {x, y, width, height};
-    SDL_RenderCopy(renderer, sdlTexture, NULL, &destRect);
+void SDLRendererAdapter::drawTexture(const std::shared_ptr<ITexture>& texture, int x, int y, int width, int height) {
+    SDLTexture* sdlTexture = dynamic_cast<SDLTexture*>(texture.get());
+    if (sdlTexture) {  // Verifica se a conversão foi bem-sucedida
+        SDL_Texture* internalTexture = sdlTexture->getInternalTexture();
+        if (internalTexture) {
+            SDL_Rect destRect = { x, y, width, height };
+            SDL_RenderCopy(renderer, internalTexture, nullptr, &destRect);
+        }
+    } else {
+        std::cerr << "Error: Provided texture is not of type SDLTexture." << std::endl;
+    }
+}
+
+void SDLRendererAdapter::drawTexturePart(const std::shared_ptr<ITexture>& texture, 
+                                         int destX, int destY, int destW, int destH, 
+                                         int srcX, int srcY, int srcW, int srcH) {
+    SDLTexture* sdlTexture = dynamic_cast<SDLTexture*>(texture.get());
+    if (sdlTexture) {
+        SDL_Rect srcRect = { srcX, srcY, srcW, srcH };
+        SDL_Rect destRect = { destX, destY, destW, destH };
+        SDL_RenderCopy(renderer, sdlTexture->getInternalTexture(), &srcRect, &destRect);
+    }
 }

@@ -8,7 +8,6 @@
 #include "ports/EventPort.h"
 #include "ports/TexturePort.h"
 #include "ports/PlayerRenderPort.h"
-#include "domain/PlayerAnimation.h"
 #include <vector>
 #include <memory>
 

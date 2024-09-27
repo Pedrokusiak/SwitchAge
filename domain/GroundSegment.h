@@ -4,10 +4,13 @@
 #include "Vector2D.h"
 #include "ports/RendererPort.h"
 #include "ObjectGame.h"
+#include "memory.h"
 
 class GroundSegment : public ObjectGame {
 public:
-    GroundSegment(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hibernate, ITexture* texture, Animation animation);
+  
+    GroundSegment(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hibernate, 
+                  std::shared_ptr<ITexture> texture, RendererPort* renderer, int frameWidth, int frameHeight);
     void render(RendererPort* renderer) const override;
     float getWidth() const;
     float getHeight() const;
