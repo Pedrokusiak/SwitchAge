@@ -54,7 +54,7 @@ Game::Game(RendererPort *renderer, EventPort *eventPort, TexturePort *texturePor
             groundTexture,
             renderer,
             128,
-            64
+            128
         ));
 
         gameObjects.push_back(std::move(ground));
@@ -112,6 +112,7 @@ void Game::run()
                     Player *player = dynamic_cast<Player *>(object.get());
                     if (player)
                     { 
+                        camera.centerOn(player->getPosition());
                         player->handleEvent(eventPort);
                         break;
                     }

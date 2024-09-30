@@ -6,13 +6,19 @@ GroundSegment::GroundSegment(Vector2D position, Vector2D size, Vector2D gravity,
 
 
 
-void GroundSegment::render(RendererPort* renderer,const Camera& camera ) const {
+void GroundSegment::render(RendererPort* renderer, const Camera& camera) const {
     if (texture) {
         Vector2D screenPos = camera.worldToScreen(position);
-        int width = texture -> getWidth();
-        int height = texture -> getHeight();
         int x = static_cast<int>(screenPos.x);
         int y = static_cast<int>(screenPos.y);
+        int width = static_cast<int>(size.x);
+        int height = static_cast<int>(size.y);
+
+        if (x + width < 0 || x > camera.getViewportWidth() ||
+            y + height < 0 || y > camera.getViewportHeight()) {
+            return;  // Segmento está fora da viewport, não renderize
+        }
+
         renderer->drawTexture(texture, x, y, width, height);
     }
 }

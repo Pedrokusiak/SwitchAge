@@ -50,6 +50,8 @@ bool ObjectGame::checkCollision(const ObjectGame& other) const {
     return hitbox.intersects(other.getHitbox());
 }
 
+
+
 void ObjectGame::resolveCollision(ObjectGame& other) {
    Vector2D overlap = hitbox.getOverlap(other.getHitbox());
 

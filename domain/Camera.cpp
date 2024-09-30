@@ -1,4 +1,3 @@
-// Camera.cpp
 #include "Camera.h"
 
 Camera::Camera(float x, float y, int viewportWidth, int viewportHeight)

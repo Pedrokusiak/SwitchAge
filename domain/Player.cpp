@@ -35,13 +35,18 @@ void Player::handleEvent(EventPort* event) {
 
 void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
     ObjectGame::update(deltaTime, gameObjects);
+    animation->update(deltaTime);
     
     }
 
 
 void Player::render(RendererPort* renderer, const Camera& camera) const {
     Vector2D screenPos = camera.worldToScreen(position);
-    renderer->drawPlayer(screenPos.x, screenPos.y, size.x, size.y, 0xFF, 0x00, 0x00, 0xFF);
+    
+    int screenX = static_cast<int>(screenPos.x);
+    int screenY = static_cast<int>(screenPos.y);
+
+    animation->render(screenX, screenY);
 }
 
 void Player::addAnimation(const std::string& name, const std::vector<int>& frameIndices) {
