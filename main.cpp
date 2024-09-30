@@ -33,10 +33,12 @@ int main(int argc, char *argv[]) {
         // Carregar textura
        SDLTexture* texturePort = new SDLTexture(renderer.getRenderer());
 
+        Camera camera(0, 0, WIDTH, HEIGHT);
+
 
 
         // Instanciar o Game
-        Game game(&renderer, &event, texturePort);
+         Game game(&renderer, &event, texturePort, camera);
         game.run();
 
      

@@ -43,3 +43,11 @@ void Player::render(RendererPort* renderer, const Camera& camera) const {
     Vector2D screenPos = camera.worldToScreen(position);
     renderer->drawPlayer(screenPos.x, screenPos.y, size.x, size.y, 0xFF, 0x00, 0x00, 0xFF);
 }
+
+void Player::addAnimation(const std::string& name, const std::vector<int>& frameIndices) {
+    animation->addAnimation(name, frameIndices);
+}
+
+void Player::playAnimation(const std::string& name, bool loop) {
+    animation->playAnimation(name, loop);
+}

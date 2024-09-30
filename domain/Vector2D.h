@@ -46,6 +46,8 @@ public:
         y /= scalar;
         return *this;
     }
+
+ 
 };
 
 #endif // VECTOR2D_HPP

@@ -2,17 +2,35 @@
 #include "ports/RendererPort.h"
 #include <iostream>
 
-Game::Game(RendererPort *renderer, EventPort *eventPort, TexturePort *texturePort)
+Game::Game(RendererPort *renderer, EventPort *eventPort, TexturePort *texturePort, Camera camera)
     : renderer(renderer),
       eventPort(eventPort),
-      texturePort(texturePort)
-      eventPort(eventPort),
-      camera(0, 0, 800, 600)
+      texturePort(texturePort),
+      camera(camera)
 {
-    auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 50), Vector2D(0, 0.0f), 1.00f, false);
-    auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1000000000.0f, false);
-    auto groundSegment2 = std::make_unique<GroundSegment>(Vector2D(0, 150), Vector2D(800, 20), Vector2D(0, 0), 10000000000.0f, false);
-    auto groundSegment3 = std::make_unique<GroundSegment>(Vector2D(0, 75), Vector2D(800, 20), Vector2D(0, 0), 10000000000.0f, true);
+
+    auto playerTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Resources/Trees/Tree.png");
+    auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Factions/Goblins/Buildings/Wood_House/Goblin_House.png"); // Substitua pelo caminho correto
+
+    // Configurando o jogador
+    Vector2D playerPosition = {200, 200};
+    Vector2D playerSize = {64, 64};
+    Vector2D playerGravity = {0, 90.8};
+    float playerMass = 10.0f;
+    bool playerHibernate = false;
+
+    std::unique_ptr<Player> player(new Player(playerPosition, playerSize, playerGravity, playerMass,
+                                              playerHibernate, playerTexture, renderer, 64, 64));
+
+    player->addAnimation("idle", {0, 1, 2, 3});
+    player->addAnimation("walkLeft", {4, 5, 6, 7});
+    player->addAnimation("walkRight", {8, 9, 10, 11});
+    player->addAnimation("jumpUp", {12, 13, 14});
+    player->addAnimation("crouch", {15, 16});
+    player->playAnimation("idle", true);
+
+
+  
 
     gameObjects.push_back(std::move(player));
 
@@ -107,7 +125,7 @@ void Game::run()
             renderer->draw();
             for (const auto &object : gameObjects)
             {
-                object->render(renderer);
+                object->render(renderer, camera);
             }
 
             renderer->present();

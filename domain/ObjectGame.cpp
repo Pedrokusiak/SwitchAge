@@ -16,9 +16,7 @@ ObjectGame::ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float
 
 
 void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
-    std::cout << "Delta time: " << deltaTime << std::endl;
     applyPhysics(deltaTime);
-    std::cout << "ObjectGame::update called" << std::endl;
     if(!hibernate){
         hitbox.update(position);
     }
@@ -58,12 +56,6 @@ void ObjectGame::resolveCollision(ObjectGame& other) {
     float const totalMass = this->physicsComponent.getMass() + other.physicsComponent.getMass();
     float const thisMassRatio = this->physicsComponent.getMass() / totalMass;
     float const otherMassRatio = other.physicsComponent.getMass() / totalMass;
-
-    // Debugging information
-    std::cout << "overlap: (" << overlap.x << ", " << overlap.y << ")\n";
-    std::cout << "positions before collision: this(" << position.x << ", " << position.y << ") other(" << other.position.x << ", " << other.position.y << ")\n";
-    std::cout << "velocities before collision: this(" << physicsComponent.getVelocity().x << ", " << physicsComponent.getVelocity().y << ") other(" << other.physicsComponent.getVelocity().x << ", " << other.physicsComponent.getVelocity().y << ")\n";
-        
 
     // Vertical collision resolution
     if (overlap.y < overlap.x) {
@@ -110,8 +102,6 @@ void ObjectGame::resolveCollision(ObjectGame& other) {
 }
 
 void ObjectGame::handleHibernateCollision(ObjectGame& other, const Vector2D& overlap) {
-    // Implementar lógica específica para colisões envolvendo objetos hibernados
-    // Exemplo: Evitar alterar a posição ou velocidade do objeto hibernado
     if (this->hibernate && !other.hibernate) {
         other.adjustForCollision(other,overlap);
     } else if (!this->hibernate && other.hibernate) {
@@ -123,7 +113,6 @@ void ObjectGame::adjustForCollision(ObjectGame& other,const Vector2D& overlap) {
 
     bool isHorizontal = overlap.x < overlap.y;
 
-    // Ajusta as posições para resolver a sobreposição
     if (isHorizontal) {
         if (position.x < other.getPosition().x) {
             position.x -= overlap.x; // Empurra para a esquerda

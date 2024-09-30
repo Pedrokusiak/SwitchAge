@@ -12,7 +12,7 @@ public:
   
     GroundSegment(Vector2D position, Vector2D size, Vector2D gravity, float mass, bool hibernate, 
                   std::shared_ptr<ITexture> texture, RendererPort* renderer, int frameWidth, int frameHeight);
-    void render(RendererPort* renderer) const override;
+    void render(RendererPort* renderer,const Camera& camera) const override;
     float getWidth() const;
     float getHeight() const;
 };

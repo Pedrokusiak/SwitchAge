@@ -3,7 +3,7 @@
 VisualElement::VisualElement(Vector2D pos, const std::shared_ptr<ITexture>& texture)
     : position(pos), texture(texture) {}
 
-void VisualElement::render(RendererPort* renderer) const {
+void VisualElement::render(RendererPort* renderer, const Camera& camera) const {
     if (texture) {
         int width = texture->getWidth();
         int height = texture->getHeight();
