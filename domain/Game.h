@@ -8,6 +8,7 @@
 #include "ports/EventPort.h"
 #include "ports/TexturePort.h"
 #include "ports/PlayerRenderPort.h"
+#include "Camera.h"
 #include <vector>
 #include <memory>
 
@@ -19,13 +20,14 @@ public:
     void updateGameObjects(float deltaTime);
     void renderGameObjects();
     void controlFrameRate(Uint32 frameStar, float frameDelay);
+    
 
 private:
     RendererPort *renderer;
     EventPort *eventPort;
     TexturePort *texturePort;
     std::vector<std::unique_ptr<ObjectGame>> gameObjects;
-
+    Camera camera;
 };
 
 #endif // GAME_H

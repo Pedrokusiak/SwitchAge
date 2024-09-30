@@ -39,48 +39,7 @@ void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGam
     }
 
 
-void Player::render(RendererPort* renderer) const {
-    std::cout << "Player position: (" << position.x << ", " << position.y << ")" << std::endl;
-
-    if (animation) {
-        animation->render(position.x, position.y);
-    } else {
-        renderer->drawRect(
-            static_cast<int>(position.x),
-            static_cast<int>(position.y),
-            static_cast<int>(size.x),
-            static_cast<int>(size.y),
-            255, 0, 0, 255  // Vermelho sólido
-        );
-    }
-
-    // Opcional: Renderizar informações de debug
-    #ifdef DEBUG_RENDER
-        // Renderiza a hitbox
-        renderer->drawRect(
-            static_cast<int>(hitbox.getPosition().x),
-            static_cast<int>(hitbox.getPosition().y),
-            static_cast<int>(hitbox.getSize().x),
-            static_cast<int>(hitbox.getSize().y),
-            0, 255, 0, 128  // Verde semi-transparente
-        );
-
-        // Renderiza o vetor de velocidade
-        Vector2D velocityEnd = position + physicsComponent.getVelocity() * 10.0f;
-        renderer->drawLine(
-            static_cast<int>(position.x),
-            static_cast<int>(position.y),
-            static_cast<int>(velocityEnd.x),
-            static_cast<int>(velocityEnd.y),
-            0, 0, 255, 255  // Azul
-        );
-    #endif
-}
-
-void Player::addAnimation(const std::string& name, const std::vector<int>& frameIndices) {
-    animation->addAnimation(name, frameIndices);
-}
-
-void Player::playAnimation(const std::string& name, bool loop) {
-    animation->playAnimation(name, loop);
+void Player::render(RendererPort* renderer, const Camera& camera) const {
+    Vector2D screenPos = camera.worldToScreen(position);
+    renderer->drawPlayer(screenPos.x, screenPos.y, size.x, size.y, 0xFF, 0x00, 0x00, 0xFF);
 }

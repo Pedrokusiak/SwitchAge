@@ -4,14 +4,9 @@ GroundSegment::GroundSegment(Vector2D position, Vector2D size, Vector2D gravity,
                              std::shared_ptr<ITexture> texture, RendererPort* renderer, int frameWidth, int frameHeight)
     : ObjectGame(position, size, gravity, mass, hibernate, texture, renderer, frameWidth, frameHeight) {}
 
-void GroundSegment::render(RendererPort* renderer) const {
-    if (texture) {
-        int width = texture -> getWidth();
-        int height = texture -> getHeight();
-        int x = static_cast<int>(position.x);
-        int y = static_cast<int>(position.y);
-        renderer->drawTexture(texture, x, y, width, height);
-    }
+void GroundSegment::render(RendererPort* renderer, const Camera& camera) const {
+    Vector2D screenPos = camera.worldToScreen(position);
+    renderer->drawRect(screenPos.x, screenPos.y, size.x, size.y, 0x00, 0xFF, 0x00, 0xFF);
 }
 
 float GroundSegment::getWidth() const {

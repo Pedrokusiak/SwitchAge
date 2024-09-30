@@ -5,6 +5,7 @@
 #include "ports/RendererPort.h"
 #include "ObjectGame.h"
 #include "memory.h"
+#include "Camera.h"
 
 class GroundSegment : public ObjectGame {
 public:
