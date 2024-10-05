@@ -1,10 +1,11 @@
 #include "Player.h"
 #include <iostream>
+#include "MixerManager.h" // Inclua o MixerManager
 
 const float PLAYER_FORCE = 1000.0f;
 
-Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate, ITexture* texture )
-    : ObjectGame(pos, size, gravity, mass, hibernate, texture ) {}
+Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate, ITexture* texture, GameAudio::MixerManager* mixerManager)
+    : ObjectGame(pos, size, gravity, mass, hibernate, texture), mixerManager(mixerManager) {}
 
 void Player::handleEvent(EventPort* event) {
     if (event->isKeyDownEvent()) {
@@ -16,15 +17,21 @@ void Player::handleEvent(EventPort* event) {
                 physicsComponent.applyForce(Vector2D(PLAYER_FORCE, 0));
                 break;
             case SDLK_UP:
-                physicsComponent.applyForce(Vector2D(0, -PLAYER_FORCE));
+                // Certifique-se de que o jogador está no chão antes de pular
+                if (physicsComponent.getVelocity().y == 0) {
+                    physicsComponent.applyForce(Vector2D(0, -PLAYER_FORCE));
+                    
+                    // Reproduzir som de pulo usando o mixerManager
+                    mixerManager->playSound("jump");
+                }
                 break;
             case SDLK_DOWN:
                 physicsComponent.applyForce(Vector2D(0, PLAYER_FORCE));
                 break;
 
             default:
-                 physicsComponent.applyForce(Vector2D(0, 0));
-                 break;
+                physicsComponent.applyForce(Vector2D(0, 0));
+                break;
         }
     }
 }
@@ -41,7 +48,6 @@ void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGam
     }
 }
 
-
 void Player::render(RendererPort* renderer) const {
     if (texture) {
         int width = texture->getWidth();
@@ -51,4 +57,3 @@ void Player::render(RendererPort* renderer) const {
         renderer->drawTexture(texture, x, y, width, height);
     }
 }
-

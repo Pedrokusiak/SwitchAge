@@ -1,18 +1,24 @@
 #include "Game.h"
 #include <iostream>
 
-Game::Game(RendererPort *renderer,EventPort *eventPort, TexturePort *texturePort)
+Game::Game(RendererPort *renderer, EventPort *eventPort, TexturePort *texturePort)
     : renderer(renderer),
       eventPort(eventPort),
       texturePort(texturePort)
 {
     auto playerTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Deco/18.png");
     auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Deco/18.png");
-    auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 50), Vector2D(0, 0.0f), 1.00f, false, playerTexture);
+    auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 50), Vector2D(0, 0.0f), 1.00f, false, playerTexture, &mixerManager);
     auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1000000000.0f, false, groundTexture);
 
     gameObjects.push_back(std::move(player));
     gameObjects.push_back(std::move(groundSegment));
+
+    // Carregar e reproduzir música de fundo
+    mixerManager.loadMusic("background", "asserts/Sound/music.mp3");
+    mixerManager.playMusic("background", -1); // -1 para tocar em loop
+
+    mixerManager.loadSound("jump", "asserts/Sound/jump-up.mp3");
 }
 
 void Game::run()
@@ -38,7 +44,6 @@ void Game::run()
                 }
                 for (const auto &object : gameObjects)
                 {
-                    
                     Player *player = dynamic_cast<Player *>(object.get());
                     if (player)
                     { 
@@ -74,5 +79,7 @@ void Game::run()
         renderer->quit();
     }
 
+    // Parar música quando o jogo terminar
+    mixerManager.stopMusic();
     renderer->quit();
 }

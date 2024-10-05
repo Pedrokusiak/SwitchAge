@@ -10,15 +10,16 @@
 #include "ports/PlayerRenderPort.h"
 #include <vector>
 #include <memory>
+#include "MixerManager.h" // Inclui o MixerManager
 
 class Game {
 public:
-    Game(RendererPort *renderer,EventPort *eventPort, TexturePort *texturePort);
+    Game(RendererPort *renderer, EventPort *eventPort, TexturePort *texturePort);
     void run();
     void processEvents(bool running);
     void updateGameObjects(float deltaTime);
     void renderGameObjects();
-    void controlFrameRate(Uint32 frameStar, float frameDelay);
+    void controlFrameRate(Uint32 frameStart, float frameDelay);
 
 private:
     RendererPort *renderer;
@@ -26,6 +27,8 @@ private:
     TexturePort *texturePort;
     std::vector<std::unique_ptr<ObjectGame>> gameObjects;
 
+    // Adicionando MixerManager da GameAudio
+    GameAudio::MixerManager mixerManager; // Usando o namespace correto para evitar conflitos
 };
 
 #endif // GAME_H
