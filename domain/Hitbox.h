@@ -20,6 +20,7 @@ public:
         return size;
     }
 
+
 private:
     Vector2D position;
     Vector2D size;
