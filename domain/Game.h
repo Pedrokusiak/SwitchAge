@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include <vector>
 #include <memory>
+#include "MixerManager.h" // Inclui o MixerManager
 
 class Game {
 public:
@@ -28,6 +29,9 @@ private:
     TexturePort *texturePort;
     std::vector<std::unique_ptr<ObjectGame>> gameObjects;
     Camera camera;
+
+    // Adicionando MixerManager da GameAudio
+    GameAudio::MixerManager mixerManager; // Usando o namespace correto para evitar conflitos
 };
 
 #endif // GAME_H
