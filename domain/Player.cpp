@@ -14,19 +14,15 @@ void Player::handleEvent(EventPort* event) {
         switch (event->getKey()) {
             case SDLK_LEFT:
                 physicsComponent.applyForce(Vector2D(-100, 0));
-                animation->playAnimation("walkLeft", true);
                 break;
             case SDLK_RIGHT:
                 physicsComponent.applyForce(Vector2D(100, 0));
-                animation->playAnimation("walkRight", true);
                 break;
             case SDLK_UP:
                 physicsComponent.applyForce(Vector2D(0, -100));
-                animation->playAnimation("jumpUp", false);
                 break;
             case SDLK_DOWN:
                 physicsComponent.applyForce(Vector2D(0, 100));
-                animation->playAnimation("crouch", true);
                 break;
         }
     }
@@ -35,7 +31,6 @@ void Player::handleEvent(EventPort* event) {
 
 void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
     ObjectGame::update(deltaTime, gameObjects);
-    animation->update(deltaTime);
     
     }
 

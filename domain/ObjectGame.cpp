@@ -17,11 +17,10 @@ ObjectGame::ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float
 
 void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
     applyPhysics(deltaTime);
-    if(!hibernate){
-        hitbox.update(position);
-    }
+   
     std::set<std::tuple<int, int>> checkedPairs;
     for (size_t i = 0; i < gameObjects.size(); ++i) {
+
         for (size_t j = i + 1; j < gameObjects.size(); ++j) {
             auto pair = std::make_tuple(i, j);
 

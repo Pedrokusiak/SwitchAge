@@ -27,7 +27,7 @@ Game::Game(RendererPort *renderer, EventPort *eventPort, TexturePort *texturePor
     player->addAnimation("walkRight", {8, 9, 10, 11});
     player->addAnimation("jumpUp", {12, 13, 14});
     player->addAnimation("crouch", {15, 16});
-    player->playAnimation("idle", true);
+    player->playAnimation("walkLeft", true);
 
 
   
@@ -112,8 +112,8 @@ void Game::run()
                     Player *player = dynamic_cast<Player *>(object.get());
                     if (player)
                     { 
-                        camera.centerOn(player->getPosition());
                         player->handleEvent(eventPort);
+
                         break;
                     }
                 }
@@ -126,6 +126,11 @@ void Game::run()
             renderer->draw();
             for (const auto &object : gameObjects)
             {
+                Player *player = dynamic_cast<Player *>(object.get());
+                 if (player)
+                    { 
+                        camera.centerOn(player->getPosition());
+                    }
                 object->render(renderer, camera);
             }
 

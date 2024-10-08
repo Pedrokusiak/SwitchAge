@@ -1,0 +1,52 @@
+@startuml teste
+start
+
+:1. Inicializar soma = 0;
+:2. Inicializar contador = 0;
+:3. Iniciar loopExterno: while (true);
+
+while (true)
+    :4. Incrementar contador;
+    if (contador % 3 == 0) then (Sim)
+        :5. Iniciar loop for (i = 0; i < valor; i++);
+        while (i < valor)
+            if (i % 2 == 0) then (Sim)
+                :6. Continuar para a próxima iteração do for;
+            else (Não)
+                :7. Adicionar i a soma;
+                if (soma > 10) then (Sim)
+                    :8. Quebrar loopExterno;
+                    stop
+                endif
+            endif
+        endwhile
+    elseif (contador % 3 == 1) then (Sim)
+        :9. Iniciar loop while (contador < valor);
+        while (contador < valor)
+            if (contador == 2) then (Sim)
+                :10. Incrementar valor em 2;
+            endif
+            :11. Subtrair contador de soma;
+            :12. Incrementar contador;
+        endwhile
+    elseif (contador % 3 == 2) then (Sim)
+        :13. Iniciar loop do-while;
+        do
+            if (contador == 5) then (Sim)
+                :14. Quebrar loopExterno;
+                stop
+            endif
+            :15. Multiplicar soma por contador;
+            :16. Incrementar contador;
+        while (contador < valor)
+    endif
+
+    if (soma < -20) then (Sim)
+        :17. Quebrar loopExterno;
+        stop
+    endif
+endwhile
+
+:18. Imprimir "O resultado da soma: " + soma;
+stop
+@enduml

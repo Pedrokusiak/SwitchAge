@@ -15,8 +15,6 @@
 class Game {
 public:
    Game(RendererPort *renderer, EventPort *eventPort, TexturePort *texturePort, Camera camera);
-
-
     void run();
     void processEvents(bool running);
     void updateGameObjects(float deltaTime);

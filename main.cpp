@@ -24,14 +24,11 @@ int main(int argc, char *argv[]) {
     }
 
     try {
-        // Instanciar SDLRendererAdapter
         SDLRendererAdapter renderer;
 
-        // Instanciar SDLEventAdapter
         SDLEventAdapter event;
 
-        // Carregar textura
-       SDLTexture* texturePort = new SDLTexture(renderer.getRenderer());
+        SDLTexture* texturePort = new SDLTexture(renderer.getRenderer());
 
         Camera camera(0, 0, WIDTH, HEIGHT);
 
