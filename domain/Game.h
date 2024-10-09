@@ -32,6 +32,7 @@ private:
 
     // Adicionando MixerManager da GameAudio
     GameAudio::MixerManager mixerManager; // Usando o namespace correto para evitar conflitos
+    int score = 0; // Variável de pontuação
 };
 
 #endif // GAME_H

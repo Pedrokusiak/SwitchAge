@@ -91,10 +91,23 @@ void Player::handleGroundedState(const Vector2D& normal)
     }
 }
 
-void Player::render(RendererPort* renderer, const Camera& camera) const
-{
+void Player::render(RendererPort* renderer, const Camera& camera) const {
     Vector2D screenPos = camera.worldToScreen(position);
-    renderer->drawPlayer(screenPos.x, screenPos.y, size.x, size.y, 0xFF, 0x00, 0x00, 0xFF);
+
+    if (!animation) {
+        std::cerr << "Error: Animation not initialized." << std::endl;
+        return;
+    }
+
+    if (screenPos.x + animation->getFrameWidth() < 0 || screenPos.x > camera.getViewportWidth() ||
+        screenPos.y + animation->getFrameHeight() < 0 || screenPos.y > camera.getViewportWidth()) {
+        return;
+    }
+
+    int screenX = static_cast<int>(screenPos.x);
+    int screenY = static_cast<int>(screenPos.y);
+
+    animation->render(screenX, screenY);
 }
 
 

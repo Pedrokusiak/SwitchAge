@@ -23,9 +23,12 @@ public:
     void quit() const override;
 
     void delay(Uint32 ms) const override;
+    // void drawText(const std::string& text, int x, int y, SDL_Color color, TTF_Font* font) override;
 
     Uint32 getTicks() const override;
     SDL_Renderer *getRenderer() const;
+
+
 
 private:
     SDL_Window* window;
