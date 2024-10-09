@@ -9,56 +9,56 @@ Game::Game(RendererPort *renderer,  EventPort *eventPort, TexturePort *texturePo
       camera(camera)
 {
 
-//     auto playerTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Resources/Trees/Tree.png");
-//     auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Factions/Goblins/Buildings/Wood_House/Goblin_House.png"); // Substitua pelo caminho correto
+    auto playerTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Resources/Trees/Tree.png");
+    auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Factions/Goblins/Buildings/Wood_House/Goblin_House.png"); // Substitua pelo caminho correto
 
-//     // Configurando o jogador
-//     Vector2D playerPosition = {200, 200};
-//     Vector2D playerSize = {64, 64};
-//     Vector2D playerGravity = {0, 90.8};
-//     float playerMass = 10.0f;
-//     bool playerHibernate = false;
+    // Configurando o jogador
+    Vector2D playerPosition = {200, 200};
+    Vector2D playerSize = {64, 64};
+    Vector2D playerGravity = {0, 90.8};
+    float playerMass = 10.0f;
+    bool playerHibernate = false;
 
-//     std::unique_ptr<Player> player(new Player(playerPosition, playerSize, playerGravity, playerMass,
-//                                               playerHibernate, playerTexture, renderer, 64, 64));
+   std::unique_ptr<Player> player(new Player(playerPosition, playerSize, playerGravity, playerMass,
+                                          playerHibernate, playerTexture, renderer, 64, 64, &mixerManager));
 
-//     player->addAnimation("idle", {0, 1, 2, 3});
-//     player->addAnimation("walkLeft", {4, 5, 6, 7});
-//     player->addAnimation("walkRight", {8, 9, 10, 11});
-//     player->addAnimation("jumpUp", {12, 13, 14});
-//     player->addAnimation("crouch", {15, 16});
-//     player->playAnimation("walkLeft", true);
+    player->addAnimation("idle", {0, 1, 2, 3});
+    player->addAnimation("walkLeft", {4, 5, 6, 7});
+    player->addAnimation("walkRight", {8, 9, 10, 11});
+    player->addAnimation("jumpUp", {12, 13, 14});
+    player->addAnimation("crouch", {15, 16});
+    player->playAnimation("walkLeft", true);
 
 
   
 
-//     gameObjects.push_back(std::move(player));
+    gameObjects.push_back(std::move(player));
 
-//     const int numGroundSegments = 5; // Número de segmentos de chão
-//     const int segmentWidth = 160;     // Largura de cada segmento
-//     const int segmentHeight = 64;     // Altura de cada segmento
-//     const int floorY = 500;
-//     const int ceilingY = 50;  // Posição Y do teto
+    const int numGroundSegments = 5; // Número de segmentos de chão
+    const int segmentWidth = 160;     // Largura de cada segmento
+    const int segmentHeight = 64;     // Altura de cada segmento
+    const int floorY = 500;
+    const int ceilingY = 50;  // Posição Y do teto
          
-//   for (int i = 0; i < numGroundSegments; ++i)
-//     {
-//         Vector2D groundPosition = {static_cast<float>(i * segmentWidth), static_cast<float>(floorY + (i % 2) * 30)};
-//         Vector2D groundSize = {static_cast<float>(segmentWidth), static_cast<float>(segmentHeight)};
+  for (int i = 0; i < numGroundSegments; ++i)
+    {
+        Vector2D groundPosition = {static_cast<float>(i * segmentWidth), static_cast<float>(floorY + (i % 2) * 30)};
+        Vector2D groundSize = {static_cast<float>(segmentWidth), static_cast<float>(segmentHeight)};
 
-//         std::unique_ptr<GroundSegment> ground(new GroundSegment(
-//             groundPosition,
-//             groundSize,
-//             Vector2D(0, 0),
-//             1000.0f,
-//             true,
-//             groundTexture,
-//             renderer,
-//             128,
-//             128
-//         ));
+        std::unique_ptr<GroundSegment> ground(new GroundSegment(
+            groundPosition,
+            groundSize,
+            Vector2D(0, 0),
+            1000.0f,
+            true,
+            groundTexture,
+            renderer,
+            128,
+            128
+        ));
 
-//         gameObjects.push_back(std::move(ground));
-//     }
+        gameObjects.push_back(std::move(ground));
+    }
 
 //     // Criando segmentos de teto
 //     for (int i = 0; i < numGroundSegments; ++i)
