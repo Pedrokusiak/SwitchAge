@@ -15,7 +15,7 @@ public:
 
     void addAnimation(const std::string& name, const std::vector<int>& frameIndices);
     void playAnimation(const std::string& name, bool loop = true);
-    void update(Uint32 deltaTime);
+    void update(float deltaTime);
     void render(int x, int y);
 
     int getFrameWidth() const { return frameWidth; }

@@ -14,12 +14,14 @@ void GroundSegment::render(RendererPort* renderer, const Camera& camera) const {
         int width = static_cast<int>(size.x);
         int height = static_cast<int>(size.y);
 
-        if (x + width < 0 || x > camera.getViewportWidth() ||
-            y + height < 0 || y > camera.getViewportHeight()) {
-            return;  // Segmento está fora da viewport, não renderize
-        }
+        
 
-        renderer->drawTexture(texture, x, y, width, height);
+        int srcX = 0;            // Coordenada X de origem na textura (usualmente 0 se quiser pegar tudo)
+        int srcY = 0;            // Coordenada Y de origem na textura
+        int srcWidth = 256;      // Largura da parte da textura a ser desenhada
+        int srcHeight = 256;     // Altura da parte da textura a ser desenhada
+
+        renderer->drawTexturePart(texture, x, y, srcWidth, srcHeight, srcX, srcY, width, height);
     }
 }
 

@@ -16,7 +16,10 @@ ObjectGame::ObjectGame(Vector2D position, Vector2D size, Vector2D gravity, float
 
 
 void ObjectGame::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
+    std::cout << "TESTE - Frame Timer: " << deltaTime << std::endl;
+
     applyPhysics(deltaTime);
+    animation->update(deltaTime); 
    
     std::set<std::tuple<int, int>> checkedPairs;
     for (size_t i = 0; i < gameObjects.size(); ++i) {
@@ -39,7 +42,7 @@ void ObjectGame::applyPhysics(float deltaTime) {
      if (!hibernate) {
         physicsComponent.update(deltaTime);
         position += physicsComponent.getVelocity() * deltaTime;
-        animation->update(deltaTime); 
+
         hitbox.update(position);
     }
   

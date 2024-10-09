@@ -9,8 +9,8 @@ Game::Game(RendererPort *renderer,  EventPort *eventPort, TexturePort *texturePo
       camera(camera)
 {
 
-    auto playerTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Resources/Trees/Tree.png");
-    auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Factions/Goblins/Buildings/Wood_House/Goblin_House.png"); // Substitua pelo caminho correto
+    auto playerTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Factions/Knights/Troops/Archer/Archer + Bow/Archer_Blue_(NoArms).png");
+    auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Terrain/Ground/Tilemap_Flat.png"); // Substitua pelo caminho correto
 
     // Configurando o jogador
     Vector2D playerPosition = {200, 200};
@@ -22,12 +22,12 @@ Game::Game(RendererPort *renderer,  EventPort *eventPort, TexturePort *texturePo
    std::unique_ptr<Player> player(new Player(playerPosition, playerSize, playerGravity, playerMass,
                                           playerHibernate, playerTexture, renderer, 64, 64, &mixerManager));
 
-    player->addAnimation("idle", {0, 1, 2, 3});
-    player->addAnimation("walkLeft", {4, 5, 6, 7});
-    player->addAnimation("walkRight", {8, 9, 10, 11});
-    player->addAnimation("jumpUp", {12, 13, 14});
+    player->addAnimation("idle", {22, 28});
+    player->addAnimation("walkLeft", {12, 20,42 });
+    player->addAnimation("walkRight", {32, 12, 40, 44});
+    player->addAnimation("jumpUp", {28});
     player->addAnimation("crouch", {15, 16});
-    player->playAnimation("walkLeft", true);
+    player->playAnimation("idle", true);
 
 
   
@@ -59,84 +59,8 @@ Game::Game(RendererPort *renderer,  EventPort *eventPort, TexturePort *texturePo
 
         gameObjects.push_back(std::move(ground));
     }
-
-//     // Criando segmentos de teto
-//     for (int i = 0; i < numGroundSegments; ++i)
-//     {
-//         Vector2D ceilingPosition = {static_cast<float>(i * segmentWidth), static_cast<float>(ceilingY - (i % 2) * 30)};
-//         Vector2D ceilingSize = {static_cast<float>(segmentWidth), static_cast<float>(segmentHeight)};
-
-//         std::unique_ptr<GroundSegment> ceiling(new GroundSegment(
-//             ceilingPosition,
-//             ceilingSize,
-//             Vector2D(0, 0),
-//             1000.0f,
-//             true,
-//             groundTexture,
-//             renderer,
-//             64,
-//             64
-//         ));
-
-//         gameObjects.push_back(std::move(ceiling));
-//     }
-//     auto playerTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Deco/18.png");
-//     auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Deco/18.png");
-//     auto player = std::make_unique<Player>(Vector2D(375, 100), Vector2D(50, 50), Vector2D(0, 0.0f), 1.00f, false, playerTexture, &mixerManager);
-//     auto groundSegment = std::make_unique<GroundSegment>(Vector2D(0, 580), Vector2D(800, 20), Vector2D(0, 0), 1000000000.0f, false, groundTexture);
-
-//     gameObjects.push_back(std::move(player));
-
-//     const int numGroundSegments = 5; // Número de segmentos de chão
-//     const int segmentWidth = 160;     // Largura de cada segmento
-//     const int segmentHeight = 64;     // Altura de cada segmento
-//     const int floorY = 500;
-//     const int ceilingY = 50;  // Posição Y do teto
-         
-//   for (int i = 0; i < numGroundSegments; ++i)
-//     {
-//         Vector2D groundPosition = {static_cast<float>(i * segmentWidth), static_cast<float>(floorY + (i % 2) * 30)};
-//         Vector2D groundSize = {static_cast<float>(segmentWidth), static_cast<float>(segmentHeight)};
-
-//         std::unique_ptr<GroundSegment> ground(new GroundSegment(
-//             groundPosition,
-//             groundSize,
-//             Vector2D(0, 0),
-//             1000.0f,
-//             true,
-//             groundTexture,
-//             renderer,
-//             128,
-//             128
-//         ));
-
-//         gameObjects.push_back(std::move(ground));
-//     }
-
-//     // Criando segmentos de teto
-//     for (int i = 0; i < numGroundSegments; ++i)
-//     {
-//         Vector2D ceilingPosition = {static_cast<float>(i * segmentWidth), static_cast<float>(ceilingY - (i % 2) * 30)};
-//         Vector2D ceilingSize = {static_cast<float>(segmentWidth), static_cast<float>(segmentHeight)};
-
-//         std::unique_ptr<GroundSegment> ceiling(new GroundSegment(
-//             ceilingPosition,
-//             ceilingSize,
-//             Vector2D(0, 0),
-//             1000.0f,
-//             true,
-//             groundTexture,
-//             renderer,
-//             64,
-//             64
-//         ));
-
-//         gameObjects.push_back(std::move(ceiling));
-//     }
-
-    // Carregar e reproduzir música de fundo
-    mixerManager.loadMusic("background", "asserts/Sound/music.mp3");
-    mixerManager.playMusic("background", -1); // -1 para tocar em loop
+    // mixerManager.loadMusic("background", "asserts/Sound/music.mp3");
+    // mixerManager.playMusic("background", -1); // -1 para tocar em loop
 
     mixerManager.loadSound("jump", "asserts/Sound/jump-up.mp3");
 }

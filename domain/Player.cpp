@@ -14,25 +14,31 @@ void Player::handleEvent(EventPort* event) {
    if (event->isKeyDownEvent()) {
         switch (event->getKey()) {
             case SDLK_LEFT:
-                physicsComponent.applyForce(Vector2D(-100, 0));
+                animation->playAnimation("walkLeft", true);
+                physicsComponent.applyForce(Vector2D(-1000, 0));
+
                 break;
             case SDLK_RIGHT:
-                physicsComponent.applyForce(Vector2D(100, 0));
+                physicsComponent.applyForce(Vector2D(1000, 0));
+                physicsComponent.applyForce(Vector2D(1000, 0));
                 break;
             case SDLK_UP:
-                // Certifique-se de que o jogador está no chão antes de pular
                 if (physicsComponent.getVelocity().y == 0) {
-                    physicsComponent.applyForce(Vector2D(0, -100));
+
+                    animation->playAnimation("jumpUp", false);
+                    physicsComponent.applyForce(Vector2D(0, -1000));
                     
-                    // Reproduzir som de pulo usando o mixerManager
                     mixerManager->playSound("jump");
                 }
                 break;
             case SDLK_DOWN:
+
+                animation->playAnimation("crouch", false);
                 physicsComponent.applyForce(Vector2D(0, PLAYER_FORCE));
                 break;
 
             default:
+                animation->playAnimation("idle", false);
                 physicsComponent.applyForce(Vector2D(0, 0));
                 break;
         }
@@ -58,7 +64,17 @@ void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGam
 
 void Player::render(RendererPort* renderer, const Camera& camera) const {
     Vector2D screenPos = camera.worldToScreen(position);
-    
+
+    if (!animation) {
+        std::cerr << "Error: Animation not initialized." << std::endl;
+        return;
+    }
+
+    if (screenPos.x + animation->getFrameWidth() < 0 || screenPos.x > camera.getViewportWidth() ||
+        screenPos.y + animation->getFrameHeight() < 0 || screenPos.y > camera.getViewportWidth()) {
+        return;
+    }
+
     int screenX = static_cast<int>(screenPos.x);
     int screenY = static_cast<int>(screenPos.y);
 
@@ -67,6 +83,7 @@ void Player::render(RendererPort* renderer, const Camera& camera) const {
 
 void Player::addAnimation(const std::string& name, const std::vector<int>& frameIndices) {
     animation->addAnimation(name, frameIndices);
+    std::cout << "Animação " << name << " adicionada com " << frameIndices.size() << " frames." << std::endl;
 }
 
 void Player::playAnimation(const std::string& name, bool loop) {
