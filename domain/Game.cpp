@@ -75,8 +75,6 @@ void Game::run()
     const int frameDelay = 1000 / FPS;
     Player* player = nullptr;
 
-
-
     try
     {
         while (running)

@@ -4,6 +4,9 @@
 #include "MixerManager.h" // Inclua o MixerManager
 #include "Animation.h"
 const float PLAYER_FORCE = 1000.0f;
+const float PLAYER_MOVEMENT_FORCE = 800.0f;
+const float GRAVITY_MAGNITUDE = 1000.0f;
+const float GRAVITY_FLIP_COOLDOWN = 0.5f;
 
 Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate, 
                std::shared_ptr<ITexture> texture, RendererPort* renderer, 
@@ -48,38 +51,52 @@ void Player::handleEvent(EventPort* event) {
 
 void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
     ObjectGame::update(deltaTime, gameObjects);
-    for (const auto& object : gameObjects) {
-        if (this != object.get() && checkCollision(*object)) {
-            if (position.y + size.y <= object->getPosition().y) {
-                position.y = object.get()->getPosition().y - size.y;
-                physicsComponent.setVelocity(Vector2D(physicsComponent.getVelocity().x, 0));
-            }
+    
+    bool isGrounded = false;
+    for (const auto& object : gameObjects)
+    {
+        if (this != object.get() && checkCollision(*object))
+        {
+            isGrounded = true;
+            Vector2D normal = calculateCollisionNormal(*object);
+            handleGroundedState(normal);
         }
     }
 }
 
-
-
-
-
-void Player::render(RendererPort* renderer, const Camera& camera) const {
-    Vector2D screenPos = camera.worldToScreen(position);
-
-    if (!animation) {
-        std::cerr << "Error: Animation not initialized." << std::endl;
-        return;
+Vector2D Player::calculateCollisionNormal(const ObjectGame& other) const
+{
+    Vector2D centerDiff = other.getPosition() - position;
+    Vector2D normal(0, 0);
+    
+    if (std::abs(centerDiff.y) > std::abs(centerDiff.x))
+    {
+        normal.y = centerDiff.y > 0 ? 1 : -1;
     }
-
-    if (screenPos.x + animation->getFrameWidth() < 0 || screenPos.x > camera.getViewportWidth() ||
-        screenPos.y + animation->getFrameHeight() < 0 || screenPos.y > camera.getViewportWidth()) {
-        return;
+    else
+    {
+        normal.x = centerDiff.x > 0 ? 1 : -1;
     }
-
-    int screenX = static_cast<int>(screenPos.x);
-    int screenY = static_cast<int>(screenPos.y);
-
-    animation->render(screenX, screenY);
+    
+    return normal;
 }
+
+void Player::handleGroundedState(const Vector2D& normal)
+{
+    Vector2D vel = physicsComponent.getVelocity();
+    if ((normal.y > 0 && vel.y > 0) || (normal.y < 0 && vel.y < 0))
+    {
+        vel.y = 0;
+        physicsComponent.setVelocity(vel);
+    }
+}
+
+void Player::render(RendererPort* renderer, const Camera& camera) const
+{
+    Vector2D screenPos = camera.worldToScreen(position);
+    renderer->drawPlayer(screenPos.x, screenPos.y, size.x, size.y, 0xFF, 0x00, 0x00, 0xFF);
+}
+
 
 void Player::addAnimation(const std::string& name, const std::vector<int>& frameIndices) {
     animation->addAnimation(name, frameIndices);
@@ -88,4 +105,5 @@ void Player::addAnimation(const std::string& name, const std::vector<int>& frame
 
 void Player::playAnimation(const std::string& name, bool loop) {
     animation->playAnimation(name, loop);
+
 }

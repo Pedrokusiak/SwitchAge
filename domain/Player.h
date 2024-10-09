@@ -16,10 +16,14 @@ public:
     void update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) override; // Adicione esta linha
     void addAnimation(const std::string& name, const std::vector<int>& frameIndices);
     void playAnimation(const std::string& name, bool loop = true);
+        
 
 
 private:
     GameAudio::MixerManager* mixerManager; // Adiciona um ponteiro para o MixerManager
+    float lastGravityFlip;
+    Vector2D calculateCollisionNormal(const ObjectGame& other) const;
+    void handleGroundedState(const Vector2D& normal);
 
 };
 
