@@ -15,6 +15,8 @@ public:
     void render(RendererPort* renderer,const Camera& camera) const override;
     float getWidth() const;
     float getHeight() const;
+
+
 };
 
 #endif // GROUNDSEGMENT_H

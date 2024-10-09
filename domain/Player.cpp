@@ -5,8 +5,10 @@
 #include "Animation.h"
 const float PLAYER_FORCE = 1000.0f;
 
-Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate, ITexture* texture, GameAudio::MixerManager* mixerManager)
-    : ObjectGame(pos, size, gravity, mass, hibernate, texture), mixerManager(mixerManager) {}
+Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate, 
+               std::shared_ptr<ITexture> texture, RendererPort* renderer, 
+               int frameWidth, int frameHeight, GameAudio::MixerManager* mixerManager)
+    : ObjectGame(pos, size, gravity, mass, hibernate, texture, renderer, frameWidth, frameHeight), mixerManager(mixerManager) {}
 
 void Player::handleEvent(EventPort* event) {
    if (event->isKeyDownEvent()) {
@@ -50,18 +52,8 @@ void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGam
     }
 }
 
-void Player::render(RendererPort* renderer) const {
-    if (texture) {
-        int width = texture->getWidth();
-        int height = texture->getHeight();
-        int x = static_cast<int>(position.x);
-        int y = static_cast<int>(position.y);
-        renderer->drawTexture(texture, x, y, width, height);
-    }
-}
 
-    
-    }
+
 
 
 void Player::render(RendererPort* renderer, const Camera& camera) const {
