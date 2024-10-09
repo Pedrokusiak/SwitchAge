@@ -10,20 +10,18 @@ public:
     void applyForce(const Vector2D& force);
     void update(float deltaTime);
 
+    // Getters
     float getMass() const;
     Vector2D getGravity() const;
-    Vector2D getForce() const { return force; }
+    Vector2D getForce() const;
     Vector2D getVelocity() const;
-    Vector2D getAcceleration() const { return acceleration;}
+    Vector2D getAcceleration() const;
+
+    // Setters
     void setVelocity(const Vector2D& vel);
     void setForce(const Vector2D& force);
-    void setAcceleration(const Vector2D& acceleration){
-        this -> acceleration = acceleration;
-    }
-    
-
-
-    void setGravity(const Vector2D& gravit);
+    void setAcceleration(const Vector2D& acceleration);
+    void setGravity(const Vector2D& gravity);
 
 private:
     Vector2D gravity;
