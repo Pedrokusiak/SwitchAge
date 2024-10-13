@@ -21,6 +21,7 @@ public:
     void updateGameObjects(float deltaTime);
     void renderGameObjects();
     void controlFrameRate(Uint32 frameStar, float frameDelay);
+    void renderScore(int score); 
     
 
 private:
@@ -30,9 +31,8 @@ private:
     std::vector<std::unique_ptr<ObjectGame>> gameObjects;
     Camera camera;
 
-    // Adicionando MixerManager da GameAudio
-    GameAudio::MixerManager mixerManager; // Usando o namespace correto para evitar conflitos
-    int score = 0; // Variável de pontuação
+    GameAudio::MixerManager mixerManager; 
+    int score = 0; 
 };
 
 #endif // GAME_H

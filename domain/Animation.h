@@ -14,8 +14,10 @@ public:
     Animation(RendererPort* renderer, std::shared_ptr<ITexture> spritesheet, int frameWidth, int frameHeight);
 
     void addAnimation(const std::string& name, const std::vector<int>& frameIndices);
+    bool isPlayingAnimation(const std::string& name) const;
     void playAnimation(const std::string& name, bool loop = true);
     void update(float deltaTime);
+    
     void render(int x, int y);
 
     int getFrameWidth() const { return frameWidth; }

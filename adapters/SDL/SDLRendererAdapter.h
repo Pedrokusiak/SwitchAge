@@ -7,6 +7,8 @@
 #include <memory>
 #include "SDLTexture.h" 
 
+class RendererPort;
+
 class SDLRendererAdapter : public RendererPort {
 public:
     SDLRendererAdapter();
@@ -23,10 +25,9 @@ public:
     void quit() const override;
 
     void delay(Uint32 ms) const override;
-    // void drawText(const std::string& text, int x, int y, SDL_Color color, TTF_Font* font) override;
 
     Uint32 getTicks() const override;
-    SDL_Renderer *getRenderer() const;
+    SDL_Renderer *getRenderer() const override;
 
 
 

@@ -2,36 +2,52 @@
 #include "Animation.h"
 #include <iostream>
 
-Animation::Animation(RendererPort* ren, std::shared_ptr<ITexture> sheet, int fWidth, int fHeight)
+Animation::Animation(RendererPort *ren, std::shared_ptr<ITexture> sheet, int fWidth, int fHeight)
     : renderer(ren), spritesheet(sheet), frameWidth(fWidth), frameHeight(fHeight),
-      currentFrameIndex(0), frameTimer(0), frameDuration(0.5f), looping(false) {
-    
-    if (spritesheet) {
+      currentFrameIndex(0), frameTimer(0), frameDuration(0.5f), looping(false)
+{
+
+    if (spritesheet)
+    {
         spritesheetCols = spritesheet->getWidth() / frameWidth;
-    } else {
+    }
+    else
+    {
         std::cerr << "Error: Spritesheet is null in Animation constructor." << std::endl;
         spritesheetCols = 1;
     }
 }
 
-void Animation::addAnimation(const std::string& name, const std::vector<int>& frameIndices) {
+void Animation::addAnimation(const std::string &name, const std::vector<int> &frameIndices)
+{
     animations[name] = frameIndices;
 }
 
-void Animation::playAnimation(const std::string& name, bool loop) {
+bool  Animation::isPlayingAnimation(const std::string &name) const
+{
+    return currentAnimation == name;
+}
+
+void Animation::playAnimation(const std::string &name, bool loop)
+{
     auto it = animations.find(name);
-    if (it != animations.end()) {
+    if (it != animations.end())
+    {
         currentAnimation = name;
         currentFrameIndex = 0;
         frameTimer = 0;
         looping = loop;
-    } else {
+    }
+    else
+    {
         std::cerr << "Error: Animation '" << name << "' not found." << std::endl;
     }
 }
 
-void Animation::update(float deltaTime) {
-    if (currentAnimation.empty() || animations[currentAnimation].empty()) {
+void Animation::update(float deltaTime)
+{
+    if (currentAnimation.empty() || animations[currentAnimation].empty())
+    {
         return;
     }
 
@@ -40,14 +56,19 @@ void Animation::update(float deltaTime) {
 
     std::cout << "TESTE - Frame Timer: " << frameTimer << " na FrameDuration: " << frameDuration << std::endl;
     frameTimer += deltaTime;
-    if (frameTimer >= frameDuration) {
+    if (frameTimer >= frameDuration)
+    {
         frameTimer -= frameDuration;
         currentFrameIndex++;
 
-        if (currentFrameIndex >= animations[currentAnimation].size()) {
-            if (looping) {
+        if (currentFrameIndex >= animations[currentAnimation].size())
+        {
+            if (looping)
+            {
                 currentFrameIndex = 0;
-            } else {
+            }
+            else
+            {
                 currentFrameIndex = animations[currentAnimation].size() - 1;
             }
         }
@@ -56,8 +77,10 @@ void Animation::update(float deltaTime) {
     }
 }
 
-void Animation::render(int x, int y) {
-    if (currentAnimation.empty() || animations[currentAnimation].empty()) {
+void Animation::render(int x, int y)
+{
+    if (currentAnimation.empty() || animations[currentAnimation].empty())
+    {
         std::cerr << "Error: No current animation or animation is empty." << std::endl;
         return;
     }
@@ -69,7 +92,8 @@ void Animation::render(int x, int y) {
     int col = frameIndex % spritesheetCols;
 
     // Verificar se spritesheetCols está correto e frames estão sendo acessados corretamente
-    if (spritesheetCols == 0) {
+    if (spritesheetCols == 0)
+    {
         std::cerr << "Error: spritesheetCols is zero, possibly due to incorrect spritesheet dimensions." << std::endl;
         return;
     }

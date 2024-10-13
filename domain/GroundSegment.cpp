@@ -7,22 +7,8 @@ GroundSegment::GroundSegment(Vector2D position, Vector2D size, Vector2D gravity,
 
 
 void GroundSegment::render(RendererPort* renderer, const Camera& camera) const {
-    if (texture) {
-        Vector2D screenPos = camera.worldToScreen(position);
-        int x = static_cast<int>(screenPos.x);
-        int y = static_cast<int>(screenPos.y);
-        int width = static_cast<int>(size.x);
-        int height = static_cast<int>(size.y);
-
-        
-
-        int srcX = 0;            // Coordenada X de origem na textura (usualmente 0 se quiser pegar tudo)
-        int srcY = 0;            // Coordenada Y de origem na textura
-        int srcWidth = 256;      // Largura da parte da textura a ser desenhada
-        int srcHeight = 256;     // Altura da parte da textura a ser desenhada
-
-        renderer->drawTexturePart(texture, x, y, srcWidth, srcHeight, srcX, srcY, width, height);
-    }
+    Vector2D screenPos = camera.worldToScreen(position);
+    renderer->drawRect(screenPos.x, screenPos.y, size.x, size.y, 0x00, 0xFF, 0x00, 0xFF);
 }
 
 

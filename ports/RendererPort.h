@@ -31,7 +31,9 @@ public:
     virtual void drawTexturePart(const std::shared_ptr<ITexture>& texture, 
                                  int destX, int destY, int destW, int destH, 
                                  int srcX, int srcY, int srcW, int srcH) = 0;
-    // virtual void drawText(const std::string& text, int x, int y, SDL_Color color, TTF_Font* font) = 0;
+
+                               
+   virtual SDL_Renderer *getRenderer() const = 0;
 };
 
 #endif 

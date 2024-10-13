@@ -7,6 +7,7 @@ public:
     virtual bool pollEvent() = 0;
     virtual bool isQuitEvent() const = 0;
     virtual bool isKeyDownEvent() const = 0;
+    virtual bool isKeyUpEvent() const = 0; 
     virtual int getKey() const = 0;
 };
 

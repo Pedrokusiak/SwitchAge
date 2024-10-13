@@ -11,6 +11,7 @@ public:
     bool pollEvent() override;
     bool isQuitEvent() const override;
     bool isKeyDownEvent() const override;
+    bool isKeyUpEvent() const override;
     int getKey() const override;
 
 private:

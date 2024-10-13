@@ -8,52 +8,55 @@ const float PLAYER_MOVEMENT_FORCE = 800.0f;
 const float GRAVITY_MAGNITUDE = 1000.0f;
 const float GRAVITY_FLIP_COOLDOWN = 0.5f;
 
-Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate, 
-               std::shared_ptr<ITexture> texture, RendererPort* renderer, 
-               int frameWidth, int frameHeight, GameAudio::MixerManager* mixerManager)
+Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate,
+               std::shared_ptr<ITexture> texture, RendererPort *renderer,
+               int frameWidth, int frameHeight, GameAudio::MixerManager *mixerManager)
     : ObjectGame(pos, size, gravity, mass, hibernate, texture, renderer, frameWidth, frameHeight), mixerManager(mixerManager) {}
 
 void Player::handleEvent(EventPort* event) {
-   if (event->isKeyDownEvent()) {
+    if (event->isKeyDownEvent()) {
         switch (event->getKey()) {
             case SDLK_LEFT:
-                animation->playAnimation("walkLeft", true);
-                physicsComponent.applyForce(Vector2D(-1000, 0));
-
+                if (!animation->isPlayingAnimation("walkLeft")) {
+                    animation->playAnimation("walkLeft", true);
+                }
+                physicsComponent.applyForce(Vector2D(-PLAYER_MOVEMENT_FORCE, 0));
                 break;
             case SDLK_RIGHT:
-                physicsComponent.applyForce(Vector2D(1000, 0));
-                physicsComponent.applyForce(Vector2D(1000, 0));
-                break;
-            case SDLK_UP:
-                if (physicsComponent.getVelocity().y == 0) {
-
-                    animation->playAnimation("jumpUp", false);
-                    physicsComponent.applyForce(Vector2D(0, -1000));
-                    
-                    mixerManager->playSound("jump");
+                if (!animation->isPlayingAnimation("walkRight")) {
+                    animation->playAnimation("walkRight", true);
                 }
+                physicsComponent.applyForce(Vector2D(PLAYER_MOVEMENT_FORCE, 0));
                 break;
-            case SDLK_DOWN:
-
-                animation->playAnimation("crouch", false);
-                physicsComponent.applyForce(Vector2D(0, PLAYER_FORCE));
+            case SDLK_SPACE:
+                if (!animation->isPlayingAnimation("jumpUp")) {
+                    animation->playAnimation("jumpUp", false);
+                }
+                flipGravity();
+                Vector2D currentGravity = physicsComponent.getGravity();
+                Vector2D newGravity = Vector2D(0, currentGravity.y > 0 ? -GRAVITY_MAGNITUDE : GRAVITY_MAGNITUDE);
+                physicsComponent.setGravity(newGravity);
+                physicsComponent.applyForce(newGravity * 0.5f);
                 break;
-
-            default:
-                animation->playAnimation("idle", false);
-                physicsComponent.applyForce(Vector2D(0, 0));
+        }
+    } else if (event->isKeyUpEvent()) {
+        switch (event->getKey()) {
+            case SDLK_LEFT:
+            case SDLK_RIGHT:
+                if (!animation->isPlayingAnimation("idle")) {
+                    animation->playAnimation("idle", true);
+                }
                 break;
         }
     }
 }
 
-
-void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>>& gameObjects) {
+void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>> &gameObjects)
+{
     ObjectGame::update(deltaTime, gameObjects);
-    
+
     bool isGrounded = false;
-    for (const auto& object : gameObjects)
+    for (const auto &object : gameObjects)
     {
         if (this != object.get() && checkCollision(*object))
         {
@@ -64,11 +67,11 @@ void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGam
     }
 }
 
-Vector2D Player::calculateCollisionNormal(const ObjectGame& other) const
+Vector2D Player::calculateCollisionNormal(const ObjectGame &other) const
 {
     Vector2D centerDiff = other.getPosition() - position;
     Vector2D normal(0, 0);
-    
+
     if (std::abs(centerDiff.y) > std::abs(centerDiff.x))
     {
         normal.y = centerDiff.y > 0 ? 1 : -1;
@@ -77,11 +80,11 @@ Vector2D Player::calculateCollisionNormal(const ObjectGame& other) const
     {
         normal.x = centerDiff.x > 0 ? 1 : -1;
     }
-    
+
     return normal;
 }
 
-void Player::handleGroundedState(const Vector2D& normal)
+void Player::handleGroundedState(const Vector2D &normal)
 {
     Vector2D vel = physicsComponent.getVelocity();
     if ((normal.y > 0 && vel.y > 0) || (normal.y < 0 && vel.y < 0))
@@ -91,16 +94,19 @@ void Player::handleGroundedState(const Vector2D& normal)
     }
 }
 
-void Player::render(RendererPort* renderer, const Camera& camera) const {
+void Player::render(RendererPort *renderer, const Camera &camera) const
+{
     Vector2D screenPos = camera.worldToScreen(position);
 
-    if (!animation) {
+    if (!animation)
+    {
         std::cerr << "Error: Animation not initialized." << std::endl;
         return;
     }
 
     if (screenPos.x + animation->getFrameWidth() < 0 || screenPos.x > camera.getViewportWidth() ||
-        screenPos.y + animation->getFrameHeight() < 0 || screenPos.y > camera.getViewportWidth()) {
+        screenPos.y + animation->getFrameHeight() < 0 || screenPos.y > camera.getViewportWidth())
+    {
         return;
     }
 
@@ -110,13 +116,13 @@ void Player::render(RendererPort* renderer, const Camera& camera) const {
     animation->render(screenX, screenY);
 }
 
-
-void Player::addAnimation(const std::string& name, const std::vector<int>& frameIndices) {
+void Player::addAnimation(const std::string &name, const std::vector<int> &frameIndices)
+{
     animation->addAnimation(name, frameIndices);
     std::cout << "Animação " << name << " adicionada com " << frameIndices.size() << " frames." << std::endl;
 }
 
-void Player::playAnimation(const std::string& name, bool loop) {
+void Player::playAnimation(const std::string &name, bool loop)
+{
     animation->playAnimation(name, loop);
-
 }
