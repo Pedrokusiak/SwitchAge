@@ -34,6 +34,11 @@ Game::Game(RendererPort *renderer, EventPort *eventPort, TexturePort *texturePor
     player->addAnimation("jumpUp", {36,37});
     player->addAnimation("crouch", {15, 16});
 
+    player->addAnimation("idleInverted", {36,37});
+    player->addAnimation("walkLeftInverted", {39,40});
+    player->addAnimation("walkRightInverted", {39,40});
+    player->addAnimation("jumpUpInverted", {39,40});
+
 
     player->playAnimation("idle", true);
 

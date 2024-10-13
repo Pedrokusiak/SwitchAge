@@ -3,53 +3,56 @@
 #include <iostream>
 #include "MixerManager.h" // Inclua o MixerManager
 #include "Animation.h"
-const float PLAYER_FORCE = 1000.0f;
-const float PLAYER_MOVEMENT_FORCE = 800.0f;
-const float GRAVITY_MAGNITUDE = 1000.0f;
-const float GRAVITY_FLIP_COOLDOWN = 0.5f;
 
 Player::Player(Vector2D pos, Vector2D size, Vector2D gravity, float mass, bool hibernate,
                std::shared_ptr<ITexture> texture, RendererPort *renderer,
                int frameWidth, int frameHeight, GameAudio::MixerManager *mixerManager)
-    : ObjectGame(pos, size, gravity, mass, hibernate, texture, renderer, frameWidth, frameHeight), mixerManager(mixerManager) {}
+    : ObjectGame(pos, size, gravity, mass, hibernate, texture, renderer, frameWidth, frameHeight), mixerManager(mixerManager)
+{
+}
 
-void Player::handleEvent(EventPort* event) {
-    if (event->isKeyDownEvent()) {
-        switch (event->getKey()) {
-            case SDLK_LEFT:
-                if (!animation->isPlayingAnimation("walkLeft")) {
-                    animation->playAnimation("walkLeft", true);
-                }
-                physicsComponent.applyForce(Vector2D(-PLAYER_MOVEMENT_FORCE, 0));
-                break;
-            case SDLK_RIGHT:
-                if (!animation->isPlayingAnimation("walkRight")) {
-                    animation->playAnimation("walkRight", true);
-                }
-                physicsComponent.applyForce(Vector2D(PLAYER_MOVEMENT_FORCE, 0));
-                break;
-            case SDLK_SPACE:
-                if (!animation->isPlayingAnimation("jumpUp")) {
-                    animation->playAnimation("jumpUp", false);
-                }
-                flipGravity();
-                Vector2D currentGravity = physicsComponent.getGravity();
-                Vector2D newGravity = Vector2D(0, currentGravity.y > 0 ? -GRAVITY_MAGNITUDE : GRAVITY_MAGNITUDE);
-                physicsComponent.setGravity(newGravity);
-                physicsComponent.applyForce(newGravity * 0.5f);
-                break;
+void Player::handleEvent(EventPort* event)
+{
+    const float PLAYER_MOVEMENT_FORCE = 800.0f;
+
+    if (event->isKeyDownEvent())
+    {
+        switch (event->getKey())
+        {
+        case SDLK_LEFT:
+            if (!animation->isPlayingAnimation("walkLeft"))
+            {
+                animation->playAnimation("walkLeft", true);
+            }
+            physicsComponent.applyForce(Vector2D(-PLAYER_MOVEMENT_FORCE, 0));
+            break;
+        case SDLK_RIGHT:
+            if (!animation->isPlayingAnimation("walkRight"))
+            {
+                animation->playAnimation("walkRight", true);
+            }
+            physicsComponent.applyForce(Vector2D(PLAYER_MOVEMENT_FORCE, 0));
+            break;
+        case SDLK_SPACE:
+            flipGravity();
+            break;
         }
-    } else if (event->isKeyUpEvent()) {
-        switch (event->getKey()) {
-            case SDLK_LEFT:
-            case SDLK_RIGHT:
-                if (!animation->isPlayingAnimation("idle")) {
-                    animation->playAnimation("idle", true);
-                }
-                break;
+    }
+    else if (event->isKeyUpEvent())
+    {
+        switch (event->getKey())
+        {
+        case SDLK_LEFT:
+        case SDLK_RIGHT:
+            if (!animation->isPlayingAnimation("idle"))
+            {
+                animation->playAnimation("idle", true);
+            }
+            break;
         }
     }
 }
+
 
 void Player::update(float deltaTime, const std::vector<std::unique_ptr<ObjectGame>> &gameObjects)
 {
@@ -125,4 +128,17 @@ void Player::addAnimation(const std::string &name, const std::vector<int> &frame
 void Player::playAnimation(const std::string &name, bool loop)
 {
     animation->playAnimation(name, loop);
+}
+
+void Player::updateAnimationBasedOnState()
+{
+    std::string currentAnim = animation->getCurrentAnimation();
+    std::string baseAnim = currentAnim;
+    
+    size_t pos = baseAnim.find("Inverted");
+    if (pos != std::string::npos) {
+        baseAnim = baseAnim.substr(0, pos);
+    }
+
+    playAnimation(baseAnim + getCurrentStateSuffix(), true);
 }
