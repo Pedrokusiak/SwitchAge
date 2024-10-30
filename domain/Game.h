@@ -12,7 +12,7 @@
 #include <vector>
 #include <memory>
 #include "MixerManager.h" // Inclui o MixerManager
-
+#include "TerrainManager.h"
 class Game {
 public:
    Game(RendererPort *renderer, EventPort *eventPort, TexturePort *texturePort, Camera camera);
@@ -21,7 +21,7 @@ public:
     void updateGameObjects(float deltaTime);
     void renderGameObjects();
     void controlFrameRate(Uint32 frameStar, float frameDelay);
-    void renderScore(int score); 
+    // void renderScore(int score); 
     
 
 private:
@@ -30,7 +30,7 @@ private:
     TexturePort *texturePort;
     std::vector<std::unique_ptr<ObjectGame>> gameObjects;
     Camera camera;
-
+    std::unique_ptr<TerrainManager> terrainManager;
     GameAudio::MixerManager mixerManager; 
     int score = 0; 
 };

@@ -4,7 +4,7 @@
 
 Animation::Animation(RendererPort *ren, std::shared_ptr<ITexture> sheet, int fWidth, int fHeight)
     : renderer(ren), spritesheet(sheet), frameWidth(fWidth), frameHeight(fHeight),
-      currentFrameIndex(0), frameTimer(0), frameDuration(0.5f), looping(false)
+      currentFrameIndex(0), frameTimer(0), frameDuration(0.25f), looping(false)
 {
 
     if (spritesheet)

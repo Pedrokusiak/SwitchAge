@@ -20,17 +20,11 @@ void Player::handleEvent(EventPort* event)
         switch (event->getKey())
         {
         case SDLK_LEFT:
-            if (!animation->isPlayingAnimation("walkLeft"))
-            {
-                animation->playAnimation("walkLeft", true);
-            }
+            playAnimation("walkLeft" + getCurrentStateSuffix(), true);
             physicsComponent.applyForce(Vector2D(-PLAYER_MOVEMENT_FORCE, 0));
             break;
         case SDLK_RIGHT:
-            if (!animation->isPlayingAnimation("walkRight"))
-            {
-                animation->playAnimation("walkRight", true);
-            }
+            playAnimation("walkRight" + getCurrentStateSuffix(), true);
             physicsComponent.applyForce(Vector2D(PLAYER_MOVEMENT_FORCE, 0));
             break;
         case SDLK_SPACE:
@@ -44,10 +38,7 @@ void Player::handleEvent(EventPort* event)
         {
         case SDLK_LEFT:
         case SDLK_RIGHT:
-            if (!animation->isPlayingAnimation("idle"))
-            {
-                animation->playAnimation("idle", true);
-            }
+            playAnimation("idle" + getCurrentStateSuffix(), true);
             break;
         }
     }

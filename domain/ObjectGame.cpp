@@ -53,36 +53,28 @@ void ObjectGame::resolveCollision(ObjectGame &other)
     
     if (overlap.x == 0 && overlap.y == 0) return; // No collision
 
-    // Determine collision direction
     bool fromTop = position.y < other.position.y;
     bool fromLeft = position.x < other.position.x;
 
-    // Resolve collision
     if (std::abs(overlap.x) < std::abs(overlap.y))
     {
-        // Horizontal collision
         position.x += fromLeft ? -overlap.x : overlap.x;
         physicsComponent.setVelocity(Vector2D(0, physicsComponent.getVelocity().y));
     }
     else
     {
-        // Vertical collision
         position.y += fromTop ? -overlap.y : overlap.y;
         
         if (fromTop)
         {
-            // Landing on a surface
             physicsComponent.setVelocity(Vector2D(physicsComponent.getVelocity().x, 0));
-            physicsComponent.setGravity(Vector2D(0, 0));
         }
         else
         {
-            // Hitting a ceiling
             physicsComponent.setVelocity(Vector2D(physicsComponent.getVelocity().x, 0));
         }
     }
 
-    // Update hitbox
     hitbox.update(position);
 }
 
