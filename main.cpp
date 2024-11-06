@@ -35,6 +35,7 @@ int main(int argc, char *argv[]) {
 
 
         // Instanciar o Game
+        // Menu menu(renderer, event);
         Game game(&renderer, &event, texturePort, camera);
         game.run();
 

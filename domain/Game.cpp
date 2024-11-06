@@ -14,7 +14,7 @@ Game::Game(RendererPort* renderer, EventPort* eventPort, TexturePort* texturePor
     auto groundTexture = texturePort->loadTexture("asserts/Tiny Swords (Update 010)/Terrain/Ground/Tilemap_Flat.png");
 
     // Configurando o jogador
-    Vector2D playerPosition = {200, 200};
+    Vector2D playerPosition = {50, 150};
     Vector2D playerSize = {64, 64};
     Vector2D playerGravity = {0, 180.8};
     float playerMass = 1.0f;
