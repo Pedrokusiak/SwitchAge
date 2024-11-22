@@ -321,5 +321,76 @@ Essa solução simples e direta permitiu manter o projeto leve e funcional, sem 
 Link para o Video: 
 
 
-# RELATORIO 05 : 
+# RELATORIO 05 : Aprendendo uma Nova Linguagem e Implementando um Jogo
+
+## 🌟 A Dificuldade na Aprendizagem de uma Nova Linguagem
+
+Aprender uma nova linguagem vai além de memorizar comandos ou sintaxes. É necessário compreender os paradigmas que ela segue (orientação a objetos, funcional, procedural, etc.) e as ferramentas específicas que ela oferece. Por exemplo:
+
+- Em C++, lidar com gestão de memória manual e o uso de ponteiros pode ser desafiador, especialmente para programadores acostumados a linguagens de mais alto nível como Python ou JavaScript.
+- Além disso, integrar bibliotecas externas, como a SDL (Simple DirectMedia Layer), exige não apenas o domínio da linguagem, mas também um entendimento profundo das APIs que estão sendo utilizadas.
+
+## 🎮 A Dificuldade de Implementar um Jogo
+
+O desenvolvimento de um jogo combina lógica, criatividade e programação avançada. Alguns desafios comuns incluem:
+
+- **Gestão de Recursos**:
+  Gerenciar texturas, sons e outros ativos de forma eficiente é fundamental. Veja um exemplo de como texturas são carregadas e armazenadas em cache utilizando SDL:
+
+    ```cpp
+    std::shared_ptr<ITexture> SDLTexture::loadTexture(const std::string& filePath) {
+        auto it = textureCache.find(filePath);
+        if (it != textureCache.end()) {
+            return it->second;
+        }
+
+        SDL_Surface* surface = IMG_Load(filePath.c_str());
+        if (!surface) {
+            std::cerr << "Unable to load image " << filePath << "! SDL_image Error: " << IMG_GetError() << std::endl;
+            return nullptr;
+        }
+
+        SDL_Texture* newTexture = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+
+        if (!newTexture) {
+            std::cerr << "Unable to create texture from " << filePath << "! SDL Error: " << SDL_GetError() << std::endl;
+            return nullptr;
+        }
+
+        auto texture = std::make_shared<SDLTexture>(renderer);
+        texture->texture = newTexture;
+        textureCache[filePath] = texture;
+
+        return texture;
+    }
+    ```
+
+    Este exemplo mostra como texturas são armazenadas em cache para evitar carregamentos redundantes e economizar recursos.
+
+- **Sistemas de Renderização**:
+  Configurar um pipeline de renderização para exibir objetos na tela exige atenção a detalhes técnicos, como posições, tamanhos e interações.
+
+- **Estruturas de Jogo**:
+  Implementar sistemas como gerenciamento de estados (menu, jogo ativo, pausa) e eventos exige uma arquitetura clara e organizada.
+
+## 🛠️ Estratégias para Superar os Desafios
+
+1. **Dividir para Conquistar**:
+   - Comece implementando pequenos módulos antes de abordar sistemas mais complexos. Por exemplo, implemente uma classe de gerenciamento de texturas antes de criar animações.
+
+2. **Explorar Documentação e Exemplos**:
+   - Utilize a documentação oficial e exemplos práticos para entender como integrar bibliotecas como a SDL ao seu projeto.
+
+3. **Iteração Contínua**:
+   - Desenvolva versões básicas e, ao aprender mais sobre a linguagem e os requisitos do jogo, refine e expanda as funcionalidades.
+
+4. **Aprender com Erros**:
+   - Debugging será seu melhor aliado. Cada erro enfrentado é uma oportunidade de compreender melhor a linguagem e os sistemas envolvidos.
+
+## 🚀 Conclusão
+
+Embora aprender uma nova linguagem e desenvolver um jogo sejam tarefas desafiadoras, elas são altamente recompensadoras. Funcionalidades como o gerenciamento de texturas, mostrado no exemplo acima, são marcos significativos nesse processo. Superar esses desafios expande suas habilidades técnicas e aumenta sua capacidade de resolver problemas complexos, essenciais para o sucesso em qualquer projeto de tecnologia.
+
+Link para o Video: 
 
