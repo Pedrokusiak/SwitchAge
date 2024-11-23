@@ -290,7 +290,6 @@ A classe `TestSuite` foi desenvolvida para testar manualmente os principais mét
   ### 💻 Exemplo de Teste
 Abaixo está um exemplo real de como os testes foram implementados. Este teste verifica se o construtor da classe `Physics` inicializa corretamente seus atributos:
 
-```cpp
 suite.addTest("Physics Constructor Test", []() {
     Physics physics(Vector2D(0, -9.8), 1.0);
     return vectorAlmostEqual(physics.getGravity(), Vector2D(0, -9.8)) &&
@@ -336,7 +335,7 @@ O desenvolvimento de um jogo combina lógica, criatividade e programação avan�
 - **Gestão de Recursos**:
   Gerenciar texturas, sons e outros ativos de forma eficiente é fundamental. Veja um exemplo de como texturas são carregadas e armazenadas em cache utilizando SDL:
 
-    ```cpp
+    ```
     std::shared_ptr<ITexture> SDLTexture::loadTexture(const std::string& filePath) {
         auto it = textureCache.find(filePath);
         if (it != textureCache.end()) {
