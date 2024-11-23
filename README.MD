@@ -203,7 +203,6 @@ Link para o video: https://drive.google.com/file/d/1VM1ZR0peBQSPkaYfEv0y8r3HxdFK
 ## 🛠️ Métodos e Funcionalidades
 
 ### 🔧 Construtor
-```cpp
 Physics(Vector2D gravity, float mass);
 
 - **Inicialização**:
